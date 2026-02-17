@@ -1,0 +1,234 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+}
+
+/* Header principal */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    height: 100px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header img {
+    height: 80px;
+    width: auto;
+}
+
+/* Navigation générale */
+nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+nav a {
+    text-decoration: none;
+    color: #043d5b;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 24px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+nav a:hover {
+    background-color: #fccd2c;
+    color: #004182;
+    transform: translateY(-1px);
+}
+
+nav a[href*="/register"],
+nav a[href*="/inscrire"],
+nav a:nth-child(4) {
+    color: white !important;
+    background-color: #043d5b !important;
+}
+
+nav a[href*="/register"]:hover,
+nav a[href*="/inscrire"]:hover,
+nav a:nth-child(4):hover {
+    background-color: #365899 !important;
+    color: white !important;
+    transform: translateY(-1px);
+}
+
+/* Section bienvenue*/
+.bienvenue-section {
+    height: 100px;
+    background-color: #043d5b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    z-index: 10;
+}
+
+.bienvenue-section h1 {
+    margin: 0;
+}
+
+/* Section Objectif*/
+.objectif-section {
+    background-color: #fccd2c;
+    color: #043d5b;
+    padding: 80px 30px;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+.objectif-content {
+    max-width: 800px;
+    margin: 0 auto 60px auto;
+}
+
+.objectif-section h2 {
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin-bottom: 24px;
+}
+
+/* Bouton Explorer */
+.btn-explorer {
+    display: inline-block;
+    background-color: #4169E1;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 12px 32px;
+    border-radius: 24px;
+    text-decoration: none;
+    margin-top: 24px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(65, 105, 225, 0.3);
+}
+
+.btn-explorer:hover {
+    background-color: #365899;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(65, 105, 225, 0.4);
+}
+
+/*Carrousel*/
+.carrousel-container {
+    overflow: hidden;
+    max-width: 640px;
+    height: 360px;
+    margin: 40px auto 0;
+}
+
+.carrousel-images {
+    display: flex;
+    width: max-content;
+    animation: scroll 40s linear infinite;
+}
+
+.carrousel-images img {
+    width: 640px;
+    height: 360px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+@keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+
+
+
+
+/* Main */
+main {
+    margin-top: 20px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 40px 20px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    margin-top: 40px;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+        height: auto;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    header img {
+        height: 60px;
+    }
+
+    nav a {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .bienvenue-section,
+    .objectif-section {
+        padding: 40px 15px;
+    }
+
+    .objectif-section h2 {
+        font-size: 24px;
+    }
+
+    .carrousel-container {
+        height: 400px;
+    }
+
+    .carrousel-images img {
+        height: 400px;
+    }
+}
