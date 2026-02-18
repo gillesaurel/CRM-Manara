@@ -359,3 +359,44 @@ footer {
         font-size: 24px;
     }
 }
+
+
+/* Div boutons inscription */
+..btn-group-inscription {
+     display: flex;
+     flex-direction: column;
+     gap: 12px;
+     align-items: center;
+     background-color: #f8f9fa;
+     padding: 20px;
+     border-radius: 12px;
+ }
+
+ .btn-group-inscription button {
+     width: 100%;
+     padding: 12px 20px;
+     background-color: #fccd2c;
+     color: #043d5b !important;
+     border: 2px solid #043d5b;
+     border-radius: 24px;
+     font-weight: bold;
+     font-size: 16px;
+     cursor: not-allowed;
+ }
+
+ .btn-group-inscription a {
+     color: white !important;
+     text-decoration: none;
+     font-weight: bold;
+     padding: 8px 16px;
+     border-radius: 24px;
+     transition: all 0.3s ease;
+ }
+
+ .btn-group-inscription a:hover {
+     background-color: #043d5b;
+     color: #fccd2c !important;
+     transform: translateY(-1px);
+ }
+
+
