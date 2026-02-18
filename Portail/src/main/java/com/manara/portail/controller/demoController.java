@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class demoController {
 
-@GetMapping("/")
+/*@GetMapping("/")
 public String pageDemo(Model model){
     return "demo";
-}
+}*/
 }
