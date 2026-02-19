@@ -4,19 +4,13 @@
     <meta charset="UTF-8">
     <title>Dashboard Animateurs</title>
     <link th:rel="stylesheet" th:href="@{/css/style.css}">
+    <link th:rel="stylesheet" th:href="@{/css/animateur.css}">
 </head>
 <body class="page-animateurs">
 
-    <header th:fragment="header">
-        <img th:src="@{/images/manara_logo.png}" alt="Logo Manara">
+<header th:replace="fragments::header">
 
-        <nav>
-            <a th:href="@{/}">Accueil</a>
-            <a th:href="@{/}">À propos</a>
-            <a th:href="@{/}">Se connecter</a>
-            <a th:href="@{/}">S'inscrire</a>
-        </nav>
-    </header>
+</header>
 
 <hr>
 
@@ -58,19 +52,23 @@
                 </td>
             </tr>
             <tr th:each="inscrit, inscritStat : ${inscrits}">
-                <td th:text="${inscrit.nom}">Nom</td>
-                <td th:text="${inscrit.prenom}">Prénom</td>
-                <td th:text="${inscrit.email}">Email</td>
-                <td th:text="${inscrit.telephone ?: 'N/A'}">Téléphone</td>
-                <td th:text="${inscrit.activite?.nom ?: 'N/A'}">Activité</td>
-                <td th:text="${#temporals.format(inscrit.dateInscription, 'dd/MM/yyyy')}">Date</td>
-                <td>
-                    <span th:if="${inscrit.statut == 'CONFIRME'}" 
-                            th:text="'Confirmé'">Confirmé</span>
-                    <span th:if="${inscrit.statut == 'EN_ATTENTE'}" 
-                            th:text="'En attente'">En attente</span>
-                    <span th:if="${inscrit.statut == 'ANNULE'}" 
-                            th:text="'Annulé'">Annulé</span>
+                <td data-label="Nom" th:text="${inscrit.nom}">Nom</td>
+                <td data-label="Prénom" th:text="${inscrit.prenom}">Prénom</td>
+                <td data-label="Email" th:text="${inscrit.email}">Email</td>
+                <td data-label="Téléphone" th:text="${inscrit.telephone ?: 'N/A'}">Téléphone</td>
+                <td data-label="Activité" th:text="${inscrit.activite?.nom ?: 'N/A'}">Activité</td>
+                <td data-label="Date" th:text="${#temporals.format(inscrit.dateInscription, 'dd/MM/yyyy')}">Date</td>
+                <td data-label="Statut">
+                    <span class="badge"
+                          th:classappend="' ' + ${inscrit.statut}"
+                          th:text="${
+                              inscrit.statut == 'CONFIRME' ? 'Confirmé' :
+                              inscrit.statut == 'EN_ATTENTE' ? 'En attente' :
+                              inscrit.statut == 'ANNULE' ? 'Annulé' :
+                              'Inconnu'
+                          }">
+                        Statut
+                    </span>
                 </td>
             </tr>
         </tbody>

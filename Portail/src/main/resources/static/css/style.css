@@ -112,6 +112,21 @@ nav a[href*="/login"]:hover {
     overflow-wrap: break-word;
     hyphens: auto;
 }
+.activity-selector {
+    background-color: #fccd2c;
+    color: #043d5b;
+    padding: 80px 30px;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
 
 .objectif-content {
     max-width: 800px;
@@ -362,7 +377,7 @@ footer {
 
 
 /* Div boutons inscription */
-..btn-group-inscription {
+.btn-group-inscription {
      display: flex;
      flex-direction: column;
      gap: 12px;
