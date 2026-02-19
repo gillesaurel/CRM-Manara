@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portail Manara — Animateur</title>
+
+    <link th:rel="stylesheet" th:href="@{/css/style.css}">
+    <link th:rel="stylesheet" th:href="@{/css/animateur.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="page-animateurs">
+
+<header th:replace="fragments::header"></header>
+
+<main class="dash">
+    <!-- Titre + petit badge profil -->
+    <section class="dash-top">
+        <div>
+            <h1>Portail Manara</h1>
+            <p class="subtitle">Tableau de bord</p>
+        </div>
+
+        <div class="profile-pill">
+            <i class="fa-solid fa-user-tie"></i>
+            <span>Profil : Animateur</span>
+        </div>
+    </section>
+
+    <!-- Carte bienvenue -->
+    <section class="card welcome">
+        <h2>Bienvenue</h2>
+        <p>
+            Accès rapide aux fonctions animateur. Conçu pour être clair sur cellulaire
+            et efficace sur ordinateur.
+        </p>
+    </section>
+
+    <!-- Actions rapides -->
+    <section class="card">
+        <div class="card-head">
+            <h3>Actions rapides</h3>
+            <p class="hint">Les tâches les plus fréquentes, en 1 tap.</p>
+        </div>
+
+        <div class="quick-grid">
+            <a class="quick-btn" th:href="@{/animateur/inscriptions}">
+        <span class="icon">
+          <i class="fa-solid fa-users"></i>
+        </span>
+                <span class="text">
+          <strong>Inscriptions</strong>
+          <small>Consulter / filtrer</small>
+        </span>
+            </a>
+
+            <a class="quick-btn" th:href="@{/animateur/presences}">
+        <span class="icon">
+          <i class="fa-solid fa-clipboard-check"></i>
+        </span>
+                <span class="text">
+          <strong>Présences</strong>
+          <small>Consigner sur place</small>
+        </span>
+            </a>
+
+            <a class="quick-btn" th:href="@{/animateur/horaire}">
+        <span class="icon">
+          <i class="fa-solid fa-calendar-days"></i>
+        </span>
+                <span class="text">
+          <strong>Horaire</strong>
+          <small>Sessions à venir</small>
+        </span>
+            </a>
+
+            <a class="quick-btn warn" th:href="@{/animateur/incidents}">
+        <span class="icon">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </span>
+                <span class="text">
+          <strong>Incidents</strong>
+          <small>Signaler / suivi</small>
+        </span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Liste sessions à venir (style comme ta capture) -->
+    <section class="card">
+        <div class="card-head">
+            <h3>Sessions à venir</h3>
+            <p class="hint">Prochaines sessions (exemples).</p>
+        </div>
+
+        <div class="session-list">
+            <article class="session-item" th:each="s : ${sessions}">
+                <div class="session-main">
+                    <strong th:text="${s.nomActivite}">Session : Arts plastiques (6–8 ans)</strong>
+                    <small>
+                        <span th:text="${s.dateTexte}">Mar 18:00</span>
+                        — <span th:text="${s.lieu}">Salle 2</span>
+                    </small>
+                </div>
+
+                <div class="session-side">
+                    <span class="chip" th:text="'Places : ' + ${s.placesRestantes}">Places : 3</span>
+                    <span class="status open" th:if="${s.ouverte}">État : Ouverte</span>
+                    <span class="status full" th:if="${!s.ouverte}">État : Complète</span>
+                </div>
+            </article>
+
+            <div class="empty" th:if="${sessions == null or sessions.isEmpty()}">
+                Aucune session à venir.
+            </div>
+        </div>
+    </section>
+
+    <!-- Aperçu (KPIs) -->
+    <section class="card">
+        <div class="card-head">
+            <h3>Aperçu</h3>
+            <p class="hint">Indicateurs rapides.</p>
+        </div>
+
+        <div class="kpi-grid">
+            <div class="kpi">
+                <small>Inscriptions</small>
+                <strong th:text="${totalInscriptions}">0</strong>
+            </div>
+
+            <div class="kpi">
+                <small>Sessions aujourd’hui</small>
+                <strong th:text="${sessionsAujourdHui}">0</strong>
+            </div>
+
+            <div class="kpi">
+                <small>Incidents (7 jours)</small>
+                <strong th:text="${incidents7j}">0</strong>
+            </div>
+
+            <div class="kpi">
+                <small>Présences saisies</small>
+                <strong th:text="${presencesSaisies}">0</strong>
+            </div>
+        </div>
+    </section>
+
+    <!-- espace pour que la nav bottom ne cache pas le contenu -->
+    <div class="bottom-spacer"></div>
+</main>
+
+<!-- Bottom nav (comme ton screenshot) -->
+<nav class="bottom-nav" aria-label="Navigation bas">
+    <a th:href="@{/animateur/dashboard}" class="nav-item active">
+        <i class="fa-solid fa-house"></i>
+        <span>Accueil</span>
+    </a>
+
+    <a th:href="@{/animateur/horaire}" class="nav-item">
+        <i class="fa-solid fa-calendar-days"></i>
+        <span>Horaire</span>
+    </a>
+
+    <a th:href="@{/animateur/inscriptions}" class="nav-item">
+        <i class="fa-solid fa-users"></i>
+        <span>Inscriptions</span>
+    </a>
+
+    <a th:href="@{/animateur/compte}" class="nav-item">
+        <i class="fa-solid fa-user"></i>
+        <span>Compte</span>
+    </a>
+</nav>
+
+</body>
+</html>
