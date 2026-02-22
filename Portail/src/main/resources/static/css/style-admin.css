@@ -6,7 +6,7 @@
 .admin-main {
     max-width: 1200px;
     margin: 40px auto;
-    padding: 0 20px; }
+    padding: 0 20px 90px; }
 
 .dashboard-grid {
     display: grid;
