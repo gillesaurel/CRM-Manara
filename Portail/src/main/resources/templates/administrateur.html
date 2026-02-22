@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-<div th:replace="fragments::header-admin"></div>
-
+<!--<div th:replace="fragments::header-admin"></div> -->
+<div th:replace="fragments/main::header"></div>
 <div class="bienvenue-section">
     <h1>Tableau de Bord Administrateur</h1>
 </div>
@@ -93,7 +93,7 @@
 
 </main>
 
-<footer th:replace="fragments::footer"></footer>
+<div th:replace="~{fragments/administrateur :: bottomNav('dashboard')}"></div>
 
 </body>
 <script>
