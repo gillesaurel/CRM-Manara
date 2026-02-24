@@ -6,28 +6,28 @@
      aria-label="Navigation bas"
      th:fragment="bottomNav(activePage)">
 
-    <a th:href="@{/administrateur/dashboard}"
+    <a th:href="@{/administrateur}"
        th:classappend="${activePage == 'dashboard'} ? 'active'"
        class="nav-item">
         <i class="fa-solid fa-house"></i>
         <span>Accueil</span>
     </a>
 
-    <a th:href="@{/administrateur/activites}"
+    <a th:href="@{/administrateur}"
        th:classappend="${activePage == 'activites'} ? 'active'"
        class="nav-item">
         <i class="fa-solid fa-layer-group"></i>
         <span>Activités</span>
     </a>
 
-    <a th:href="@{/administrateur/inscriptions}"
+    <a th:href="@{/administrateur}"
        th:classappend="${activePage == 'inscriptions'} ? 'active'"
        class="nav-item">
         <i class="fa-solid fa-user-check"></i>
         <span>Inscriptions</span>
     </a>
 
-    <a th:href="@{/administrateur/messages}"
+    <a th:href="@{/administrateur}"
        th:classappend="${activePage == 'messages'} ? 'active'"
        class="nav-item">
         <i class="fa-solid fa-envelope"></i>
