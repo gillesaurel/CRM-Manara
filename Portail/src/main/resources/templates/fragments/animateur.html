@@ -6,28 +6,28 @@
      aria-label="Navigation bas"
      th:fragment="bottomNav(activePage)">
 
-    <a th:href="@{/animateur/dashboard}"
+    <a th:href="@{/animateur}"
        th:classappend="${activePage == 'dashboard'} ? 'active'"
        class="nav-item">
         <i class="fa-solid fa-house"></i>
         <span>Accueil</span>
     </a>
 
-    <a th:href="@{/animateur/horaire}"
+    <a th:href="@{/animateur}"
        th:classappend="${activePage == 'horaire'} ? 'active'"
        class="nav-item">
         <i class="fa-solid fa-calendar-days"></i>
         <span>Horaire</span>
     </a>
 
-    <a th:href="@{/animateur/inscriptions}"
+    <a th:href="@{/animateur}"
        th:classappend="${activePage == 'inscriptions'} ? 'active'"
        class="nav-item">
         <i class="fa-solid fa-users"></i>
         <span>Inscriptions</span>
     </a>
 
-    <a th:href="@{/animateur/compte}"
+    <a th:href="@{/animateur}"
        th:classappend="${activePage == 'compte'} ? 'active'"
        class="nav-item">
         <i class="fa-solid fa-user"></i>
