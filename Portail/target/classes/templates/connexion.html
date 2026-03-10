@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Connexion</title>
+</head>
+<body>
+    <header th:replace="fragments/main::header">
+
+    </header>
+    <main class="formulaire-section">
+        <h1>Connexion</h1>
+        <form>
+            <!-- Courriel -->
+            <div>
+                <label for="email">Courriel *</label>
+                <input type="email"
+                       id="email"
+                       name="email"
+                       placeholder="pierre@gmail.com"
+                       required />
+            </div>
+
+            <!-- Mot de passe -->
+            <div>
+                <label for="password">Mot de passe *</label>
+                <input type="password"
+                       id="password"
+                       name="password"
+                       placeholder="••••••••"
+                       required
+                       minlength="6" />
+            </div>
+
+
+            <div class="btn-group-inscription">
+                <button type="submit" disabled>Se connecter</button>
+                <a th:href="@{/register}">Créer un compte</a>
+            </div>
+        </form>
+    </main>
+
+
+    <footer th:replace="fragments/main::footer">
+
+    </footer>
+
+
+</body>
+</html>

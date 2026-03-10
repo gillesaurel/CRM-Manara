@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Administration - Manara</title>
+    <!-- CSS local -->
+    <link rel="stylesheet" th:href="@{/css/style-admin.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<!--<div th:replace="fragments::header-admin"></div> -->
+<div th:replace="fragments/main::header"></div>
+<div class="bienvenue-section">
+    <h1>Tableau de Bord Administrateur</h1>
+</div>
+
+<main class="admin-main">
+
+    <!-- Tableaux de bord (User Story: Piloter les activités) -->
+    <div class="dashboard-grid">
+        <div class="stat-card">
+            <h3>Activités Créées</h3>
+            <div class="value" th:text="${totalActivities ?: '12'}">1</div>
+        </div>
+        <div class="stat-card" style="border-left-color: #fccd2c;">
+            <h3>Taux de Remplissage</h3>
+            <div class="value">80%</div>
+        </div>
+        <div class="stat-card">
+            <h3>En attente</h3>
+            <div class="value" th:text="${waitingListSize ?: '5'}">5</div>
+        </div>
+    </div>
+
+    <!-- Gestion des Sessions (User Story: Créer & Planifier) -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="color: #043d5b;">Sessions Actives</h2>
+        <button id="openModal" class="btn-explorer" style="margin-bottom:20px;">+ Nouvelle Activité</button>
+
+        <!-- Pop-up modal -->
+        <div id="activityModal" class="modal">
+            <div class="modal-content admin-modal">
+                <span class="close">&times;</span>
+                <h2>Créer une Nouvelle Activité</h2>
+                <form th:action="@{/admin/activities/save}" method="post">
+                    <input type="text" name="title" placeholder="Nom de l'activité" required>
+                    <input type="datetime-local" name="date" required>
+                    <input type="number" name="capacity" placeholder="Capacité max" required>
+                    <textarea name="description" placeholder="Description" rows="4"></textarea>
+                    <button type="submit" class="btn-explorer">Créer l'activité</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Suivi des inscriptions (User Story: Consulter en temps réel) -->
+    <table class="admin-table">
+        <thead>
+        <tr>
+            <th>Activité</th>
+            <th>Session</th>
+            <th>Inscrits</th>
+            <th>Capacité</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Exemple statique (à boucler avec th:each en production) -->
+        <tr>
+            <td><strong>Football Junior</strong></td>
+            <td>Samedi 09:00</td>
+            <td>18</td>
+            <td>20</td>
+            <td>
+                <a th:href="@{/admin/edit/1}" style="color: #4169E1; margin-right: 10px;"><i class="fas fa-edit"></i></a>
+                <a th:href="@{/admin/notify/1}" style="color: #043d5b;"><i class="fas fa-envelope"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Communication (User Story: Notifications aux parents) -->
+    <section class="comm-box">
+        <h3 style="color: #043d5b; margin-bottom: 15px;">Communiquer avec les parents</h3>
+        <form th:action="@{/admin/notify-all}" method="post">
+            <input type="text" name="message" class="input-comm" placeholder="Envoyer un rappel important à tous les inscrits...">
+            <button type="submit" class="btn-explorer" style="border: none; cursor: pointer;">Diffuser</button>
+        </form>
+    </section>
+
+</main>
+
+<div th:replace="~{fragments/administrateur :: bottomNav('dashboard')}"></div>
+
+</body>
+<script>
+    const modal = document.getElementById("activityModal");
+    const btn = document.getElementById("openModal");
+    const span = document.querySelector(".close");
+
+    btn.onclick = () => modal.style.display = "block";
+
+    span.onclick = () => modal.style.display = "none";
+
+    window.onclick = (event) => { if(event.target == modal) modal.style.display = "none"; }
+</script>
+
+</html>
