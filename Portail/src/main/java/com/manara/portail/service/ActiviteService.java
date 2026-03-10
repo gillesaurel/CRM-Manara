@@ -1,6 +1,6 @@
 package com.manara.portail.service;
 
-import com.manara.portail.model.Activite;
+import com.manara.portail.model.ActiviteAdmin;
 import com.manara.portail.repository.ActiviteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,15 +12,15 @@ public class ActiviteService {
     @Autowired
     private ActiviteRepository activiteRepository;
 
-    public List<Activite> getAllActivites() {
+    public List<ActiviteAdmin> getAllActivites() {
         return activiteRepository.findAll();
     }
 
-    public Activite save(Activite activite) {
+    public ActiviteAdmin save(ActiviteAdmin activite) {
         return activiteRepository.save(activite);
     }
 
-    public Activite getById(Long id) {
+    public ActiviteAdmin getById(Long id) {
         return activiteRepository.findById(id).orElse(null);
     }
 

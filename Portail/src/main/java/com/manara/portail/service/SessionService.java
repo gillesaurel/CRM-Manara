@@ -1,6 +1,6 @@
 package com.manara.portail.service;
 
-import com.manara.portail.model.Session;
+import com.manara.portail.model.SessionAdmin;
 import com.manara.portail.repository.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +12,11 @@ public class SessionService {
     @Autowired
     private SessionRepository sessionRepository;
 
-    public List<Session> getAllSessions() {
+    public List<SessionAdmin> getAllSessions() {
         return sessionRepository.findAll();
     }
 
-    public Session save(Session session) {
+    public SessionAdmin save(SessionAdmin session) {
         return sessionRepository.save(session);
     }
 }

@@ -1,7 +1,6 @@
 package com.manara.portail.controller;
 
-import com.manara.portail.model.Activite;
-import com.manara.portail.model.Session;
+import com.manara.portail.model.ActiviteAdmin;
 import com.manara.portail.service.ActiviteNotFoundException;
 import com.manara.portail.service.ActiviteService;
 import com.manara.portail.service.SessionService;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -22,13 +20,13 @@ public class AdminController {
 
     @GetMapping("/administrateur")
     public String pageAdministrateur(Model model) {
-        model.addAttribute("activite", new Activite());
+        model.addAttribute("activite", new ActiviteAdmin());
         model.addAttribute("activites", activiteService.getAllActivites());
         return "administrateur";
     }
 
     @PostMapping("/activities/save")
-    public String addActivite(@ModelAttribute Activite activite, RedirectAttributes redirectAttributes) {
+    public String addActivite(@ModelAttribute ActiviteAdmin activite, RedirectAttributes redirectAttributes) {
         activiteService.save(activite);
         redirectAttributes.addFlashAttribute("message",
                 "Activité enregistrée avec succès.");

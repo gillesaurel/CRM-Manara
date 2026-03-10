@@ -1,7 +1,6 @@
 package com.manara.portail.model;
 
 import jakarta.persistence.*;
-import com.manara.portail.model.Session;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -9,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "activites")
-public class Activite {
+public class ActiviteAdmin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,13 +30,13 @@ public class Activite {
     private LocalDateTime dateCreation = LocalDateTime.now();
 
     @OneToMany(mappedBy = "activite", cascade = CascadeType.ALL)
-    private List<Session> sessions;
+    private List<SessionAdmin> sessions;
 
-    public Activite() {
+    public ActiviteAdmin() {
 
     }
 
-    public Activite(String nom, String description, int capacite) {
+    public ActiviteAdmin(String nom, String description, int capacite) {
         this.nom = nom;
         this.description = description;
         this.capacite = capacite;
@@ -75,10 +74,10 @@ public class Activite {
         return dateCreation;
     }
 
-    public List<Session> getSessions() {
+    public List<SessionAdmin> getSessions() {
         return sessions;
     }
-    public void setSessions(List<Session> sessions) {
+    public void setSessions(List<SessionAdmin> sessions) {
         this.sessions = sessions;
     }
 

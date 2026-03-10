@@ -2,13 +2,10 @@ package com.manara.portail.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 @Entity
-public class Session {
+public class SessionAdmin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,13 +18,13 @@ public class Session {
 
     @ManyToOne
     @JoinColumn(name = "activite_id", nullable = false)
-    private Activite activite;
+    private ActiviteAdmin activite;
 
-    public Session() {
+    public SessionAdmin() {
 
     }
 
-    public Session(LocalDateTime dateDebut, LocalDateTime dateFin, Activite activite) {
+    public SessionAdmin(LocalDateTime dateDebut, LocalDateTime dateFin, ActiviteAdmin activite) {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.activite = activite;
@@ -57,11 +54,11 @@ public class Session {
         this.dateFin = dateFin;
     }
 
-    public Activite getActivite() {
+    public ActiviteAdmin getActivite() {
         return activite;
     }
 
-    public void setActivite(Activite activite) {
+    public void setActivite(ActiviteAdmin activite) {
         this.activite = activite;
     }
 }
