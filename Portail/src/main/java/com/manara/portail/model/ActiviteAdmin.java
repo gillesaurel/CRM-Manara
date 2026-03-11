@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,7 +31,15 @@ public class ActiviteAdmin {
     private LocalDateTime dateCreation = LocalDateTime.now();
 
     @OneToMany(mappedBy = "activite", cascade = CascadeType.ALL)
-    private List<SessionAdmin> sessions;
+    private List<Inscription> inscriptions =  new ArrayList<>();
+
+    public long getNbEnAttente() {
+        return inscriptions.stream().filter(Inscription::isEnAttente).count();
+    }
+
+    public long getNbInscrits() {
+        return inscriptions.stream().filter(i -> !i.isEnAttente()).count();
+    }
 
     public ActiviteAdmin() {
 
@@ -72,13 +81,6 @@ public class ActiviteAdmin {
 
     public LocalDateTime getDateCreation() {
         return dateCreation;
-    }
-
-    public List<SessionAdmin> getSessions() {
-        return sessions;
-    }
-    public void setSessions(List<SessionAdmin> sessions) {
-        this.sessions = sessions;
     }
 
     public LocalDateTime getDateDebut() {

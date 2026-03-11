@@ -2,6 +2,7 @@ package com.manara.portail.controller;
 
 import com.manara.portail.model.Role;
 import com.manara.portail.model.Utilisateur;
+import com.manara.portail.service.RoleService;
 import com.manara.portail.service.UtilisateurNotFoundException;
 import com.manara.portail.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class AuthController {
 
     @Autowired
     UtilisateurService UtilService;
+
+    @Autowired
+    private RoleService roleService;
 
     // PAGE INSCRIPTION UTILISATEUR
     @GetMapping("/register")
@@ -43,7 +47,7 @@ public class AuthController {
 
             if (utilisateur.getRole() == null) {
                 // Example: role_id = 2 for "USER"
-                Role roleUtilisateur = roleService.findByName("PARENT"); // PARENT role must exist in DB
+                Role roleUtilisateur = roleService.findByName("PARENT").orElse(null); // PARENT role must exist in DB
                 utilisateur.setRole(roleUtilisateur);
             }
 

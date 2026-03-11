@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org/">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Administration - Manara</title>
@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-<!--<div th:replace="fragments::header-admin"></div> -->
-<div th:replace="fragments/main::header"></div>
+<header th:replace="fragments/main::header"></header>
+
 <div class="bienvenue-section">
     <h1>Tableau de Bord Administrateur</h1>
 </div>
@@ -22,15 +22,15 @@
     <div class="dashboard-grid">
         <div class="stat-card">
             <h3>Activités Créées</h3>
-            <div class="value" th:text="${totalActivities ?: '12'}">1</div>
+            <div class="value" th:text="${totalActivities ?: '12'}">0</div>
         </div>
         <div class="stat-card" style="border-left-color: #fccd2c;">
             <h3>Taux de Remplissage</h3>
-            <div class="value">80%</div>
+            <div class="value">0%</div>
         </div>
         <div class="stat-card">
             <h3>En attente</h3>
-            <div class="value" th:text="${waitingListSize ?: '5'}">5</div>
+            <div class="value" th:text="${waitingListSize ?: '5'}">0</div>
         </div>
     </div>
 
@@ -45,6 +45,7 @@
                 <span class="close">&times;</span>
                 <h2>Créer une Nouvelle Activité</h2>
                 <form th:action="@{/admin/activities/save}" th:object="${activite}" method="post">
+                    <input type="hidden" th:field="*{id}" />
                     <div class="form-group">
                         <label for="nom">Nom de l'activité</label>
                         <input type="text" id="nom" th:field="*{nom}" placeholder="Ex: Atelier Peinture" required>
@@ -90,15 +91,15 @@
             <td>0</td>
             <td th:text="${act.capacite}">Capacité</td>
             <td>
-                <a th:href="@{/admin/edit/{id}(id=${act.id})}"
+                <a th:href="@{/admin/activities/edit/{id}(id=${act.id})}"
                    style="color: #4169E1;
                    margin-right: 10px;">
                     <i class="fas fa-edit"></i>
                 </a>
-                <a href="#" style="color:
-                #043d5b;"
-                th:href="@{'/activities/delete/' + ${act.getId()}}"
-                th:sct><i class="fas fa-trash"></i></a>
+                <a style="color:#ff0808;"
+                   th:href="@{/admin/activities/delete/{id}(id=${act.id})}"
+                   onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette activité ?')">
+                    <i class="fas fa-trash"></i></a>
             </td>
         </tr>
         </tbody>
@@ -115,7 +116,7 @@
 
 </main>
 
-<div th:replace="~{fragments/administrateur :: bottomNav('dashboard')}"></div>
+<footer th:replace="~{fragments/fragmentAdministrateur::bottomNav('dashboard')}"></footer>
 
 </body>
 <script>
@@ -128,6 +129,22 @@
     span.onclick = () => modal.style.display = "none";
 
     window.onclick = (event) => { if(event.target == modal) modal.style.display = "none"; }
+    if (window.location.pathname.includes('/edit/')) {
+        modal.style.display = "block";
+    }
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const alertMessage = document.querySelector('[style*="background-color: #043d5b"]');
+
+        if (alertMessage) {
+            setTimeout(() => {
+                alertMessage.style.transition = "opacity 0.5s ease";
+                alertMessage.style.opacity = "0";
+                setTimeout(() => alertMessage.remove(), 500);
+            }, 3000);
+        }
+    });
+
 </script>
 
 </html>
