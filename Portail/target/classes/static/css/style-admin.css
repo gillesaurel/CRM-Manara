@@ -43,6 +43,8 @@
 
 .admin-table thead {
     background: #043d5b;
+    border-bottom: 3px solid #fccd2c;
+
     color: white; }
 .admin-table th, .admin-table td {
     padding: 15px;

@@ -21,6 +21,7 @@ public class Utilisateur {
     private String motdepasse;
 
     @ManyToOne
+    @JoinColumn(name = "role_id")
     private Role role;
 
     // getters and setters
@@ -37,8 +38,8 @@ public class Utilisateur {
         this.motdepasse = motdepasse;
     }
 
-    public Utilisateur(long id, String nom, String prenom,String email, String motdepasse) {
-        this.id = id;
+    public Utilisateur(String nom, String prenom,String email, String motdepasse, Role role) {
+
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
@@ -78,13 +79,9 @@ public class Utilisateur {
         this.email = email;
     }
 
-    public Role getRole() {
-        return role;
-    }
+    public Role getRole() {return role;}
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
+    public void setRole(Role role) {this.role = role;}
 
 
     public String getMotdepasse() {
