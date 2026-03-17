@@ -24,6 +24,8 @@ public class UtilisateurService {
         return utilisateurRepository.save(utilisateur);
     }
 
+    public Utilisateur connecter(String email, String password){return utilisateurRepository.getUtilisateurByEmailAndMotDePasse(email,password);}
+
 
 
 }

@@ -29,7 +29,7 @@ public class AuthController {
     // PAGE INSCRIPTION UTILISATEUR
     @GetMapping("/register")
     public String pageInscription(Model model) {
-        model.addAttribute("utilisateur",new Utilisateur());
+        model.addAttribute("utilisateur", new Utilisateur());
         return "inscription";
     }
 
@@ -52,9 +52,33 @@ public class AuthController {
         }
     }
 
-
-@GetMapping("/login")
-    public String pageConnexion(){
+    @GetMapping("/login")
+    public String pageConnexion(Model model) {
+        model.addAttribute("utilisateur", new Utilisateur());
         return "connexion";
+    }
+
+
+    @PostMapping("/login/save")
+    public String connecterUtilisateur(
+            @ModelAttribute("utilisateur") Utilisateur utilisateur,
+            RedirectAttributes redirectAttributes
+    ) throws IOException {
+        try {
+
+            Utilisateur tempUtilisateur = UtilService.connecter(
+                    utilisateur.getEmail(),
+                    utilisateur.getMotdepasse()
+            );
+
+            if (utilisateur.getEmail().equals(tempUtilisateur.getEmail())) {
+                return "redirect:/";
+            }
+
+            return "redirect:/login";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return "redirect:/login";
+        }
     }
 }

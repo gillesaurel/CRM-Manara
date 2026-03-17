@@ -31,6 +31,11 @@ public class Utilisateur {
     public Utilisateur() {
     }
 
+    public Utilisateur(String email, String motdepasse) {
+        this.email = email;
+        this.motdepasse = motdepasse;
+    }
+
     public Utilisateur( String nom, String prenom,String email, String motdepasse) {
         this.nom = nom;
         this.prenom = prenom;
