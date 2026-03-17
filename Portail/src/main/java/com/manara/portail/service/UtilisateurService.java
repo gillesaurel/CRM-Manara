@@ -1,15 +1,12 @@
 package com.manara.portail.service;
 
 import com.manara.portail.model.Utilisateur;
-import com.manara.portail.repos.UtilisateurRepository;
+import com.manara.portail.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 
 @Service
@@ -26,6 +23,8 @@ public class UtilisateurService {
     public Utilisateur enregistrer(Utilisateur utilisateur){
         return utilisateurRepository.save(utilisateur);
     }
+
+    public Utilisateur connecter(String email, String password){return utilisateurRepository.getUtilisateurByEmailAndMotDePasse(email,password);}
 
 
 

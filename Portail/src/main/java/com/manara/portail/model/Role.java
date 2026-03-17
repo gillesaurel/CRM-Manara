@@ -2,6 +2,8 @@ package com.manara.portail.model;
 
 import jakarta.persistence.*;
 
+
+
 @Entity
 @Table(name = "role")
 public class  Role {
@@ -12,11 +14,14 @@ public class  Role {
     String nom;
     String description;
 
+
+    // DEFAULT
     public Role() {
+
     }
 
+    // SPECIFIC
     public Role( String nom, String description) {
-
         this.nom = nom;
         this.description = description;
     }
