@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Mes inscriptions - Manara</title>
+</head>
+<body>
+<header th:replace="fragments::header"></header>
+
+<main class="dashboard-container">
+    <div class="page-header">
+        <h1>Mes inscriptions</h1>
+        <a th:href="@{/parent/activites}" class="btn-add">+ Nouvelle inscription</a>
+    </div>
+
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <!-- Inscriptions actives -->
+    <h2>Inscriptions actives</h2>
+    <div th:if="${inscriptions.isEmpty()}" class="empty-state">
+        <p>Vous n'avez aucune inscription active</p>
+        <a th:href="@{/parent/activites}" class="btn-primary">Explorer les activités</a>
+    </div>
+
+    <div th:unless="${inscriptions.isEmpty()}" class="inscriptions-table-container">
+        <table class="inscriptions-table">
+            <thead>
+            <tr>
+                <th>Enfant</th>
+                <th>Activité</th>
+                <th>Date</th>
+                <th>Horaire</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="inscription : ${inscriptions}">
+                <td th:text="${inscription.enfant.prenom} + ' ' + ${inscription.enfant.nom}">Jean Dupont</td>
+                <td th:text="${inscription.session.activite.nom}">Natation</td>
+                <td th:text="${#dates.format(inscription.session.date, 'dd/MM/yyyy')}">15/01/2024</td>
+                <td th:text="${inscription.session.heureDebut} + ' - ' + ${inscription.session.heureFin}">10h - 11h</td>
+                <td>
+                            <span class="badge" th:classappend="'badge-' + ${inscription.statut.toLowerCase()}"
+                                  th:text="${inscription.statut}">Confirmé</span>
+                </td>
+                <td>
+                    <form th:action="@{/parent/inscription/{id}/annuler(id=${inscription.id})}"
+                          method="post"
+                          onsubmit="return confirm('Annuler cette inscription ?')">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <button type="submit" class="btn-small btn-danger">Annuler</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Historique (inscriptions passées) -->
+    <h2 class="mt-4">Historique</h2>
+    <div th:if="${inscriptionsPassees.isEmpty()}" class="empty-state small">
+        <p>Aucun historique d'inscription</p>
+    </div>
+
+    <div th:unless="${inscriptionsPassees.isEmpty()}" class="inscriptions-table-container">
+        <table class="inscriptions-table">
+            <thead>
+            <tr>
+                <th>Enfant</th>
+                <th>Activité</th>
+                <th>Date</th>
+                <th>Statut</th>
+                <th>Présence</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="inscription : ${inscriptionsPassees}">
+                <td th:text="${inscription.enfant.prenom} + ' ' + ${inscription.enfant.nom}">Jean Dupont</td>
+                <td th:text="${inscription.session.activite.nom}">Natation</td>
+                <td th:text="${#dates.format(inscription.session.date, 'dd/MM/yyyy')}">15/01/2024</td>
+                <td>
+                            <span class="badge" th:classappend="'badge-' + ${inscription.statut.toLowerCase()}"
+                                  th:text="${inscription.statut}">Terminé</span>
+                </td>
+                <td>
+                    <span th:if="${inscription.presence.present}" class="badge badge-success">Présent</span>
+                    <span th:unless="${inscription.presence.present}" class="badge badge-danger">Absent</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer th:replace="fragments::footer"></footer>
+</body>
+</html>

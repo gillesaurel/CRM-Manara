@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <title>Mes factures - Manara</title>
+</head>
+<body>
+<header th:replace="fragments::header"></header>
+
+<main class="dashboard-container">
+  <div class="page-header">
+    <h1>Historique des factures</h1>
+    <p class="page-subtitle">Consultez et téléchargez vos factures</p>
+  </div>
+
+  <!-- Résumé des paiements -->
+  <div class="payment-summary">
+    <div class="summary-card">
+      <span class="summary-label">Total dépensé</span>
+      <span class="summary-value">350 €</span>
+    </div>
+    <div class="summary-card">
+      <span class="summary-label">Factures impayées</span>
+      <span class="summary-value">0 €</span>
+    </div>
+    <div class="summary-card">
+      <span class="summary-label">Dernier paiement</span>
+      <span class="summary-value">15/01/2024</span>
+    </div>
+  </div>
+
+  <!-- Liste des factures -->
+  <div class="factures-list">
+    <table class="factures-table">
+      <thead>
+      <tr>
+        <th>N° Facture</th>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Montant</th>
+        <th>Statut</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>FAC-2024-001</td>
+        <td>15/01/2024</td>
+        <td>Inscription Natation - Léo (janvier)</td>
+        <td>0 $</td>
+        <td><span class="badge badge-success">Payée</span></td>
+        <td>
+          <a href="#" class="btn-icon download">📥</a>
+          <a href="#" class="btn-icon view">👁️</a>
+        </td>
+      </tr>
+      <tr>
+        <td>FAC-2024-002</td>
+        <td>01/02/2024</td>
+        <td>Inscription Danse - Emma (février)</td>
+        <td>0 $</td>
+        <td><span class="badge badge-warning">En attente</span></td>
+        <td>
+          <a href="#" class="btn-icon download">📥</a>
+          <a href="#" class="btn-icon view">👁️</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Options de paiement -->
+  <div class="payment-options">
+    <h2>Mode de paiement</h2>
+    <div class="payment-methods">
+      <div class="payment-method">
+        <input type="radio" name="payment" id="cb" checked>
+        <label for="cb">Carte bancaire</label>
+      </div>
+      <div class="payment-method">
+        <input type="radio" name="payment" id="paypal">
+        <label for="paypal">PayPal</label>
+      </div>
+    </div>
+    <button class="btn-pay">Payer les factures sélectionnées</button>
+  </div>
+</main>
+
+<footer th:replace="fragments::footer"></footer>
+</body>
+</html>
