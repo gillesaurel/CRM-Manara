@@ -1,8 +1,8 @@
+// fait par Manu Charland-Rivard
+
 package com.manara.portail.model;
 
 import jakarta.persistence.*;
-
-
 
 @Entity
 @Table(name = "role")

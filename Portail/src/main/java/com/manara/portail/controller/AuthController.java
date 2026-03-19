@@ -1,3 +1,5 @@
+// FAIT PAR MANU, GILLES ET JOSE
+
 package com.manara.portail.controller;
 
 import com.manara.portail.model.Role;
@@ -52,6 +54,7 @@ public class AuthController {
         }
     }
 
+    // PAGE CONNEXION UTILISATEUR
     @GetMapping("/login")
     public String pageConnexion(Model model) {
         model.addAttribute("utilisateur", new Utilisateur());

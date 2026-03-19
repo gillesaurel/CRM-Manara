@@ -1,3 +1,5 @@
+// fait par Gilles Aurel
+
 package com.manara.portail.model;
 
 import jakarta.persistence.*;

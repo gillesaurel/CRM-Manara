@@ -1,3 +1,5 @@
+// fait par Manu Charland-Rivard
+
 package com.manara.portail.service;
 
 import com.manara.portail.model.Utilisateur;
