@@ -8,17 +8,21 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+
+
 
 @WebMvcTest(AuthController.class)
 public class AuthControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;    @Autowired
-    UtilisateurService UtilService;
+    private MockMvc mockMvc;    
     @Autowired
-    RoleService RoleService;
+    private UtilisateurService UtilService;
+    @Autowired
+    private RoleService RoleService;
 
-    private Utilisateur utilisateur = new Utilisateur("Prenom", "Nom", 5555555555, "email@test.com", "motdepasse")
+    private Utilisateur utilisateur = new Utilisateur("Prenom", "Nom", "5555555555", "email@test.com", "motdepasse")
 
 
     @Test
