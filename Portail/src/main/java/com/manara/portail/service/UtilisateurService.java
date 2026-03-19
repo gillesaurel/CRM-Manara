@@ -20,7 +20,10 @@ public class UtilisateurService {
         return ( List<Utilisateur> ) utilisateurRepository.findAll();
     }
 
-    public Utilisateur enregistrer(Utilisateur utilisateur){
+    public Utilisateur enregistrer(Utilisateur utilisateur)throws Exception {
+        if (utilisateurRepository.findByEmail(utilisateur.getEmail()) != null) {
+            throw new Exception("Email déjà utilisé !");
+        }
         return utilisateurRepository.save(utilisateur);
     }
 

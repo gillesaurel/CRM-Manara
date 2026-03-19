@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UtilisateurRepository extends JpaRepository<Utilisateur, Integer>  {
+public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long>  {
     @Query("SELECT u FROM Utilisateur u WHERE u.email = :email")
     public Utilisateur getUtilisateurByEmail(@Param("email") String email);
 
@@ -30,5 +30,5 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Intege
     List<Utilisateur> findByRoleNom(String nomRole);
     // Recherche par nom equale (utilisation de la convention de nommage)
     public Utilisateur findByNomEquals(String nom);
-
+    Utilisateur findByEmail(String email);
 }

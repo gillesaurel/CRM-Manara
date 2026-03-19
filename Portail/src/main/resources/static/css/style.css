@@ -454,3 +454,16 @@ footer {
 .bottom-spacer{
     height: 74px;
 }
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    padding: 20px;
+    border-radius: 12px;
+}
+.form.formulaire-section {
+    padding: 20px;
+    height: auto;
+}
