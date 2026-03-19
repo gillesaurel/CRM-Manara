@@ -79,10 +79,10 @@ public class AuthController {
 
             if (tempUtilisateur != null) {
 
-                response.addCookie(createCookie("email",utilisateur.getEmail()))
-                response.addCookie(createCookie("role", utilisateur.getRole().getNom()));
-                response.addCookie(createCookie("prenom", utilisateur.getPrenom()));
-                response.addCookie(createCookie("nom", utilisateur.getNom()));
+                response.addCookie(createCookie("email",tempUtilisateur.getEmail()));
+                response.addCookie(createCookie("role", tempUtilisateur.getRole().getNom()));
+                response.addCookie(createCookie("prenom", tempUtilisateur.getPrenom()));
+                response.addCookie(createCookie("nom", tempUtilisateur.getNom()));
 
                 return "redirect:/";
             }
