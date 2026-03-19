@@ -13,7 +13,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AuthControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    private MockMvc mockMvc;    @Autowired
+    UtilisateurService UtilService;
+    @Autowired
+    RoleService RoleService;
+
     private Utilisateur utilisateur = new Utilisateur("Prenom", "Nom", 5555555555, "email@test.com", "motdepasse")
 
 
