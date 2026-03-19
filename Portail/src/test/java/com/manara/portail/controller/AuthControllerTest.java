@@ -16,20 +16,18 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 public class AuthControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;    
-    @Autowired
-    private UtilisateurService UtilService;
-    @Autowired
-    private RoleService RoleService;
+    private MockMvc mockMvc;
 
-    private Utilisateur utilisateur = new Utilisateur("Prenom", "Nom", "5555555555", "email@test.com", "motdepasse")
+    @MockBean
+    private UtilisateurService utilService;
 
+    @MockBean
+    private RoleService roleService;
 
     @Test
-    public void enregistrerUtilisateur() {
-        utilisateur.setRole(RoleService.findByName("PARENT"));
-        UtilService.enregistrer(utilisateur);
-
-        return "redirect:/";
+    public void testPageInscription() throws Exception {
+        mockMvc.perform(get("/register"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("inscription"));
     }
 }
