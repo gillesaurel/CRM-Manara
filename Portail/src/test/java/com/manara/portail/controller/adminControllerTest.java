@@ -20,6 +20,7 @@ class adminControllerTest {
                 .andExpect(view().name("administrateur"));
     }
 
+
 }
 
 
