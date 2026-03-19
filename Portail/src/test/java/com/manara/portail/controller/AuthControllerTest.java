@@ -14,9 +14,14 @@ public class AuthControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+    private Utilisateur utilisateur = new Utilisateur("Prenom", "Nom", 5555555555, "email@test.com", "motdepasse")
 
-    //@Test
-   // void enregistrerUtilisateur() {
 
-    //}
+    @Test
+    public void enregistrerUtilisateur() {
+        utilisateur.setRole(RoleService.findByName("PARENT"));
+        UtilService.enregistrer(utilisateur);
+
+        return "redirect:/";
+    }
 }
