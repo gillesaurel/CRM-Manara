@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import jakarta.servlet.http.Cookie;
 
 import java.io.IOException;
 
@@ -74,7 +75,15 @@ public class AuthController {
                     utilisateur.getMotdepasse()
             );
 
-            if (utilisateur.getEmail().equals(tempUtilisateur.getEmail())) {
+            if (utilisateur.getEmail().equals(tempUtilisateur.getEmail()) || 
+                utilisateur.getMotdepasse().equals(tempUtilisateur.getMotdepasse())
+                ) {
+
+                response.createCookie("email",utilisateur.getEmail());
+                response.createCookie("role", utilisateur.getRole());
+                response.createCookie("prenom", utilisateur.getPrenom());
+                response.createCookie("nom", utilisateur.getNom());
+
                 return "redirect:/";
             }
 
@@ -84,4 +93,15 @@ public class AuthController {
             return "redirect:/login";
         }
     }
+
+    // creer un cookie utilisateur lorsque l'utilisateur se connecte
+    private Cookie createCookie(String name, String value) {
+        Cookie cookie = new Cookie(name, value);
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24 * 7);
+        cookie.setHttpOnly(true);
+        return cookie;
+    }
+
+
 }
