@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
@@ -66,21 +67,22 @@ public class AuthController {
     @PostMapping("/login/save")
     public String connecterUtilisateur(
             @ModelAttribute("utilisateur") Utilisateur utilisateur,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            HttpServletResponse response
     ) throws IOException {
         try {
 
-            Utilisateur tempUtilisateur = UtilService.connecter(
+            Utilisateur tempUtilisateur = UtilService.getUtilisateurByEmailAndMotDePasse(
                     utilisateur.getEmail(),
                     utilisateur.getMotdepasse()
             );
 
-            if (if tempUtilisateur != null) {
+            if (tempUtilisateur != null) {
 
-                response.createCookie("email",utilisateur.getEmail());
-                response.createCookie("role", utilisateur.getRole());
-                response.createCookie("prenom", utilisateur.getPrenom());
-                response.createCookie("nom", utilisateur.getNom());
+                response.addCookie(createCookie("email",utilisateur.getEmail()))
+                response.addCookie(createCookie("role", utilisateur.getRole().getNom()));
+                response.addCookie(createCookie("prenom", utilisateur.getPrenom()));
+                response.addCookie(createCookie("nom", utilisateur.getNom()));
 
                 return "redirect:/";
             }
