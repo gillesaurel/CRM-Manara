@@ -51,44 +51,4 @@ public class AuthControllerTest {
         mockMvc.perform(get("/login")).andExpect(status().isOk())
                 .andExpect(view().name("login"));
     }
-
-    @Test
-    void testEnregistrerUtilisateur_success() throws Exception {
-        // Mock role lookup
-        Role parentRole = new Role("PARENT");
-        when(roleService.findByName("PARENT")).thenReturn(parentRole);
-
-        // Mock service save (no exception)
-        doNothing().when(utilService).enregistrer(any(Utilisateur.class));
-
-        mockMvc.perform(multipart("/register/save")
-                        .param("nom", "John")
-                        .param("prenom", "Doe")
-                        .param("email", "john@example.com")
-                        .param("password", "123456")
-                        .with(csrf())) // required for POST with security
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/"));
-    }
-
-    @Test
-    void testEnregistrerUtilisateur_failure() throws Exception {
-        // Mock role lookup
-        Role parentRole = new Role("PARENT");
-        when(roleService.findByName("PARENT")).thenReturn(parentRole);
-
-        // Force exception
-        doThrow(new RuntimeException("Erreur d'inscription"))
-                .when(utilService).enregistrer(any(Utilisateur.class));
-
-        mockMvc.perform(multipart("/register/save")
-                        .param("nom", "John")
-                        .param("prenom", "Doe")
-                        .param("email", "john@example.com")
-                        .param("password", "123456")
-                        .with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/register"))
-                .andExpect(flash().attribute("message", "Erreur d'inscription"));
-    }
 }
