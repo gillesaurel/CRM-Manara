@@ -1,3 +1,5 @@
+// fait par Manu Charland-Rivard
+
 package com.manara.portail.controller;
 
 import org.springframework.stereotype.Controller;
