@@ -75,9 +75,7 @@ public class AuthController {
                     utilisateur.getMotdepasse()
             );
 
-            if (utilisateur.getEmail().equals(tempUtilisateur.getEmail()) || 
-                utilisateur.getMotdepasse().equals(tempUtilisateur.getMotdepasse())
-                ) {
+            if (if tempUtilisateur != null) {
 
                 response.createCookie("email",utilisateur.getEmail());
                 response.createCookie("role", utilisateur.getRole());
@@ -103,5 +101,5 @@ public class AuthController {
         return cookie;
     }
 
-
+   
 }
