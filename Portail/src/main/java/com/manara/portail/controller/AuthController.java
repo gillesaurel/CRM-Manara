@@ -7,12 +7,10 @@ import com.manara.portail.model.Utilisateur;
 import com.manara.portail.service.RoleService;
 import com.manara.portail.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.Cookie;
@@ -25,10 +23,13 @@ import java.io.IOException;
 public class AuthController {
 
     @Autowired
-    UtilisateurService UtilService;
+    RoleService RoleService;
 
     @Autowired
-    RoleService RoleService;
+    private UtilisateurService utilisateurService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // PAGE INSCRIPTION UTILISATEUR
     @GetMapping("/register")
@@ -43,12 +44,9 @@ public class AuthController {
             @ModelAttribute("utilisateur") Utilisateur utilisateur,
             @RequestParam(value = "fileImage", required = false) MultipartFile fileImage,
             RedirectAttributes redirectAttributes
-    ) throws IOException {
+    ) {
         try {
-
-            utilisateur.setRole(RoleService.findByName("PARENT"));
-            UtilService.enregistrer(utilisateur);
-
+            utilisateurService.enregistrer(utilisateur);
             return "redirect:/";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
@@ -63,7 +61,7 @@ public class AuthController {
         return "connexion";
     }
 
-
+/*
     @PostMapping("/login/save")
     public String connecterUtilisateur(
             @ModelAttribute("utilisateur") Utilisateur utilisateur,
@@ -92,7 +90,7 @@ public class AuthController {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/login";
         }
-    }
+    }*/
 
     // creer un cookie utilisateur lorsque l'utilisateur se connecte
     private Cookie createCookie(String name, String value) {

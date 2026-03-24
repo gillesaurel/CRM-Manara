@@ -23,6 +23,9 @@ public class Utilisateur {
     private String email;
     @Column(nullable = false)
     private String motdepasse;
+    @Column(nullable = false)
+    @Transient
+    private String confirmMotdepasse;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
@@ -40,19 +43,21 @@ public class Utilisateur {
         this.motdepasse = motdepasse;
     }
 
-    public Utilisateur( String nom, String prenom,String email, String motdepasse) {
+    public Utilisateur( String nom, String prenom,String email, String motdepasse, String confirmMotdepasse) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.motdepasse = motdepasse;
+        this.confirmMotdepasse = confirmMotdepasse;
     }
 
-    public Utilisateur(String nom, String prenom,String email, String motdepasse, Role role) {
+    public Utilisateur(String nom, String prenom,String email, String motdepasse,String confirmMotdepasse, Role role) {
 
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.motdepasse = motdepasse;
+        this.confirmMotdepasse = confirmMotdepasse;
         this.role = role;
     }
 
@@ -99,6 +104,13 @@ public class Utilisateur {
 
     public void setMotdepasse(String motdepasse) {
         this.motdepasse = motdepasse;
+    }
+
+    public String getConfirmMotdepasse() {
+        return confirmMotdepasse;
+    }
+    public void setConfirmMotdepasse(String confirmMotdepasse) {
+        this.confirmMotdepasse = confirmMotdepasse;
     }
 
 }

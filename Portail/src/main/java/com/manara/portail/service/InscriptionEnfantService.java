@@ -12,15 +12,17 @@ import org.springframework.stereotype.Service;
 public class InscriptionEnfantService {
     @Autowired
     private InscriptionEnfantRepository inscriptionRepository;
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     private ActiviteRepository activiteRepository;
-    public InscriptionEnfant InscriptionEnfant(String nom, Long activite_id, Utilisateur parent) {
+    public InscriptionEnfant inscriptionEnfant(String nom, Long activite_id, Utilisateur parent) {
         ActiviteAdmin activite = activiteRepository.findById(activite_id).orElseThrow(
-                () -> new ActiviteIntrouvableException("Le activite n'existe pas")
+                () -> new ActiviteIntrouvableException("L'activité n'existe pas")
         );
         if (activite.getNbInscrits() >= activite.getCapacite()) {
-            throw new ActiviteDejaFullException("Le activite n'existe pas");
+            throw new ActiviteDejaFullException("L'activité est complète");
         }
 
         InscriptionEnfant inscriptionEnfant = new InscriptionEnfant();
@@ -28,6 +30,13 @@ public class InscriptionEnfantService {
         inscriptionEnfant.setUtilisateur(parent);
         inscriptionEnfant.setNomEnfant(nom);
         inscriptionEnfant.setEnAttente(false);
+
+        emailService.sendEmail(
+                parent.getEmail(),
+                "Confirmation inscription",
+                "Votre enfant est inscrit à l'activité " + activite.getNom() + "qui aura lieu le "
+                + activite.getDateDebut()
+        );
 
         return inscriptionRepository.save(inscriptionEnfant);
     }

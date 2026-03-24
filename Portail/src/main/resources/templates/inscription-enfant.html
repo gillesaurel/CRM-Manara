@@ -3,9 +3,13 @@
 <head>
   <title>Inscription enfant</title>
   <meta charset="UTF-8">
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/styleInscriptionEnfant.css}">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 <body>
+<header th:replace="fragments/main::header"></header>
+<div class="container">
 
 <h2>Inscrire un enfant à une activité</h2>
 
@@ -14,7 +18,7 @@
   <p th:text="${message}" style="color: green;"></p>
 </div>
 
-<form th:action="@{/inscriptions/save}" method="post">
+<form th:action="@{/inscription-enfant/save}" method="post">
 
   <!-- ENFANT -->
   <label>Nom de l'enfant :</label>
@@ -39,6 +43,7 @@
   <button type="submit">Inscrire</button>
 
 </form>
-
+</div>
+<div th:replace="~{fragments/parent :: bottomNav('dashboard')}"></div>
 </body>
 </html>

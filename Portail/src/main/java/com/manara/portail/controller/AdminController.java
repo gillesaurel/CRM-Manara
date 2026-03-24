@@ -7,9 +7,11 @@ import com.manara.portail.model.Inscription;
 import com.manara.portail.service.ActiviteNotFoundException;
 import com.manara.portail.service.ActiviteService;
 import com.manara.portail.service.SessionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -34,7 +36,15 @@ public class AdminController {
     }
 
     @PostMapping("/activities/save")
-    public String saveOrUpdateActivite(@ModelAttribute ActiviteAdmin activite, RedirectAttributes redirectAttributes) {
+    public String saveOrUpdateActivite(
+            @Valid @ModelAttribute ActiviteAdmin activite,
+            BindingResult resulta,
+            RedirectAttributes redirectAttributes,
+            Model model) {
+        if(resulta.hasErrors()) {
+            model.addAttribute("activite", activiteService.getAllActivites());
+            return "administrateur";
+        }
         activiteService.save(activite);
         redirectAttributes.addFlashAttribute("message",
                 "Activité enregistrée avec succès.");
@@ -55,10 +65,9 @@ public class AdminController {
     public String removeActivite(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             activiteService.deleteById(id);
-            redirectAttributes.addFlashAttribute("message", "Activité supprimé avec succès.");
-        } catch (ActiviteNotFoundException ex) {
-            redirectAttributes.addFlashAttribute("message", "Activité introuvable.");
+            return "success";
+        } catch (Exception e) {
+            return "error";
         }
-        return "redirect:/admin/administrateur";
     }
 }

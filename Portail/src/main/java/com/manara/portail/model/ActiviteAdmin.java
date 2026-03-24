@@ -3,6 +3,7 @@
 package com.manara.portail.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -17,16 +18,19 @@ public class ActiviteAdmin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 150)
+    @NotBlank
+    @Size(min = 3, max = 100)
     private String nom;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Min(1)
     @Column(nullable = false)
     private int capacite;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @NotNull
     private LocalDateTime dateDebut;
 
     @Column(name = "date_creation")

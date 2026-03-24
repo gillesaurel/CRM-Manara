@@ -6,7 +6,6 @@ import com.manara.portail.repository.UtilisateurRepository;
 import com.manara.portail.service.InscriptionEnfantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,23 +22,21 @@ public class InscriptionEnfantController {
     @Autowired
     private InscriptionEnfantService inscriptionEnfantService;
 
-    @GetMapping("inscriptionEnfant")
+    @GetMapping("/inscription-enfant")
     public String afficherInscriptionEnfant(Model model) {
         model.addAttribute("activites", this.activiteRepository.findAll());
-        return "inscriptionEnfant";
+        return "inscription-enfant";
     }
 
-    @PostMapping("/inscriptionEnfant/save")
+    @PostMapping("/inscription-enfant/save")
     public String saveInscriptionEnfant(@RequestParam String nomEnfant,
-                                        @RequestParam Long activite_id,
+                                        @RequestParam ("activiteId") Long activiteId,
                                         Authentication authentication,
                                         RedirectAttributes redirectAttributes) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        assert auth != null;
-        String email = auth.getName();
+        String email = authentication.getName();
         Utilisateur parent = utilisateurRepository.findByEmail(email);
-        inscriptionEnfantService.InscriptionEnfant(nomEnfant, activite_id, parent);
+        inscriptionEnfantService.inscriptionEnfant(nomEnfant, activiteId, parent);
         redirectAttributes.addFlashAttribute("message", "Inscription confirmée !");
-        return "redirect:/index";
+        return "redirect:/";
     }
 }

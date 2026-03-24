@@ -2,6 +2,8 @@ package com.manara.portail.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "inscription_enfant")
@@ -10,6 +12,8 @@ public class InscriptionEnfant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Size(min = 3, max = 100)
     private String nomEnfant;
 
     private boolean enAttente;
