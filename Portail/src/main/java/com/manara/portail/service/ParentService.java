@@ -3,9 +3,13 @@ package com.manara.portail.service;
 import com.manara.portail.dto.ParentDTO;
 import com.manara.portail.dto.EnfantDTO;
 import com.manara.portail.model.Parent;
-import com.manara.portail.model.Enfant;
+import com.manara.portail.model.EnfantParent;
+import com.manara.portail.model.Utilisateur;
+import com.manara.portail.model.Role;
 import com.manara.portail.repository.ParentRepository;
-import com.manara.portail.repository.EnfantRepository;
+import com.manara.portail.repository.EnfantParentRepository;
+import com.manara.portail.repository.UtilisateurRepository;
+import com.manara.portail.repository.RoleRepository;
 import com.manara.portail.exception.ResourceNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,14 +23,20 @@ import java.util.stream.Collectors;
 public class ParentService {
 
     private final ParentRepository parentRepository;
-    private final EnfantRepository enfantRepository;
+    private final EnfantParentRepository enfantRepository;
+    private final UtilisateurRepository utilisateurRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     public ParentService(ParentRepository parentRepository,
-                         EnfantRepository enfantRepository,
+                         EnfantParentRepository enfantRepository,
+                         UtilisateurRepository utilisateurRepository,
+                         RoleRepository roleRepository,
                          PasswordEncoder passwordEncoder) {
         this.parentRepository = parentRepository;
         this.enfantRepository = enfantRepository;
+        this.utilisateurRepository = utilisateurRepository;
+        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -34,17 +44,37 @@ public class ParentService {
 
     @Transactional
     public Parent inscrireParent(ParentDTO parentDTO) {
-        // Vérifier si l'email existe déjà
         if (parentRepository.existsByEmail(parentDTO.getEmail())) {
             throw new RuntimeException("Un compte avec cet email existe déjà");
         }
 
+        // Récupérer le rôle PARENT
+        Role parentRole = roleRepository.findByNom("PARENT");
+        if (parentRole == null) {
+            throw new RuntimeException("Le rôle PARENT n'existe pas dans la base de données");
+        }
+
+        // Créer l'utilisateur associé avec tous les champs
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setNom(parentDTO.getNom());
+        utilisateur.setPrenom(parentDTO.getPrenom());
+        utilisateur.setEmail(parentDTO.getEmail());
+        utilisateur.setTelephone(parentDTO.getTelephone());
+        utilisateur.setMotdepasse(passwordEncoder.encode(parentDTO.getMotDePasse()));
+        utilisateur.setAdresse(parentDTO.getAdresse());
+        utilisateur.setVille(parentDTO.getVille());
+        utilisateur.setCodePostal(parentDTO.getCodePostal());
+        utilisateur.setTypeLien(parentDTO.getTypeLien());
+        utilisateur.setRole(parentRole);
+        utilisateur = utilisateurRepository.save(utilisateur);
+
+        // Créer le parent lié à l'utilisateur
         Parent parent = new Parent();
+        parent.setUtilisateur(utilisateur);
         parent.setlNom(parentDTO.getNom());
         parent.setpPrenom(parentDTO.getPrenom());
         parent.setEmail(parentDTO.getEmail());
         parent.setTelephone(parentDTO.getTelephone());
-        parent.setMotDePasseHash(passwordEncoder.encode(parentDTO.getMotDePasse()));
         parent.setAdresse(parentDTO.getAdresse());
         parent.setVille(parentDTO.getVille());
         parent.setCodePostale(parentDTO.getCodePostal());
@@ -56,8 +86,7 @@ public class ParentService {
 
     @Transactional
     public Parent mettreAJourParent(Integer id, ParentDTO parentDTO) {
-        Parent parent = parentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Parent non trouvé avec id: " + id));
+        Parent parent = getParentParId(id);
 
         parent.setlNom(parentDTO.getNom());
         parent.setpPrenom(parentDTO.getPrenom());
@@ -67,28 +96,50 @@ public class ParentService {
         parent.setCodePostale(parentDTO.getCodePostal());
         parent.setTypeLien(parentDTO.getTypeLien());
 
+        // Mettre à jour également l'utilisateur associé
+        Utilisateur utilisateur = parent.getUtilisateur();
+        if (utilisateur != null) {
+            utilisateur.setNom(parentDTO.getNom());
+            utilisateur.setPrenom(parentDTO.getPrenom());
+            utilisateur.setTelephone(parentDTO.getTelephone());
+            utilisateur.setAdresse(parentDTO.getAdresse());
+            utilisateur.setVille(parentDTO.getVille());
+            utilisateur.setCodePostal(parentDTO.getCodePostal());
+            utilisateur.setTypeLien(parentDTO.getTypeLien());
+            utilisateurRepository.save(utilisateur);
+        }
+
         return parentRepository.save(parent);
     }
 
     @Transactional
     public void changerMotDePasse(Integer id, String ancienMotDePasse, String nouveauMotDePasse) {
         Parent parent = getParentParId(id);
+        Utilisateur utilisateur = parent.getUtilisateur();
 
-        // Vérifier l'ancien mot de passe
-        if (!passwordEncoder.matches(ancienMotDePasse, parent.getMotDePasseHash())) {
+        if (utilisateur == null) {
+            throw new RuntimeException("Utilisateur non trouvé pour ce parent");
+        }
+
+        if (!passwordEncoder.matches(ancienMotDePasse, utilisateur.getMotdepasse())) {
             throw new RuntimeException("Ancien mot de passe incorrect");
         }
 
-        // Changer le mot de passe
-        parent.setMotDePasseHash(passwordEncoder.encode(nouveauMotDePasse));
-        parentRepository.save(parent);
+        utilisateur.setMotdepasse(passwordEncoder.encode(nouveauMotDePasse));
+        utilisateurRepository.save(utilisateur);
     }
 
     @Transactional
     public void reinitialiserMotDePasse(String email, String nouveauMotDePasse) {
         Parent parent = getParentParEmail(email);
-        parent.setMotDePasseHash(passwordEncoder.encode(nouveauMotDePasse));
-        parentRepository.save(parent);
+        Utilisateur utilisateur = parent.getUtilisateur();
+
+        if (utilisateur == null) {
+            throw new RuntimeException("Utilisateur non trouvé pour ce parent");
+        }
+
+        utilisateur.setMotdepasse(passwordEncoder.encode(nouveauMotDePasse));
+        utilisateurRepository.save(utilisateur);
     }
 
     public Parent getParentParEmail(String email) {
@@ -99,6 +150,11 @@ public class ParentService {
     public Parent getParentParId(Integer id) {
         return parentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Parent non trouvé avec id: " + id));
+    }
+
+    public Parent getParentParUtilisateurId(Long utilisateurId) {
+        return parentRepository.findByUtilisateurId(utilisateurId)
+                .orElseThrow(() -> new ResourceNotFoundException("Parent non trouvé pour l'utilisateur id: " + utilisateurId));
     }
 
     public List<Parent> getAllParents() {
@@ -118,6 +174,13 @@ public class ParentService {
         Parent parent = getParentParId(id);
         parent.setActif(true);
         parentRepository.save(parent);
+
+        Utilisateur utilisateur = parent.getUtilisateur();
+        if (utilisateur != null) {
+            // Si l'utilisateur a un champ actif, le mettre à jour
+            // utilisateur.setActif(true);
+            utilisateurRepository.save(utilisateur);
+        }
     }
 
     @Transactional
@@ -125,15 +188,27 @@ public class ParentService {
         Parent parent = getParentParId(id);
         parent.setActif(false);
         parentRepository.save(parent);
+
+        Utilisateur utilisateur = parent.getUtilisateur();
+        if (utilisateur != null) {
+            // Si l'utilisateur a un champ actif, le mettre à jour
+            // utilisateur.setActif(false);
+            utilisateurRepository.save(utilisateur);
+        }
     }
 
     @Transactional
     public void supprimerParent(Integer id) {
         Parent parent = getParentParId(id);
 
-        // Vérifier si le parent a des enfants
         if (!parent.getEnfants().isEmpty()) {
             throw new RuntimeException("Impossible de supprimer un parent qui a des enfants associés");
+        }
+
+        // Supprimer d'abord l'utilisateur associé
+        Utilisateur utilisateur = parent.getUtilisateur();
+        if (utilisateur != null) {
+            utilisateurRepository.delete(utilisateur);
         }
 
         parentRepository.delete(parent);
@@ -144,17 +219,16 @@ public class ParentService {
     }
 
     public long getNombreParentsActifs() {
-        return parentRepository.findAllActive().size();
+        return parentRepository.countByActif(true);
     }
 
     // ========== Gestion des Enfants ==========
 
     @Transactional
-    public Enfant ajouterEnfant(Integer parentId, EnfantDTO enfantDTO) {
-        Parent parent = parentRepository.findById(parentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Parent non trouvé avec id: " + parentId));
+    public EnfantParent ajouterEnfant(Integer parentId, EnfantDTO enfantDTO) {
+        Parent parent = getParentParId(parentId);
 
-        Enfant enfant = new Enfant();
+        EnfantParent enfant = new EnfantParent();
         enfant.setNom(enfantDTO.getNom());
         enfant.setPrenom(enfantDTO.getPrenom());
         enfant.setDateNaissance(enfantDTO.getDateNaissance());
@@ -166,8 +240,8 @@ public class ParentService {
     }
 
     @Transactional
-    public Enfant modifierEnfant(Integer enfantId, EnfantDTO enfantDTO) {
-        Enfant enfant = getEnfantParId(enfantId);
+    public EnfantParent modifierEnfant(Integer enfantId, EnfantDTO enfantDTO) {
+        EnfantParent enfant = getEnfantParId(enfantId);
 
         enfant.setNom(enfantDTO.getNom());
         enfant.setPrenom(enfantDTO.getPrenom());
@@ -178,32 +252,31 @@ public class ParentService {
         return enfantRepository.save(enfant);
     }
 
-    public Enfant getEnfantParId(Integer id) {
+    public EnfantParent getEnfantParId(Integer id) {
         return enfantRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Enfant non trouvé avec id: " + id));
     }
 
-    public List<Enfant> getEnfantsDuParent(Integer parentId) {
+    public List<EnfantParent> getEnfantsDuParent(Integer parentId) {
         return enfantRepository.findByParentId(parentId);
     }
 
-    public List<Enfant> getAllEnfants() {
+    public List<EnfantParent> getAllEnfants() {
         return enfantRepository.findAll();
     }
 
-    public List<Enfant> getEnfantsParParent(Parent parent) {
+    public List<EnfantParent> getEnfantsParParent(Parent parent) {
         return enfantRepository.findByParent(parent);
     }
 
-    public List<Enfant> getEnfantsNesApres(LocalDate date) {
+    public List<EnfantParent> getEnfantsNesApres(LocalDate date) {
         return enfantRepository.findNesApres(date);
     }
 
     @Transactional
     public void supprimerEnfant(Integer id) {
-        Enfant enfant = getEnfantParId(id);
+        EnfantParent enfant = getEnfantParId(id);
 
-        // Vérifier si l'enfant a des inscriptions
         if (!enfant.getInscriptions().isEmpty()) {
             throw new RuntimeException("Impossible de supprimer un enfant qui a des inscriptions");
         }
@@ -213,14 +286,14 @@ public class ParentService {
 
     @Transactional
     public void transfererEnfant(Integer enfantId, Integer nouveauParentId) {
-        Enfant enfant = getEnfantParId(enfantId);
+        EnfantParent enfant = getEnfantParId(enfantId);
         Parent nouveauParent = getParentParId(nouveauParentId);
 
         enfant.setParent(nouveauParent);
         enfantRepository.save(enfant);
     }
 
-    public List<Enfant> rechercherEnfantsParNom(String nom) {
+    public List<EnfantParent> rechercherEnfantsParNom(String nom) {
         return enfantRepository.rechercherParNom(nom);
     }
 
@@ -240,15 +313,13 @@ public class ParentService {
     }
 
     public boolean checkEnfantAppartientParent(Integer enfantId, Integer parentId) {
-        Enfant enfant = getEnfantParId(enfantId);
+        EnfantParent enfant = getEnfantParId(enfantId);
         return enfant.getParent().getId().equals(parentId);
     }
 
     // ========== Méthodes de recherche avancée ==========
 
     public List<Parent> rechercherParents(String searchTerm) {
-        // Cette méthode nécessiterait une requête personnalisée dans ParentRepository
-        // Par exemple: findByNomContainingOrPrenomContainingOrEmailContaining
         return parentRepository.rechercher(searchTerm);
     }
 

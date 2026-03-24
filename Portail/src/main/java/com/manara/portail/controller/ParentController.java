@@ -2,12 +2,15 @@ package com.manara.portail.controller;
 
 import com.manara.portail.dto.EnfantDTO;
 import com.manara.portail.dto.ParentDTO;
-import com.manara.portail.model.*;
+import com.manara.portail.model.Parent;
+import com.manara.portail.model.EnfantParent;
+import com.manara.portail.model.InscriptionParent;
+import com.manara.portail.model.CommunicationParent;
 import com.manara.portail.security.UserPrincipal;
 import com.manara.portail.service.ParentService;
-import com.manara.portail.service.InscriptionService;
-import com.manara.portail.service.ActiviteService;
-import com.manara.portail.service.CommunicationService;
+import com.manara.portail.service.InscriptionParentService;
+import com.manara.portail.service.ActiviteParentService;
+import com.manara.portail.service.CommunicationParentService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -23,25 +26,26 @@ import java.util.List;
 public class ParentController {
 
     private final ParentService parentService;
-    private final InscriptionService inscriptionService;
-    private final ActiviteService activiteService;
-    private final CommunicationService communicationService;
+    private final InscriptionParentService inscriptionService;
+    private final ActiviteParentService activiteService;
+    private final CommunicationParentService communicationService;
 
     public ParentController(ParentService parentService,
-                            InscriptionService inscriptionService,
-                            ActiviteService activiteService,
-                            CommunicationService communicationService) {
+                            InscriptionParentService inscriptionService,
+                            ActiviteParentService activiteService,
+                            CommunicationParentService communicationService) {
         this.parentService = parentService;
         this.inscriptionService = inscriptionService;
         this.activiteService = activiteService;
         this.communicationService = communicationService;
     }
 
+    // ========== DASHBOARD ==========
     @GetMapping("/dashboard")
     public String dashboard(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
         Parent parent = parentService.getParentParId(userPrincipal.getId());
-        List<Enfant> enfants = parentService.getEnfantsDuParent(parent.getId());
-        List<Inscription> inscriptionsFutures = inscriptionService.getInscriptionsFuturesParent(parent.getId());
+        List<EnfantParent> enfants = parentService.getEnfantsDuParent(parent.getId());
+        List<InscriptionParent> inscriptionsFutures = inscriptionService.getInscriptionsFuturesParent(parent.getId());
         long messagesNonLus = communicationService.getNombreMessagesNonLusParent(parent.getId());
 
         model.addAttribute("parent", parent);
@@ -53,6 +57,7 @@ public class ParentController {
         return "parent/dashboard";
     }
 
+    // ========== PROFIL ==========
     @GetMapping("/profil")
     public String profil(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
         Parent parent = parentService.getParentParId(userPrincipal.getId());
@@ -90,9 +95,10 @@ public class ParentController {
         return "redirect:/parent/profil";
     }
 
+    // ========== GESTION DES ENFANTS ==========
     @GetMapping("/enfants")
     public String listeEnfants(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
-        List<Enfant> enfants = parentService.getEnfantsDuParent(userPrincipal.getId());
+        List<EnfantParent> enfants = parentService.getEnfantsDuParent(userPrincipal.getId());
         model.addAttribute("enfants", enfants);
         return "parent/enfants";
     }
@@ -124,7 +130,7 @@ public class ParentController {
 
     @GetMapping("/enfants/modifier/{id}")
     public String modifierEnfantForm(@PathVariable Integer id, Model model) {
-        Enfant enfant = parentService.getEnfantParId(id);
+        EnfantParent enfant = parentService.getEnfantParId(id);
 
         EnfantDTO enfantDTO = new EnfantDTO();
         enfantDTO.setId(enfant.getId());
@@ -157,6 +163,13 @@ public class ParentController {
         return "redirect:/parent/enfants";
     }
 
+    @GetMapping("/enfants/{id}")
+    public String detailsEnfant(@PathVariable Integer id, Model model) {
+        EnfantParent enfant = parentService.getEnfantParId(id);
+        model.addAttribute("enfant", enfant);
+        return "parent/details-enfant";
+    }
+
     @GetMapping("/enfants/supprimer/{id}")
     public String supprimerEnfant(@PathVariable Integer id,
                                   RedirectAttributes redirectAttributes) {
@@ -170,6 +183,7 @@ public class ParentController {
         return "redirect:/parent/enfants";
     }
 
+    // ========== ACTIVITÉS ET SESSIONS ==========
     @GetMapping("/activites")
     public String listeActivites(Model model) {
         model.addAttribute("activites", activiteService.getAllActivitesActives());
@@ -183,10 +197,13 @@ public class ParentController {
         return "parent/sessions";
     }
 
+    // ========== INSCRIPTIONS ==========
     @GetMapping("/inscriptions")
     public String mesInscriptions(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
-        List<Inscription> inscriptions = inscriptionService.getInscriptionsFuturesParent(userPrincipal.getId());
+        List<InscriptionParent> inscriptions = inscriptionService.getInscriptionsFuturesParent(userPrincipal.getId());
+        List<InscriptionParent> inscriptionsPassees = inscriptionService.getInscriptionsPasseesParent(userPrincipal.getId());
         model.addAttribute("inscriptions", inscriptions);
+        model.addAttribute("inscriptionsPassees", inscriptionsPassees);
         return "parent/inscriptions";
     }
 
@@ -218,19 +235,20 @@ public class ParentController {
         return "redirect:/parent/inscriptions";
     }
 
+    // ========== PLANNING ==========
     @GetMapping("/planning")
     public String planning(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
-        List<Inscription> inscriptions = inscriptionService.getInscriptionsFuturesParent(userPrincipal.getId());
+        List<InscriptionParent> inscriptions = inscriptionService.getInscriptionsFuturesParent(userPrincipal.getId());
         model.addAttribute("inscriptions", inscriptions);
         return "parent/planning";
     }
 
+    // ========== NOTIFICATIONS ==========
     @GetMapping("/notifications")
     public String notifications(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
-        List<Communication> communications = communicationService.getCommunicationsParent(userPrincipal.getId());
+        List<CommunicationParent> communications = communicationService.getCommunicationsParent(userPrincipal.getId());
         model.addAttribute("communications", communications);
 
-        // Marquer comme lues
         communicationService.marquerToutesCommeLues(userPrincipal.getId());
 
         return "parent/notifications";

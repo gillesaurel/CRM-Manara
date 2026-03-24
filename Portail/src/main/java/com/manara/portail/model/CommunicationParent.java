@@ -1,13 +1,12 @@
 package com.manara.portail.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Communication {
+@Table(name = "communications_parent")
+public class CommunicationParent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -24,7 +23,7 @@ public class Communication {
 
     @NotNull(message = "La date d'envoi est requise")
     @Column(name = "date_envoi", nullable = false)
-    private LocalDateTime dateEnvoi;
+    private LocalDateTime dateEnvoi = LocalDateTime.now();
 
     @NotBlank(message = "Le canal est requis")
     @Column(length = 50, nullable = false)
@@ -35,16 +34,16 @@ public class Communication {
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
-    private Parent parent;
+    private Parent parent;  // ← Parent (votre classe)
 
     @ManyToOne
-    @JoinColumn(name = "animation_id")
-    private Animation animation;
+    @JoinColumn(name = "animateur_id")
+    private Utilisateur animateur;  // ← Utilisateur (collègue)
 
     // Constructeurs
-    public Communication() {}
+    public CommunicationParent() {}
 
-    public Communication(String sujet, String message, String canal) {
+    public CommunicationParent(String sujet, String message, String canal) {
         this.sujet = sujet;
         this.message = message;
         this.canal = canal;
@@ -73,6 +72,6 @@ public class Communication {
     public Parent getParent() { return parent; }
     public void setParent(Parent parent) { this.parent = parent; }
 
-    public Animation getAnimation() { return animation; }
-    public void setAnimation(Animation animation) { this.animation = animation; }
+    public Utilisateur getAnimateur() { return animateur; }
+    public void setAnimateur(Utilisateur animateur) { this.animateur = animateur; }
 }

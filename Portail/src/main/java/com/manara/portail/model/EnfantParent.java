@@ -1,16 +1,14 @@
 package com.manara.portail.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Enfant {
+@Table(name = "enfants_parent")
+public class EnfantParent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -44,15 +42,15 @@ public class Enfant {
     private Parent parent;
 
     @OneToMany(mappedBy = "enfant", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Presence> presences = new ArrayList<>();
+    private List<PresenceParent> presences = new ArrayList<>();
 
     @OneToMany(mappedBy = "enfant", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Inscription> inscriptions = new ArrayList<>();
+    private List<InscriptionParent> inscriptions = new ArrayList<>();
 
     // Constructeurs
-    public Enfant() {}
+    public EnfantParent() {}
 
-    public Enfant(String nom, String prenom, LocalDate dateNaissance, Parent parent) {
+    public EnfantParent(String nom, String prenom, LocalDate dateNaissance, Parent parent) {
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
@@ -81,9 +79,9 @@ public class Enfant {
     public Parent getParent() { return parent; }
     public void setParent(Parent parent) { this.parent = parent; }
 
-    public List<Presence> getPresences() { return presences; }
-    public void setPresences(List<Presence> presences) { this.presences = presences; }
+    public List<PresenceParent> getPresences() { return presences; }
+    public void setPresences(List<PresenceParent> presences) { this.presences = presences; }
 
-    public List<Inscription> getInscriptions() { return inscriptions; }
-    public void setInscriptions(List<Inscription> inscriptions) { this.inscriptions = inscriptions; }
+    public List<InscriptionParent> getInscriptions() { return inscriptions; }
+    public void setInscriptions(List<InscriptionParent> inscriptions) { this.inscriptions = inscriptions; }
 }

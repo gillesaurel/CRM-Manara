@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Session {
+@Table(name = "sessions_parent")
+public class SessionParent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -39,28 +40,28 @@ public class Session {
 
     @NotBlank(message = "Le statut est requis")
     @Column(length = 50, nullable = false)
-    private String statut;
+    private String statut = "PLANIFIÉE";
 
     @NotNull(message = "L'activité est requise")
     @ManyToOne
     @JoinColumn(name = "activite_id", nullable = false)
-    private Activite activite;
+    private ActiviteParent activite;
 
     @ManyToOne
     @JoinColumn(name = "animateur_id")
-    private Animation animateur;
+    private Utilisateur animateur;  // ← Utilise Utilisateur (collègue)
 
     @OneToMany(mappedBy = "session", cascade = CascadeType.ALL)
-    private List<Presence> presences = new ArrayList<>();
+    private List<PresenceParent> presences = new ArrayList<>();
 
     @OneToMany(mappedBy = "session", cascade = CascadeType.ALL)
-    private List<Inscription> inscriptions = new ArrayList<>();
+    private List<InscriptionParent> inscriptions = new ArrayList<>();
 
     // Constructeurs
-    public Session() {}
+    public SessionParent() {}
 
-    public Session(LocalTime heureDebut, LocalTime heureFin, LocalDate date,
-                   Integer capaciteMax, String lieu, Activite activite) {
+    public SessionParent(LocalTime heureDebut, LocalTime heureFin, LocalDate date,
+                         Integer capaciteMax, String lieu, ActiviteParent activite) {
         this.heureDebut = heureDebut;
         this.heureFin = heureFin;
         this.date = date;
@@ -92,15 +93,15 @@ public class Session {
     public String getStatut() { return statut; }
     public void setStatut(String statut) { this.statut = statut; }
 
-    public Activite getActivite() { return activite; }
-    public void setActivite(Activite activite) { this.activite = activite; }
+    public ActiviteParent getActivite() { return activite; }
+    public void setActivite(ActiviteParent activite) { this.activite = activite; }
 
-    public Animation getAnimateur() { return animateur; }
-    public void setAnimateur(Animation animateur) { this.animateur = animateur; }
+    public Utilisateur getAnimateur() { return animateur; }
+    public void setAnimateur(Utilisateur animateur) { this.animateur = animateur; }
 
-    public List<Presence> getPresences() { return presences; }
-    public void setPresences(List<Presence> presences) { this.presences = presences; }
+    public List<PresenceParent> getPresences() { return presences; }
+    public void setPresences(List<PresenceParent> presences) { this.presences = presences; }
 
-    public List<Inscription> getInscriptions() { return inscriptions; }
-    public void setInscriptions(List<Inscription> inscriptions) { this.inscriptions = inscriptions; }
+    public List<InscriptionParent> getInscriptions() { return inscriptions; }
+    public void setInscriptions(List<InscriptionParent> inscriptions) { this.inscriptions = inscriptions; }
 }

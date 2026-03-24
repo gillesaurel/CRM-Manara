@@ -5,14 +5,15 @@ import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Incident {
+@Table(name = "incidents_parent")
+public class IncidentParent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull(message = "La date et heure sont requises")
     @Column(name = "date_heure", nullable = false)
-    private LocalDateTime dateHeure;
+    private LocalDateTime dateHeure = LocalDateTime.now();
 
     @NotBlank(message = "Le type d'incident est requis")
     @Column(length = 100, nullable = false)
@@ -30,7 +31,7 @@ public class Incident {
 
     @NotBlank(message = "Le statut est requis")
     @Column(length = 50, nullable = false)
-    private String statut;
+    private String statut = "SIGNALÉ";
 
     @Size(max = 1000, message = "Les actions prises ne peuvent pas dépasser 1000 caractères")
     @Column(name = "actions_prises", length = 1000)
@@ -39,16 +40,16 @@ public class Incident {
     @NotNull(message = "L'enfant est requis")
     @ManyToOne
     @JoinColumn(name = "enfant_id", nullable = false)
-    private Enfant enfant;
+    private EnfantParent enfant;
 
     @ManyToOne
-    @JoinColumn(name = "animation_id")
-    private Animation animation;
+    @JoinColumn(name = "animateur_id")
+    private Utilisateur animateur;  // ← Utilisateur (collègue)
 
     // Constructeurs
-    public Incident() {}
+    public IncidentParent() {}
 
-    public Incident(String type, String description, Integer gravite, Enfant enfant) {
+    public IncidentParent(String type, String description, Integer gravite, EnfantParent enfant) {
         this.type = type;
         this.description = description;
         this.gravite = gravite;
@@ -79,9 +80,9 @@ public class Incident {
     public String getActionsPrises() { return actionsPrises; }
     public void setActionsPrises(String actionsPrises) { this.actionsPrises = actionsPrises; }
 
-    public Enfant getEnfant() { return enfant; }
-    public void setEnfant(Enfant enfant) { this.enfant = enfant; }
+    public EnfantParent getEnfant() { return enfant; }
+    public void setEnfant(EnfantParent enfant) { this.enfant = enfant; }
 
-    public Animation getAnimation() { return animation; }
-    public void setAnimation(Animation animation) { this.animation = animation; }
+    public Utilisateur getAnimateur() { return animateur; }
+    public void setAnimateur(Utilisateur animateur) { this.animateur = animateur; }
 }

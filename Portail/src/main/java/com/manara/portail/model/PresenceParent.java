@@ -1,12 +1,12 @@
 package com.manara.portail.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Presence {
+@Table(name = "presences_parent")
+public class PresenceParent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -26,17 +26,17 @@ public class Presence {
     @NotNull(message = "L'enfant est requis")
     @ManyToOne
     @JoinColumn(name = "enfant_id", nullable = false)
-    private Enfant enfant;
+    private EnfantParent enfant;
 
     @NotNull(message = "La session est requise")
     @ManyToOne
     @JoinColumn(name = "session_id", nullable = false)
-    private Session session;
+    private SessionParent session;
 
     // Constructeurs
-    public Presence() {}
+    public PresenceParent() {}
 
-    public Presence(boolean present, Enfant enfant, Session session) {
+    public PresenceParent(boolean present, EnfantParent enfant, SessionParent session) {
         this.present = present;
         this.enfant = enfant;
         this.session = session;
@@ -56,9 +56,9 @@ public class Presence {
     public String getCommentaire() { return commentaire; }
     public void setCommentaire(String commentaire) { this.commentaire = commentaire; }
 
-    public Enfant getEnfant() { return enfant; }
-    public void setEnfant(Enfant enfant) { this.enfant = enfant; }
+    public EnfantParent getEnfant() { return enfant; }
+    public void setEnfant(EnfantParent enfant) { this.enfant = enfant; }
 
-    public Session getSession() { return session; }
-    public void setSession(Session session) { this.session = session; }
+    public SessionParent getSession() { return session; }
+    public void setSession(SessionParent session) { this.session = session; }
 }

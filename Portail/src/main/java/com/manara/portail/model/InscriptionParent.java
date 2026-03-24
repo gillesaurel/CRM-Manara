@@ -5,7 +5,8 @@ import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Inscription {
+@Table(name = "inscriptions_parent")
+public class InscriptionParent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -29,17 +30,17 @@ public class Inscription {
     @NotNull(message = "L'enfant est requis")
     @ManyToOne
     @JoinColumn(name = "enfant_id", nullable = false)
-    private Enfant enfant;
+    private EnfantParent enfant;
 
     @NotNull(message = "La session est requise")
     @ManyToOne
     @JoinColumn(name = "session_id", nullable = false)
-    private Session session;
+    private SessionParent session;
 
     // Constructeurs
-    public Inscription() {}
+    public InscriptionParent() {}
 
-    public Inscription(Enfant enfant, Session session) {
+    public InscriptionParent(EnfantParent enfant, SessionParent session) {
         this.enfant = enfant;
         this.session = session;
         this.dateInscription = LocalDateTime.now();
@@ -63,9 +64,9 @@ public class Inscription {
     public String getCommentaireParent() { return commentaireParent; }
     public void setCommentaireParent(String commentaireParent) { this.commentaireParent = commentaireParent; }
 
-    public Enfant getEnfant() { return enfant; }
-    public void setEnfant(Enfant enfant) { this.enfant = enfant; }
+    public EnfantParent getEnfant() { return enfant; }
+    public void setEnfant(EnfantParent enfant) { this.enfant = enfant; }
 
-    public Session getSession() { return session; }
-    public void setSession(Session session) { this.session = session; }
+    public SessionParent getSession() { return session; }
+    public void setSession(SessionParent session) { this.session = session; }
 }

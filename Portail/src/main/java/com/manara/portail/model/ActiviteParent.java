@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Activite {
+@Table(name = "activites_parent")
+public class ActiviteParent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -32,27 +33,26 @@ public class Activite {
     @Column(name = "age_max", nullable = false)
     private Integer ageMax;
 
-    @NotNull(message = "Le prix est requis")
     @DecimalMin(value = "0.0", inclusive = true, message = "Le prix doit être positif")
     @DecimalMax(value = "9999.99", message = "Le prix ne peut pas dépasser 9999.99")
     @Column(nullable = false)
-    private Float prix;
+    private Float prix = 0.0f;
 
     @Column(nullable = false)
     private boolean active = true;
 
     @OneToMany(mappedBy = "activite", cascade = CascadeType.ALL)
-    private List<Session> sessions = new ArrayList<>();
+    private List<SessionParent> sessions = new ArrayList<>();
 
     // Constructeurs
-    public Activite() {}
+    public ActiviteParent() {}
 
-    public Activite(String nom, String description, Integer ageMin, Integer ageMax, Float prix) {
+    public ActiviteParent(String nom, String description, Integer ageMin, Integer ageMax, Float prix) {
         this.nom = nom;
         this.description = description;
         this.ageMin = ageMin;
         this.ageMax = ageMax;
-        this.prix = prix;
+        this.prix = prix != null ? prix : 0.0f;
     }
 
     // Getters et Setters
@@ -77,6 +77,6 @@ public class Activite {
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
 
-    public List<Session> getSessions() { return sessions; }
-    public void setSessions(List<Session> sessions) { this.sessions = sessions; }
+    public List<SessionParent> getSessions() { return sessions; }
+    public void setSessions(List<SessionParent> sessions) { this.sessions = sessions; }
 }

@@ -28,6 +28,20 @@ public class Utilisateur {
     @JoinColumn(name = "role_id")
     private Role role;
 
+
+    // CHAMPS PARENT
+    @Column(name = "adresse")
+    private String adresse;
+
+    @Column(name = "ville")
+    private String ville;
+
+    @Column(name = "code_postal", length = 10)
+    private String codePostal;
+
+    @Column(name = "type_lien", length = 50)
+    private String typeLien;
+
     // getters and setters
 
 
@@ -100,5 +114,20 @@ public class Utilisateur {
     public void setMotdepasse(String motdepasse) {
         this.motdepasse = motdepasse;
     }
+
+
+    //Méthode parents
+    // Getters et Setters
+    public String getAdresse() { return adresse; }
+    public void setAdresse(String adresse) { this.adresse = adresse; }
+
+    public String getVille() { return ville; }
+    public void setVille(String ville) { this.ville = ville; }
+
+    public String getCodePostal() { return codePostal; }
+    public void setCodePostal(String codePostal) { this.codePostal = codePostal; }
+
+    public String getTypeLien() { return typeLien; }
+    public void setTypeLien(String typeLien) { this.typeLien = typeLien; }
 
 }
