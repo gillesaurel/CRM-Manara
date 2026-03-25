@@ -13,7 +13,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
     @Query("SELECT u FROM Utilisateur u WHERE u.email = :email")
     public Utilisateur getUtilisateurByEmail(@Param("email") String email);
 
-    @Query("SELECT u FROM Utilisateur u WHERE u.email = :email and u.motdepasse=:motdepasse")
+    @Query("SELECT u FROM Utilisateur u WHERE u.email = ?1 and u.motdepasse=?2")
     //@Param est utilisé pour lier le paramètre method au paramètre Query.
     public Utilisateur getUtilisateurByEmailAndMotDePasse(@Param("email") String email,@Param("motdepasse") String motdepasse);
 

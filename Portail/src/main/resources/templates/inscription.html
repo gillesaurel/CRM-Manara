@@ -1,155 +1,95 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <title>Inscription - Manara</title>
+    <link th:rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Inscription</title>
 </head>
 <body>
 
-<header th:replace="fragments/main::header"></header>
+    <header th:replace="fragments/main::header">
 
-<main class="formulaire-section">
-    <div class="form-container">
-        <h1>Inscrivez-vous</h1>
+    </header>
 
-        <div th:if="${message}" class="alert alert-danger" th:text="${message}"></div>
-        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
-
-        <form th:action="@{/register/save}" th:object="${utilisateur}" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
-            <!-- ========== Informations personnelles ========== -->
-            <div class="form-row">
-                <div class="form-group" th:classappend="${#fields.hasErrors('prenom')} ? 'has-error' : ''">
+    <main class="formulaire-section">
+        <div class="form">
+            <h1>Inscrivez-vous</h1>
+            <form th:action="@{/register/save}" th:object="${utilisateur}" method="post" >
+                <span class="error" > </span>
+                <div  th:if="${message!= null}">[[${message}]]</div>
+                <!-- Nom -->
+                <div>
                     <label for="prenom">Prénom *</label>
-                    <input type="text" id="prenom" th:field="*{prenom}" class="form-control" required />
-                    <div th:if="${#fields.hasErrors('prenom')}" class="error-message" th:errors="*{prenom}"></div>
+                    <input type="text"
+                           id="prenom"
+                           th:field="*{prenom}"
+                           placeholder="Jean"
+                           required />
                 </div>
 
-                <div class="form-group" th:classappend="${#fields.hasErrors('nom')} ? 'has-error' : ''">
+                <!-- Prénom -->
+                <div>
                     <label for="nom">Nom *</label>
-                    <input type="text" id="nom" th:field="*{nom}" class="form-control" required />
-                    <div th:if="${#fields.hasErrors('nom')}" class="error-message" th:errors="*{nom}"></div>
-                </div>
-            </div>
-
-            <div class="form-group" th:classappend="${#fields.hasErrors('telephone')} ? 'has-error' : ''">
-                <label for="telephone">Téléphone</label>
-                <input type="tel" id="telephone" th:field="*{telephone}" class="form-control"
-                       placeholder="0612345678" pattern="[0-9]{10}" />
-                <div th:if="${#fields.hasErrors('telephone')}" class="error-message" th:errors="*{telephone}"></div>
-                <small class="form-text">10 chiffres, sans espace</small>
-            </div>
-
-            <!-- ========== Identifiants de connexion ========== -->
-            <div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error' : ''">
-                <label for="email">Courriel *</label>
-                <input type="email" id="email" th:field="*{email}" class="form-control" required />
-                <div th:if="${#fields.hasErrors('email')}" class="error-message" th:errors="*{email}"></div>
-            </div>
-
-            <div class="form-group" th:classappend="${#fields.hasErrors('motdepasse')} ? 'has-error' : ''">
-                <label for="motdepasse">Mot de passe *</label>
-                <input type="password" id="motdepasse" th:field="*{motdepasse}" class="form-control"
-                       required minlength="8" />
-                <div th:if="${#fields.hasErrors('motdepasse')}" class="error-message" th:errors="*{motdepasse}"></div>
-                <small class="form-text">Minimum 8 caractères, avec majuscule, minuscule, chiffre et caractère spécial</small>
-            </div>
-
-            <div class="form-group">
-                <label for="confirmMotdepasse">Confirmer le mot de passe *</label>
-                <input type="password" id="confirmMotdepasse" name="confirmMotdepasse" class="form-control"
-                       required minlength="8" />
-            </div>
-
-            <!-- ========== Informations d'adresse (spécifiques parent) ========== -->
-            <div class="form-group" th:classappend="${#fields.hasErrors('adresse')} ? 'has-error' : ''">
-                <label for="adresse">Adresse *</label>
-                <input type="text" id="adresse" th:field="*{adresse}" class="form-control" required />
-                <div th:if="${#fields.hasErrors('adresse')}" class="error-message" th:errors="*{adresse}"></div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group" th:classappend="${#fields.hasErrors('codePostal')} ? 'has-error' : ''">
-                    <label for="codePostal">Code postal *</label>
-                    <input type="text" id="codePostal" th:field="*{codePostal}" class="form-control"
-                           pattern="[0-9]{5}" required />
-                    <div th:if="${#fields.hasErrors('codePostal')}" class="error-message" th:errors="*{codePostal}"></div>
-                    <small class="form-text">5 chiffres (ex: 75001)</small>
+                    <input type="text"
+                           id="nom"
+                           th:field="*{nom}"
+                           placeholder="Dupont"
+                           required />
                 </div>
 
-                <div class="form-group" th:classappend="${#fields.hasErrors('ville')} ? 'has-error' : ''">
-                    <label for="ville">Ville *</label>
-                    <input type="text" id="ville" th:field="*{ville}" class="form-control" required />
-                    <div th:if="${#fields.hasErrors('ville')}" class="error-message" th:errors="*{ville}"></div>
+                <!-- Téléphone -->
+                <div>
+                    <label for="telephone">Téléphone</label>
+                    <input type="tel"
+                           id="telephone"
+                           th:field="*{telephone}"
+                           placeholder="0612345678" />
                 </div>
-            </div>
 
-            <!-- ========== Type de lien ========== -->
-            <div class="form-group" th:classappend="${#fields.hasErrors('typeLien')} ? 'has-error' : ''">
-                <label for="typeLien">Vous êtes le/la *</label>
-                <select id="typeLien" th:field="*{typeLien}" class="form-control" required>
-                    <option value="">Sélectionnez...</option>
-                    <option value="Père">Père</option>
-                    <option value="Mère">Mère</option>
-                    <option value="Grand-père">Grand-père</option>
-                    <option value="Grand-mère">Grand-mère</option>
-                    <option value="Tuteur">Tuteur légal</option>
-                    <option value="Autre">Autre</option>
-                </select>
-                <div th:if="${#fields.hasErrors('typeLien')}" class="error-message" th:errors="*{typeLien}"></div>
-            </div>
+                <!-- Email -->
+                <div>
+                    <label for="email">Courriel *</label>
+                    <input type="email"
+                           id="email"
+                           th:field="*{email}"
+                           placeholder="jeandupont@gmail.com"
+                           required />
+                </div>
 
-            <!-- ========== Photo de profil ========== -->
-            <div class="form-group">
-                <label for="photo">Photo de profil</label>
-                <input type="file" id="photo" name="fileImage" accept="image/*" class="form-control-file" />
-                <small class="form-text">Format accepté : JPG, PNG (max 2 Mo)</small>
-            </div>
+                <!-- Mot de passe -->
+                <div>
+                    <label for="motdepasse">Mot de passe *</label>
+                    <input type="password"
+                           id="motdepasse"
+                           th:field="*{motdepasse}"
+                           placeholder="••••••••"
+                           required
+                           minlength="8" />
+                </div>
 
-            <!-- ========== Conditions d'utilisation ========== -->
-            <div class="form-group terms-group">
-                <label class="checkbox-label">
-                    <input type="checkbox" name="acceptTerms" required />
-                    <span>J'accepte les <a th:href="@{/mentions-legales}" target="_blank">conditions d'utilisation</a> *</span>
-                </label>
-            </div>
 
-            <!-- ========== Boutons ========== -->
-            <div class="form-actions">
-                <button type="submit" class="btn-submit">S'inscrire</button>
-                <a th:href="@{/login}" class="btn-cancel">Déjà un compte ?</a>
-            </div>
-        </form>
-    </div>
-</main>
+                <!-- Photo
+                <div>
+                    <label for="photo">Photo de profil</label>
+                    <input type="file"
+                           id="photo"
+                           name="fileImage"
+                           accept="image/*" />
+                </div>
+                -->
+                <!-- Boutons -->
+                <div class="btn-group-inscription">
+                    <button type="submit">S'inscrire</button>
+                    <a th:href="@{/login}">Déjà un compte ?</a>
+                </div>
+            </form>
+        </div>
+    </main>
 
-<footer th:replace="fragments/main::footer"></footer>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const password = document.getElementById('motdepasse');
-        const confirm = document.getElementById('confirmMotdepasse');
+    <footer th:replace="fragments/main::footer">
 
-        function validatePassword() {
-            if (password.value !== confirm.value) {
-                confirm.setCustomValidity('Les mots de passe ne correspondent pas');
-            } else {
-                confirm.setCustomValidity('');
-            }
-        }
+    </footer>
 
-        password.addEventListener('change', validatePassword);
-        confirm.addEventListener('keyup', validatePassword);
-
-        // Validation du code postal (5 chiffres)
-        const codePostal = document.getElementById('codePostal');
-        codePostal.addEventListener('input', function() {
-            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 5);
-        });
-    });
-</script>
 </body>
 </html>

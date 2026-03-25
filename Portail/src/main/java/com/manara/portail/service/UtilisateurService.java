@@ -10,9 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
-@Service
 @Transactional
+@Service
 public class UtilisateurService {
     @Autowired
     UtilisateurRepository utilisateurRepository;   //     UtilisateurRepository repos = new  UtilisateurRepository ()

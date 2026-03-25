@@ -1,5 +1,4 @@
 // FAIT PAR MANU, GILLES ET JOSE
-// MODIFIÉ POUR INCLURE LES CHAMPS PARENT
 
 package com.manara.portail.controller;
 
@@ -7,7 +6,6 @@ import com.manara.portail.model.Role;
 import com.manara.portail.model.Utilisateur;
 import com.manara.portail.service.RoleService;
 import com.manara.portail.service.UtilisateurService;
-import com.manara.portail.service.ParentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,17 +20,15 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+
 @Controller
 public class AuthController {
 
     @Autowired
-    private UtilisateurService utilisateurService;
+    UtilisateurService UtilService;
 
     @Autowired
-    private RoleService roleService;
-
-    @Autowired
-    private ParentService parentService;
+    RoleService RoleService;
 
     // PAGE INSCRIPTION UTILISATEUR
     @GetMapping("/register")
@@ -41,55 +37,19 @@ public class AuthController {
         return "inscription";
     }
 
-    // TRAITEMENT INSCRIPTION UTILISATEUR
+    // REDIRECTION INSCRIPTION UTILISATEUR
     @PostMapping("/register/save")
     public String enregistrerUtilisateur(
             @ModelAttribute("utilisateur") Utilisateur utilisateur,
             @RequestParam(value = "fileImage", required = false) MultipartFile fileImage,
-            @RequestParam(value = "adresse", required = false) String adresse,
-            @RequestParam(value = "ville", required = false) String ville,
-            @RequestParam(value = "codePostal", required = false) String codePostal,
-            @RequestParam(value = "typeLien", required = false) String typeLien,
             RedirectAttributes redirectAttributes
     ) throws IOException {
         try {
-            // Remplir les champs parent
-            utilisateur.setAdresse(adresse);
-            utilisateur.setVille(ville);
-            utilisateur.setCodePostal(codePostal);
-            utilisateur.setTypeLien(typeLien);
 
-            // Définir le rôle PARENT
-            Role parentRole = roleService.findByName("PARENT");
-            if (parentRole == null) {
-                throw new Exception("Le rôle PARENT n'existe pas. Veuillez contacter l'administrateur.");
-            }
-            utilisateur.setRole(parentRole);
+            utilisateur.setRole(RoleService.findByName("PARENT"));
+            UtilService.enregistrer(utilisateur);
 
-            // Enregistrer l'utilisateur
-            utilisateurService.enregistrer(utilisateur);
-
-            // Créer également l'entité Parent associée (pour la partie parent)
-            try {
-                com.manara.portail.dto.ParentDTO parentDTO = new com.manara.portail.dto.ParentDTO();
-                parentDTO.setNom(utilisateur.getNom());
-                parentDTO.setPrenom(utilisateur.getPrenom());
-                parentDTO.setEmail(utilisateur.getEmail());
-                parentDTO.setTelephone(utilisateur.getTelephone());
-                parentDTO.setMotDePasse(utilisateur.getMotdepasse());
-                parentDTO.setAdresse(utilisateur.getAdresse());
-                parentDTO.setVille(utilisateur.getVille());
-                parentDTO.setCodePostal(utilisateur.getCodePostal());
-                parentDTO.setTypeLien(utilisateur.getTypeLien());
-                parentService.inscrireParent(parentDTO);
-            } catch (Exception e) {
-                // L'utilisateur est déjà créé, on continue
-                System.err.println("Erreur création parent: " + e.getMessage());
-            }
-
-            redirectAttributes.addFlashAttribute("message", "Inscription réussie ! Vous pouvez maintenant vous connecter.");
-            return "redirect:/login";
-
+            return "redirect:/";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/register";
@@ -103,51 +63,71 @@ public class AuthController {
         return "connexion";
     }
 
-    // TRAITEMENT CONNEXION UTILISATEUR
+
     @PostMapping("/login/save")
     public String connecterUtilisateur(
             @ModelAttribute("utilisateur") Utilisateur utilisateur,
             RedirectAttributes redirectAttributes,
             HttpServletResponse response
     ) throws IOException {
+
+        Utilisateur tempUtilisateur = UtilService.getUtilisateurByEmailAndMotDePasse(
+                utilisateur.getEmail(),
+                utilisateur.getMotdepasse()
+        );
+        System.out.println("email : " + utilisateur.getEmail());
+        System.out.println("mdp : " + utilisateur.getMotdepasse());
+
         try {
-            Utilisateur tempUtilisateur = utilisateurService.getUtilisateurByEmailAndMotDePasse(
-                    utilisateur.getEmail(),
-                    utilisateur.getMotdepasse()
-            );
+
+
+            System.out.println("tempUtilisateur : " + tempUtilisateur.getEmail());
+
 
             if (tempUtilisateur != null) {
-                response.addCookie(createCookie("email", tempUtilisateur.getEmail()));
+
+                response.addCookie(createCookie("email",tempUtilisateur.getEmail()));
                 response.addCookie(createCookie("role", tempUtilisateur.getRole().getNom()));
                 response.addCookie(createCookie("prenom", tempUtilisateur.getPrenom()));
                 response.addCookie(createCookie("nom", tempUtilisateur.getNom()));
 
-                // Redirection selon le rôle
-                if ("PARENT".equals(tempUtilisateur.getRole().getNom())) {
-                    return "redirect:/parent/dashboard";
-                } else if ("ADMIN".equals(tempUtilisateur.getRole().getNom())) {
-                    return "redirect:/admin/administrateur";
-                } else if ("ANIMATEUR".equals(tempUtilisateur.getRole().getNom())) {
-                    return "redirect:/animateur";
-                }
                 return "redirect:/";
             }
 
-            redirectAttributes.addFlashAttribute("message", "Email ou mot de passe incorrect");
             return "redirect:/login";
-
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/login";
         }
     }
 
-    // Créer un cookie utilisateur
+    @GetMapping("/deconnexion")
+    public String pageConnexion(Model model, HttpServletResponse response) {
+        model.addAttribute("utilisateur", new Utilisateur());
+
+        response.addCookie(deleteCookie("email"));
+        response.addCookie(deleteCookie("role"));
+        response.addCookie(deleteCookie("prenom"));
+        response.addCookie(deleteCookie("nom"));
+
+        return "index";
+    }
+
+    // creer un cookie utilisateur lorsque l'utilisateur se connecte
     private Cookie createCookie(String name, String value) {
         Cookie cookie = new Cookie(name, value);
         cookie.setPath("/");
-        cookie.setMaxAge(60 * 60 * 24 * 7); // 7 jours
+        cookie.setMaxAge(60 * 60 * 24 * 7);
         cookie.setHttpOnly(true);
         return cookie;
     }
+
+    private Cookie deleteCookie(String name) {
+        Cookie cookie = new Cookie(name, "");
+        cookie.setPath("/");
+        cookie.setMaxAge(-1);
+        cookie.setHttpOnly(true);
+        return cookie;
+    }
+   
 }
