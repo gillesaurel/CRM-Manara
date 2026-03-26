@@ -10,4 +10,19 @@ public class AnimateurController {
     public String pageAccueil(){
         return "animateur";
     }
+
+    @GetMapping("/animateur/inscriptions")
+    public String pageInscription() {
+        return "animateur_inscription";
+    }
+
+    @GetMapping("/animateur/presences")
+    public String pagePresences() {
+        return "animateur_presences";
+    }
+
+    @GetMapping("/animateur/horaire")
+    public String pageHoraire() {
+        return "animateur_horaire";
+    }
 }
