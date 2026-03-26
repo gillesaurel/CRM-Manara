@@ -4,8 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35507da5-958b-421a-8e8d-ee3287785ab7" name="Changes" comment="ajout des getmapping des futurs page animateur">
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/animateur_inscription.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/animateur_inscription.html" afterDir="false" />
+    <list default="true" id="35507da5-958b-421a-8e8d-ee3287785ab7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/ParentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/ParentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/InscriptionEnfant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/InscriptionEnfant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inscription-enfant.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inscription-enfant.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +22,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
         <option value="HTML File" />
       </list>
     </option>
@@ -28,11 +38,6 @@
         <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
       </MavenGeneralSettings>
     </option>
-    <option name="explicitlyEnabledProfiles" value="native,nativeTest" />
-  </component>
-  <component name="McpProjectServerCommands">
-    <commands />
-    <urls />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
@@ -61,9 +66,10 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.PortailApplication.executor": "Run",
-    "git-widget-placeholder": "Manu",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Manes/Downloads/crm-manara_marc-andre_gille-aurel_julien-jose/Portail/target/classes",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "julien__partie2__nouvelle",
+    "last_opened_file_path": "C:/Users/6230903/Downloads/crm-manara/crm-manara_marc-andre_gille-aurel_julien-jose-408b5ea75bde125a4bc6435a0007b7dc3a3319f7/Portail",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -76,14 +82,11 @@
   }
 }]]></component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Manes\Downloads\crm-manara_marc-andre_gille-aurel_julien-jose\Portail\target\classes" />
-      <recent name="C:\Users\Manes\Downloads\crm-manara_marc-andre_gille-aurel_julien-jose\Portail\target\classes\templates" />
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Manes\Downloads\crm-manara_marc-andre_gille-aurel_julien-jose\Portail\src\main\resources\templates" />
-      <recent name="C:\Users\Manes\Downloads\crm-manara_marc-andre_gille-aurel_julien-jose\Portail\src\main\resources\templates\animateur" />
-      <recent name="C:\Users\Manes\Downloads\crm-manara_marc-andre_gille-aurel_julien-jose\Portail\src\main\resources\templates\animateurs" />
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.manara.portail.repository" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.PortailApplication">
@@ -163,6 +166,17 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Portail" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Portail" />
+      <option name="filePath" />
+      <method v="2" />
     </configuration>
     <configuration name="PortailApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
