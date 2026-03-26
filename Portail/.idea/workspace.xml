@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35507da5-958b-421a-8e8d-ee3287785ab7" name="Changes" comment="">
+    <list default="true" id="35507da5-958b-421a-8e8d-ee3287785ab7" name="Changes" comment="ajout des getmapping des futurs page animateur">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AnimateurController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AnimateurController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/animateur_inscription.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/animateur_inscription.html" afterDir="false" />
+=======
       <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AdminController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AnimateurController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AnimateurController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/HomeController.java" beforeDir="false" />
@@ -77,6 +81,7 @@
       <change beforePath="$PROJECT_DIR$/target/classes/templates/inscription-enfant.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/inscription-enfant.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/com/manara/portail/controller/AuthControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/manara/portail/controller/AuthControllerTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/com/manara/portail/controller/adminControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/manara/portail/controller/adminControllerTest.class" afterDir="false" />
+>>>>>>> main
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
