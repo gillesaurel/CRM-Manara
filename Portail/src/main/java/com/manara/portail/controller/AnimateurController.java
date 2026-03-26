@@ -2,17 +2,28 @@
 
 package com.manara.portail.controller;
 
+import com.manara.portail.model.Utilisateur;
+import com.manara.portail.service.UtilisateurService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 @Controller
 public class AnimateurController {
+
+    @Autowired
+    UtilisateurService UtilService;
+
     @GetMapping("/animateur")
-    public String pageAccueil(){
+    public String pageAccueil(Model model){
         return "animateur";
     }
 
     @GetMapping("/animateur/inscriptions")
-    public String pageInscription() {
+    public String pageInscription(Model model) {
+        model.addAttribute("enfant", UtilService.afficherUtilisateurs());
         return "animateur_inscription";
     }
 
