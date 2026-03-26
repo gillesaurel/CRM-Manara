@@ -39,18 +39,25 @@
         </p>
         <div class="quick-grid">
             <table>
+                <thead>
                 <tr>
                     <th>Nom</th>
                     <th>Age</th>
-                    <th>Attendance
+                    <th>Attendance</th>
                 </tr>
-                <tr>
-                    <td>Joe</td>
-                    <td>67</td>
-                    <td>Oui</td>
+                </thead>
+                <tbody>
+                <!-- Loop through the "enfant" attribute from your model -->
+                <tr th:each="u : ${enfant}">
+                    <!-- Access properties of the Utilisateur object -->
+                    <td th:text="${u.nom}">Nom</td>
+                    <td >0</td>
+                    <!-- Example: If attendance is a boolean, show 'Oui'/'Non' -->
+                    <td     >Non</td>
                 </tr>
+                </tbody>
             </table>
-            <a></a>
+
         </div>
     </section>
 
