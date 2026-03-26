@@ -4,6 +4,7 @@ package com.manara.portail.model;
 
 import jakarta.persistence.*;
 import com.manara.portail.model.Role;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "utilisateur")
@@ -24,8 +25,8 @@ public class Utilisateur {
     @Column(nullable = false)
     private String motdepasse;
 
-    @ManyToOne
     @JoinColumn(name = "role_id")
+    @ManyToOne
     private Role role;
 
     // getters and setters
