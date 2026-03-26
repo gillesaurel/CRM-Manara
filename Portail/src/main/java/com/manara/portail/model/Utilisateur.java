@@ -25,7 +25,7 @@ public class Utilisateur {
     private String motdepasse;
 
     @ManyToOne
-        @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id")
     private Role role;
 
     // getters and setters

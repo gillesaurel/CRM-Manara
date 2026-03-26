@@ -34,7 +34,6 @@ public class AuthController {
     @GetMapping("/register")
     public String pageInscription(Model model) {
         model.addAttribute("utilisateur", new Utilisateur());
-
         return "inscription";
     }
 
@@ -130,5 +129,5 @@ public class AuthController {
         cookie.setHttpOnly(true);
         return cookie;
     }
-
+   
 }
