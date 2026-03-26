@@ -1,37 +1,34 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <title>Manara - Centre Communautaire</title>
+    <link th:rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Title</title>
 </head>
 <body>
 
-<header th:replace="fragments/main::header"></header>
+    <header th:replace="fragments/main::header">
 
-<section class="bienvenue-section">
-    <h1>Bienvenue à votre centre communautaire Manara</h1>
-    <p th:if="${cookieValue != null}" class="welcome-message">
-        Content de vous revoir !
-    </p>
-</section>
+    </header>
 
-<section class="objectif-section">
-    <div class="objectif-content">
-        <h2>Nous travaillons en collaboration avec les parents afin de proposer et d'organiser des activités enrichissantes et gratuites pour les enfants.</h2>
-        <a th:href="@{/activites}" class="btn-explorer">Explorer les activités gratuites</a>
-    </div>
 
-    <div class="carrousel-container">
-        <div class="carrousel-images">
-            <th:block th:each="activite : ${activitesPopulaires}">
-                <img th:if="${activite.imageUrl}"
-                     th:src="@{${activite.imageUrl}}"
-                     th:alt="${activite.nom}"
-                     th:title="${activite.nom}">
-            </th:block>
-            <th:block th:unless="${activitesPopulaires}">
+    <section class="bienvenue-section">
+        <h1>Bienvenue à votre centre communautaire Manara</h1>
+    </section>
+
+
+
+
+    <section class="objectif-section">
+
+        <div class="objectif-content">
+            <h2>Nous travaillons en collaboration avec les parents afin de proposer et d'organiser des activités enrichissantes pour les enfants.</h2>
+            <a th:href="@{/}" class="btn-explorer">Explorer les activités</a>
+        </div>
+
+
+        <div class="carrousel-container">
+            <div class="carrousel-images">
                 <img th:src="@{/images/activite1.png}" alt="Activité 1">
                 <img th:src="@{/images/activite2.png}" alt="Activité 2">
                 <img th:src="@{/images/activite3.png}" alt="Activité 3">
@@ -40,44 +37,30 @@
                 <img th:src="@{/images/activite6.png}" alt="Activité 6">
                 <img th:src="@{/images/activite7.png}" alt="Activité 7">
                 <img th:src="@{/images/activite8.png}" alt="Activité 8">
-            </th:block>
+
+                <!--Images dupliquées pour carrousel-->
+                <img th:src="@{/images/activite1.png}" alt="Activité 1">
+                <img th:src="@{/images/activite2.png}" alt="Activité 2">
+                <img th:src="@{/images/activite3.png}" alt="Activité 3">
+                <img th:src="@{/images/activite4.png}" alt="Activité 4">
+                <img th:src="@{/images/activite5.png}" alt="Activité 5">
+                <img th:src="@{/images/activite6.png}" alt="Activité 6">
+                <img th:src="@{/images/activite7.png}" alt="Activité 7">
+                <img th:src="@{/images/activite8.png}" alt="Activité 8">
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="statistiques-section" th:if="${stats}">
-    <div class="statistique">
-        <span class="stat-chiffre" th:text="${stats.nbParents}">0</span>
-        <span class="stat-label">Parents</span>
-    </div>
-    <div class="statistique">
-        <span class="stat-chiffre" th:text="${stats.nbEnfants}">0</span>
-        <span class="stat-label">Enfants</span>
-    </div>
-    <div class="statistique">
-        <span class="stat-chiffre" th:text="${stats.nbActivites}">0</span>
-        <span class="stat-label">Activités gratuites</span>
-    </div>
-    <div class="statistique">
-        <span class="stat-chiffre" th:text="${stats.nbSessions}">0</span>
-        <span class="stat-label">Sessions</span>
-    </div>
-</section>
 
-<section class="inscription-rapide" th:if="${cookieValue == null}">
-    <h2>Rejoignez-nous !</h2>
-    <p>Créez un compte parent pour inscrire gratuitement vos enfants à nos activités</p>
-    <a th:href="@{/register}" class="btn-inscription">S'inscrire gratuitement</a>
-    <p>Déjà inscrit ? <a th:href="@{/login}">Se connecter</a></p>
-</section>
 
-<section class="contact-rapide">
-    <h2>Une question ?</h2>
-    <p>N'hésitez pas à nous contacter</p>
-    <a th:href="@{/contact}" class="btn-contact">Nous contacter</a>
-</section>
+    <main>
 
-<footer th:replace="fragments/main::footer"></footer>
+    </main>
+
+
+    <footer th:replace="fragments/main::footer">
+
+    </footer>
 
 </body>
 </html>
