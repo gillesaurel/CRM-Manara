@@ -4,11 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35507da5-958b-421a-8e8d-ee3287785ab7" name="Changes" comment="" />
+    <list default="true" id="35507da5-958b-421a-8e8d-ee3287785ab7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AnimateurController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AnimateurController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Utilisateur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Utilisateur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/manara/portail/controller/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/model/Utilisateur.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/manara/portail/model/Utilisateur.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sql/Role.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../sql/Role.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sql/Utilisateur.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../sql/Utilisateur.sql" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -18,9 +35,13 @@
     </option>
     <option name="explicitlyEnabledProfiles" value="native,nativeTest" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="3BOS2u7lkUTyYEFQgMM3rSgz28I" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -39,18 +60,22 @@
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.PortailApplication.executor": "Run",
-    "last_opened_file_path": "C:/Users/6230903/Downloads/crm-manara/crm-manara_marc-andre_gille-aurel_julien-jose-408b5ea75bde125a4bc6435a0007b7dc3a3319f7/Portail",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Manes/Downloads/crm-manara_marc-andre_gille-aurel_julien-jose/Portail",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Facets",
     "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -153,8 +178,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
-        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
       </set>
     </attachedChunks>
   </component>
