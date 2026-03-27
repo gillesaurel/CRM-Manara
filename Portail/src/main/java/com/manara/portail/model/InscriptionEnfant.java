@@ -22,6 +22,21 @@ public class InscriptionEnfant {
     @JoinColumn(name = "utilisateur_id")
     private Utilisateur utilisateur;
 
+    @ManyToOne
+    @JoinColumn(name = "enfant_id")
+    private Enfant enfant;
+
+    @ManyToOne
+    @JoinColumn(name = "session_id")
+    private SessionParent session;
+
+    public SessionParent getSession() { return session; }
+    public void setSession(SessionParent session) { this.session = session; }
+
+    // + getter and setter
+    public Enfant getEnfant() { return enfant; }
+    public void setEnfant(Enfant enfant) { this.enfant = enfant; }
+
     public ActiviteAdmin getActivite() {
         return activite;
     }
