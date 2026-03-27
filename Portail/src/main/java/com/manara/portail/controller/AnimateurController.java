@@ -2,6 +2,11 @@
 
 package com.manara.portail.controller;
 
+import com.manara.portail.model.ActiviteParent;
+import com.manara.portail.model.Enfant;
+import com.manara.portail.model.InscriptionEnfant;
+import com.manara.portail.model.SessionParent;
+import com.manara.portail.service.SessionParentService;
 import com.manara.portail.service.UtilisateurService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,23 +16,55 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 @Controller
 public class AnimateurController {
 
     @Autowired
     UtilisateurService UtilService;
 
+    @Autowired
+    SessionParentService sessionParentService;
 
     @GetMapping("/animateur")
     public String pageAccueil(HttpServletRequest request, Model model) {
-        getCookies(request, model, "role");
+        getCookieValue(request, "role");
 
         return "animateur";
     }
 
     @GetMapping("/animateur/inscriptions")
     public String pageInscription(HttpServletRequest request, Model model) {
-        model.addAttribute("enfant", UtilService.afficherUtilisateurs());
+        // Get animateur id from cookie
+        String animateurIdStr = getCookieValue(request, "id");
+
+        if (animateurIdStr == null) {
+            return "redirect:/login";
+        }
+
+        Integer animateurId = Integer.parseInt(animateurIdStr);
+        List<SessionParent> sessions = sessionParentService
+                .getSessionsAvecEnfantsByAnimateur(animateurId);
+
+        // Group enfants by activite
+        Map<ActiviteParent, List<Enfant>> activitesEnfants = new LinkedHashMap<>();
+        for (SessionParent session : sessions) {
+            ActiviteParent activite = session.getActivite();
+            activitesEnfants.computeIfAbsent(activite, k -> new ArrayList<>());
+
+            for (InscriptionEnfant inscription : session.getInscriptions()) {
+                Enfant enfant = inscription.getEnfant();
+                if (!activitesEnfants.get(activite).contains(enfant)) {
+                    activitesEnfants.get(activite).add(enfant);
+                }
+            }
+        }
+
+        model.addAttribute("activitesEnfants", activitesEnfants);
         return "animateur_inscription";
     }
 
@@ -44,23 +81,15 @@ public class AnimateurController {
 
 
 
-    private void getCookies(HttpServletRequest request, Model model, String cookieName) {
-
-        // Get cookies from the request
+    private String getCookieValue(HttpServletRequest request, String cookieName) {
         Cookie[] cookies = request.getCookies();
-
-        String cookieValue = null;
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                // Example: Check for a cookie named "userSession"
                 if (cookieName.equals(cookie.getName())) {
-                    cookieValue = cookie.getValue();
-                    break;  // Exit once we find the cookie
+                    return cookie.getValue();
                 }
             }
         }
-        System.out.println("cookieValue: " + cookieValue);
-        // Add the cookie value to the model, so it can be used in Thymeleaf
-        model.addAttribute("cookieValue", cookieValue);
+        return null;
     }
 }
