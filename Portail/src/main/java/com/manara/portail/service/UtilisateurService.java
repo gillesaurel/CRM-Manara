@@ -17,6 +17,7 @@ public class UtilisateurService {
     UtilisateurRepository utilisateurRepository;   //     UtilisateurRepository repos = new  UtilisateurRepository ()
 
 
+
     public List<Utilisateur> afficherUtilisateurs(){
         return ( List<Utilisateur> ) utilisateurRepository.findAll();
     }
