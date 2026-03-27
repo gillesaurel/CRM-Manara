@@ -28,7 +28,13 @@ public class UtilisateurService {
         return utilisateurRepository.save(utilisateur);
     }
 
-    public Utilisateur getUtilisateurByEmailAndMotDePasse(String email, String password){return utilisateurRepository.getUtilisateurByEmailAndMotDePasse(email,password);}
+    public Utilisateur getUtilisateurByEmailAndMotDePasse(String email, String password){
+        return utilisateurRepository.getUtilisateurByEmailAndMotDePasse(email,password);}
+
+
+    public Utilisateur findByEmail(String email) {
+        return utilisateurRepository.findByEmail(email);
+    }
 
 
 

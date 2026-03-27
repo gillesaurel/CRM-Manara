@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <title>Sessions - Manara</title>
+</head>
+<body>
+
+<header th:replace="fragments/main::header"></header>
+
+<main class="dashboard-container">
+  <div class="page-header">
+    <h1 th:text="${activite.nom}">Natation</h1>
+    <p class="page-subtitle" th:text="${activite.description}">Description de l'activité</p>
+    <a th:href="@{/parent/activites}" class="btn-back">← Retour aux activités</a>
+  </div>
+
+  <div class="activite-info-bar">
+    <div class="info-item">
+      <strong>Âge requis:</strong>
+      <span th:text="${activite.ageMin} + ' - ' + ${activite.ageMax} + ' ans'">3-6 ans</span>
+    </div>
+    <div class="info-item">
+      <strong>Activité:</strong>
+      <span class="gratuit-badge">✨ Gratuite</span>
+    </div>
+  </div>
+
+  <h2>Sessions disponibles</h2>
+
+  <div th:if="${sessions.isEmpty()}" class="empty-state">
+    <p>Aucune session disponible pour le moment</p>
+  </div>
+
+  <div th:unless="${sessions.isEmpty()}" class="sessions-liste">
+    <div class="session-card" th:each="session : ${sessions}">
+      <div class="session-date">
+        <span class="jour" th:text="${#temporals.format(session.date, 'dd')}">15</span>
+        <span class="mois" th:text="${#temporals.format(session.date, 'MMM')}">JAN</span>
+      </div>
+
+      <div class="session-details">
+        <h3 th:text="${session.activite.nom}">Natation</h3>
+        <p class="session-horaire">
+          <span th:text="${session.heureDebut}">10h00</span> -
+          <span th:text="${session.heureFin}">11h00</span>
+        </p>
+        <p class="session-lieu" th:text="${session.lieu}">Piscine municipale</p>
+        <div class="session-capacite">
+          <span class="places-dispo" th:text="${session.capaciteMax - session.nbInscrits} + ' places disponibles'">5 places disponibles</span>
+          <span class="capacite-total" th:text="'/ ' + ${session.capaciteMax} + ' places'">/ 10 places</span>
+        </div>
+      </div>
+
+      <div class="session-actions">
+        <select class="select-enfant" th:id="'enfant-' + ${session.id}" required>
+          <option value="">Choisir un enfant</option>
+          <option th:each="enfant : ${enfantsDuParent}"
+                  th:value="${enfant.id}"
+                  th:text="${enfant.prenom} + ' ' + ${enfant.nom}">
+            Jean Dupont
+          </option>
+        </select>
+        <button class="btn-inscrire"
+                th:attr="data-session-id=${session.id}"
+                onclick="inscrireEnfant(this)">
+          S'inscrire gratuitement
+        </button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer th:replace="fragments/main::footer"></footer>
+
+<script>
+  function inscrireEnfant(button) {
+      const sessionId = button.getAttribute('data-session-id');
+      const select = document.getElementById('enfant-' + sessionId);
+      const enfantId = select.value;
+
+      if (!enfantId) {
+          alert('Veuillez sélectionner un enfant');
+          return;
+      }
+
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '/parent/inscription';
+
+      const csrfInput = document.createElement('input');
+      csrfInput.type = 'hidden';
+      csrfInput.name = '_csrf';
+      csrfInput.value = '[[${_csrf.token}]]';
+
+      const enfantInput = document.createElement('input');
+      enfantInput.type = 'hidden';
+      enfantInput.name = 'enfantId';
+      enfantInput.value = enfantId;
+
+      const sessionInput = document.createElement('input');
+      sessionInput.type = 'hidden';
+      sessionInput.name = 'sessionId';
+      sessionInput.value = sessionId;
+
+      form.appendChild(csrfInput);
+      form.appendChild(enfantInput);
+      form.appendChild(sessionInput);
+
+      document.body.appendChild(form);
+      form.submit();
+  }
+</script>
+
+</body>
+</html>
