@@ -1,3 +1,7 @@
+:root {
+  --global-color1: #043d5b; /* global scope */
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +15,7 @@ html {
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
-    background-color: #043d5b;
+    background-color: var(--global-color1);
     min-height: 100vh;
     height: 100%;
     display: flex;
@@ -46,7 +50,7 @@ nav {
 
 nav a {
     text-decoration: none;
-    color: #043d5b;
+    color: var(--global-color1);
     font-weight: bold;
     padding: 8px 16px;
     border-radius: 24px;
@@ -63,7 +67,7 @@ nav a:hover {
 
 nav a[href*="/login"] {
     color: white !important;
-    background-color: #043d5b !important;
+    background-color: var(--global-color1) !important;
 }
 
 nav a[href*="/login"]:hover {
@@ -75,6 +79,11 @@ nav a[href*="/login"]:hover {
 /* Section bienvenue */
 .bienvenue-section {
     background-color: #043d5b;
+    height: 100px;
+    background-color: var(--global-color1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: white;
     text-align: center;
     padding: 40px 20px;
@@ -102,9 +111,25 @@ nav a[href*="/login"]:hover {
 /* Section Objectif */
 .objectif-section {
     background-color: #fccd2c;
-    color: #043d5b;
+    color: var(--global-color1);
     padding: 80px 30px;
     text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+.activity-selector {
+    background-color: #fccd2c;
+    color: var(--global-color1);
+    padding: 80px 30px;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     width: 100vw;
     position: relative;
     left: 50%;
@@ -131,7 +156,7 @@ nav a[href*="/login"]:hover {
 /* Bouton Explorer */
 .btn-explorer {
     display: inline-block;
-    background-color: #043d5b;
+    background-color: var(--global-color1);
     color: white;
     font-weight: bold;
     font-size: 16px;
@@ -147,7 +172,7 @@ nav a[href*="/login"]:hover {
 
 .btn-explorer:hover {
     background-color: #fff;
-    color: #043d5b;
+    color: var(--global-color1);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(65, 105, 225, 0.4);
 }
@@ -312,7 +337,7 @@ nav a[href*="/login"]:hover {
 
 /* Formulaire */
 .formulaire-section {
-    background-color: #043d5b;
+    background-color: var(--global-color1);
     padding: 60px 20px;
     flex: 1;
     display: flex;
@@ -332,7 +357,7 @@ nav a[href*="/login"]:hover {
 
 .form-container h1 {
     text-align: center;
-    color: #043d5b;
+    color: var(--global-color1);
     margin-bottom: 30px;
     font-size: 28px;
     font-weight: bold;
@@ -360,7 +385,7 @@ nav a[href*="/login"]:hover {
 
 .form-control:focus {
     outline: none;
-    border-color: #043d5b;
+    border-color: var(--global-color1);
     box-shadow: 0 0 0 3px rgba(4,61,91,0.1);
 }
 
@@ -380,6 +405,11 @@ nav a[href*="/login"]:hover {
     flex: 1;
     padding: 12px;
     background: #043d5b;
+/* Boutons */
+.formulaire-section button {
+    width: 100%;
+    padding: 14px;
+    background: var(--global-color1);
     color: #fccd2c;
     border: none;
     border-radius: 8px;
@@ -401,6 +431,8 @@ nav a[href*="/login"]:hover {
     background: #6c757d;
     color: white;
     text-align: center;
+    margin-top: 16px;
+    color: var(--global-color1);
     text-decoration: none;
     border-radius: 8px;
     font-size: 16px;
@@ -546,6 +578,17 @@ nav a[href*="/login"]:hover {
     color: #fccd2c !important;
     transform: translateY(-1px);
 }
+ .btn-group-inscription button {
+     width: 100%;
+     padding: 12px 20px;
+     background-color: #fccd2c;
+     color: var(--global-color1) !important;
+     border: 2px solid var(--global-color1);
+     border-radius: 24px;
+     font-weight: bold;
+     font-size: 16px;
+     cursor: not-allowed;
+ }
 
 .btn-group-inscription a {
     color: #043d5b !important;
@@ -556,6 +599,13 @@ nav a[href*="/login"]:hover {
     transition: all 0.3s ease;
 }
 
+ .btn-group-inscription a:hover {
+     background-color: var(--global-color1);
+     color: #fccd2c !important;
+     transform: translateY(-1px);
+ }
+/* Bottom nav (uniforme, basee sur animateur) */
+.bottom-nav{
 .btn-group-inscription a:hover {
     background-color: #043d5b;
     color: #fccd2c !important;
@@ -595,6 +645,8 @@ nav a[href*="/login"]:hover {
 
 .bottom-nav .nav-item.active {
     color: #043d5b;
+.bottom-nav .nav-item.active{
+    color: var(--global-color1);
     background: rgba(252,205,44,0.35);
     border: 1px solid rgba(252,205,44,0.60);
 }
@@ -1156,4 +1208,17 @@ footer {
     }
 
 
+}
+table, td, th {
+  border: 1px solid var(--global-color1);
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 10px;
 }
