@@ -4,11 +4,64 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35507da5-958b-421a-8e8d-ee3287785ab7" name="Changes" comment="" />
+    <list default="true" id="35507da5-958b-421a-8e8d-ee3287785ab7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/projet.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/ParentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/ParentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/InscriptionEnfant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/InscriptionEnfant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/UtilisateurService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/UtilisateurService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/connexion.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/connexion.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inscription-enfant.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inscription-enfant.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inscription.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inscription.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/manara/portail/controller/AuthControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/manara/portail/controller/AuthControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/manara/portail/controller/adminControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/manara/portail/controller/adminControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/manara/portail/controller/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/controller/HomeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/manara/portail/controller/HomeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/controller/ParentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/manara/portail/controller/ParentController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/model/InscriptionEnfant.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/manara/portail/model/InscriptionEnfant.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/service/UtilisateurService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/manara/portail/service/UtilisateurService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/connexion.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/connexion.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/fragments/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/fragments/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inscription-enfant.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/inscription-enfant.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inscription.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/inscription.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/manara/portail/controller/AuthControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/manara/portail/controller/AuthControllerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/manara/portail/controller/adminControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/manara/portail/controller/adminControllerTest.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -16,11 +69,10 @@
         <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
       </MavenGeneralSettings>
     </option>
-    <option name="explicitlyEnabledProfiles" value="native,nativeTest" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="3BOS2u7lkUTyYEFQgMM3rSgz28I" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -29,6 +81,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.PortailApplication.executor": "Run",
+    "DefaultHtmlFileTemplate": "HTML File",
     "JUnit.AuthControllerTest.executor": "Run",
     "JUnit.AuthControllerTest.testPageInscription.executor": "Run",
     "JUnit.AuthControllerTest.testpageInscription.executor": "Run",
@@ -41,8 +94,16 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Spring Boot.PortailApplication.executor": "Run",
-    "last_opened_file_path": "C:/Users/6230903/Downloads/crm-manara/crm-manara_marc-andre_gille-aurel_julien-jose-408b5ea75bde125a4bc6435a0007b7dc3a3319f7/Portail",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "julien__partie2__nouvelle",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/jose/Bureau/Julien_Hiver_2026/Projet_Manara_ParJulien/crm-manara_marc-andre_gille-aurel_julien-jose/Portail/pom.xml",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -54,6 +115,18 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\HP\Desktop\Projet_Manara_ParJulien\crm-manara_marc-andre_gille-aurel_julien-jose\Portail\src\main\resources\templates" />
+      <recent name="C:\Users\HP\Desktop\Projet_Manara_ParJulien\crm-manara_marc-andre_gille-aurel_julien-jose\Portail\src\main\resources\templates\fragments" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.manara.portail.repository" />
+    </key>
+  </component>
   <component name="RunManager" selected="Spring Boot.PortailApplication">
     <configuration name="AuthControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Portail" />
@@ -153,8 +226,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
-        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.25410.129" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-IU-251.25410.129" />
       </set>
     </attachedChunks>
   </component>
@@ -166,6 +239,8 @@
       <option name="presentableId" value="Default" />
       <updated>1774358419976</updated>
       <workItem from="1774358421011" duration="6456000" />
+      <workItem from="1774609037265" duration="3286000" />
+      <workItem from="1774612391848" duration="15054000" />
     </task>
     <servers />
   </component>

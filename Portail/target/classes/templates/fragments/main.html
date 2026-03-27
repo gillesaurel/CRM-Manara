@@ -11,14 +11,23 @@
         <img th:src="@{/images/manara_logo.png}" alt="Logo Manara">
 
         <nav>
-            <p>[[${cookieValue}]]</p>
             <a th:href="@{/}">Accueil</a>
-            <a th:href="@{/}">À propos</a>
-            <a th:href="@{/animateur}" th:if="${cookieValue=='ANIMATEUR'}">Animateur</a>
-            <a th:href="@{/register}" th:if="${cookieValue==null}">S'inscrire</a>
-            <a th:href="@{/login}" th:if="${cookieValue==null}">Se connecter</a>
-            <a th:href="@{/deconnexion}" th:if="${cookieValue!=null}">Deconnexion</a>
+            <a th:href="@{/apropos}">À propos</a>
+
+            <!-- Si l'utilisateur est connecté -->
+            <div th:if="${#authorization.expression('isAuthenticated()')}" class="user-menu">
+                <span th:text="${#authentication.name}"></span>
+                <a th:href="@{/parent/dashboard}">Mon espace</a>
+                <a th:href="@{/deconnexion}">Déconnexion</a>
+            </div>
+
+            <!-- Si l'utilisateur n'est PAS connecté -->
+            <div th:unless="${#authorization.expression('isAuthenticated()')}">
+                <a th:href="@{/register}">S'inscrire</a>
+                <a th:href="@{/login}">Se connecter</a>
+            </div>
         </nav>
+
     </header>
 
     <!-- HEADER ADMINISTRATEUR

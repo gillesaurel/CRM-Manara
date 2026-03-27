@@ -1,6 +1,7 @@
 package com.manara.portail.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,19 +12,30 @@ public class ActiviteParent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
+    @NotBlank(message = "Le nom de l'activité est requis")
+    @Size(min = 3, max = 100, message = "Le nom doit contenir entre 3 et 100 caractères")
     @Column(length = 100, nullable = false, unique = true)
     private String nom;
 
+    @Size(max = 500, message = "La description ne peut pas dépasser 500 caractères")
     @Column(length = 500)
     private String description;
 
-
+    @NotNull(message = "L'âge minimum est requis")
+    @Min(value = 0, message = "L'âge minimum doit être au moins 0")
+    @Max(value = 18, message = "L'âge minimum ne peut pas dépasser 18")
     @Column(name = "age_min", nullable = false)
     private Integer ageMin;
 
+    @NotNull(message = "L'âge maximum est requis")
+    @Min(value = 1, message = "L'âge maximum doit être au moins 1")
+    @Max(value = 99, message = "L'âge maximum ne peut pas dépasser 99")
     @Column(name = "age_max", nullable = false)
     private Integer ageMax;
+
+    @NotNull(message = "Le prix est requis")
+    @DecimalMin(value = "0.0", inclusive = true, message = "Le prix doit être positif")
+    @DecimalMax(value = "9999.99", message = "Le prix ne peut pas dépasser 9999.99")
     @Column(nullable = false)
     private Float prix = 0.0f;
 
