@@ -36,4 +36,6 @@ public interface SessionParentRepository extends JpaRepository<SessionParent, In
 
     @Query("SELECT s FROM SessionParent s WHERE s.animateur.id = :animateurId AND s.date = :date")
     List<SessionParent> findByAnimateurIdAndDate(@Param("animateurId") Integer animateurId, @Param("date") LocalDate date);
+    @Query("SELECT s FROM SessionParent s LEFT JOIN FETCH s.inscriptions i LEFT JOIN FETCH i.enfant WHERE s.animateur.id = :animateurId")
+    List<SessionParent> findSessionsAvecEnfantsByAnimateur(@Param("animateurId") Integer animateurId);
 }

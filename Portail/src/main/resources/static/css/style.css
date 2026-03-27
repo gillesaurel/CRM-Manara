@@ -1,5 +1,5 @@
 :root {
-  --global-color1: #043d5b; /* global scope */
+    --global-color1: #043d5b;
 }
 
 * {
@@ -78,8 +78,6 @@ nav a[href*="/login"]:hover {
 
 /* Section bienvenue */
 .bienvenue-section {
-    background-color: #043d5b;
-    height: 100px;
     background-color: var(--global-color1);
     display: flex;
     align-items: center;
@@ -114,7 +112,6 @@ nav a[href*="/login"]:hover {
     color: var(--global-color1);
     padding: 80px 30px;
     text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     width: 100vw;
     position: relative;
     left: 50%;
@@ -124,12 +121,12 @@ nav a[href*="/login"]:hover {
     overflow-wrap: break-word;
     hyphens: auto;
 }
+
 .activity-selector {
     background-color: #fccd2c;
     color: var(--global-color1);
     padding: 80px 30px;
     text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     width: 100vw;
     position: relative;
     left: 50%;
@@ -405,11 +402,6 @@ nav a[href*="/login"]:hover {
     flex: 1;
     padding: 12px;
     background: #043d5b;
-/* Boutons */
-.formulaire-section button {
-    width: 100%;
-    padding: 14px;
-    background: var(--global-color1);
     color: #fccd2c;
     border: none;
     border-radius: 8px;
@@ -431,8 +423,6 @@ nav a[href*="/login"]:hover {
     background: #6c757d;
     color: white;
     text-align: center;
-    margin-top: 16px;
-    color: var(--global-color1);
     text-decoration: none;
     border-radius: 8px;
     font-size: 16px;
@@ -499,17 +489,6 @@ nav a[href*="/login"]:hover {
     color: #0c5460;
 }
 
-/* Messages d'erreur */
-.error-message {
-    color: #dc3545;
-    font-size: 13px;
-    margin-top: 5px;
-}
-
-.has-error .form-control {
-    border-color: #dc3545;
-}
-
 /* Empty state */
 .empty-state {
     text-align: center;
@@ -564,8 +543,8 @@ nav a[href*="/login"]:hover {
     width: 100%;
     padding: 12px 20px;
     background-color: #fccd2c;
-    color: #043d5b !important;
-    border: 2px solid #043d5b;
+    color: var(--global-color1) !important;
+    border: 2px solid var(--global-color1);
     border-radius: 24px;
     font-weight: bold;
     font-size: 16px;
@@ -574,21 +553,10 @@ nav a[href*="/login"]:hover {
 }
 
 .btn-group-inscription button:hover {
-    background-color: #043d5b;
+    background-color: var(--global-color1);
     color: #fccd2c !important;
     transform: translateY(-1px);
 }
- .btn-group-inscription button {
-     width: 100%;
-     padding: 12px 20px;
-     background-color: #fccd2c;
-     color: var(--global-color1) !important;
-     border: 2px solid var(--global-color1);
-     border-radius: 24px;
-     font-weight: bold;
-     font-size: 16px;
-     cursor: not-allowed;
- }
 
 .btn-group-inscription a {
     color: #043d5b !important;
@@ -599,15 +567,8 @@ nav a[href*="/login"]:hover {
     transition: all 0.3s ease;
 }
 
- .btn-group-inscription a:hover {
-     background-color: var(--global-color1);
-     color: #fccd2c !important;
-     transform: translateY(-1px);
- }
-/* Bottom nav (uniforme, basee sur animateur) */
-.bottom-nav{
 .btn-group-inscription a:hover {
-    background-color: #043d5b;
+    background-color: var(--global-color1);
     color: #fccd2c !important;
     transform: translateY(-1px);
 }
@@ -644,8 +605,6 @@ nav a[href*="/login"]:hover {
 }
 
 .bottom-nav .nav-item.active {
-    color: #043d5b;
-.bottom-nav .nav-item.active{
     color: var(--global-color1);
     background: rgba(252,205,44,0.35);
     border: 1px solid rgba(252,205,44,0.60);
@@ -674,7 +633,6 @@ footer {
     color: #6c757d;
     font-size: 14px;
 }
-
 
 /* Page À propos */
 .apropos-section {
@@ -767,12 +725,7 @@ footer {
     text-decoration: underline;
 }
 
-
-
-/* ================ */
-/* Dashboard Parent
-/* ================ */
-
+/* Dashboard Parent */
 .dashboard-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -893,11 +846,6 @@ footer {
     padding: 15px;
     background: #f8f9fa;
     border-radius: 8px;
-    transition: transform 0.2s ease;
-}
-
-.enfant-card:hover {
-    transform: translateX(5px);
 }
 
 .enfant-avatar {
@@ -943,15 +891,7 @@ footer {
 .btn-icon {
     text-decoration: none;
     font-size: 16px;
-    padding: 5px;
-    border-radius: 4px;
-    transition: all 0.3s ease;
 }
-
-.btn-icon.view { color: #043d5b; }
-.btn-icon.edit { color: #fccd2c; }
-.btn-icon.view:hover { background: #e0e0e0; }
-.btn-icon.edit:hover { background: #fff3cd; }
 
 .activites-list, .messages-list {
     display: flex;
@@ -965,11 +905,6 @@ footer {
     padding: 12px;
     background: #f8f9fa;
     border-radius: 8px;
-    transition: all 0.3s ease;
-}
-
-.activite-item:hover, .message-item:hover {
-    background: #e9ecef;
 }
 
 .message-item.unread {
@@ -1009,7 +944,7 @@ footer {
 }
 
 .activite-details p, .message-content p {
-    margin: 0 0 5px 0;
+    margin: 0;
     font-size: 12px;
     color: #666;
 }
@@ -1069,7 +1004,7 @@ footer {
     font-size: 14px;
 }
 
-/* User menu dans la navigation */
+/* User menu */
 .user-menu {
     display: flex;
     align-items: center;
@@ -1094,24 +1029,19 @@ footer {
     color: #043d5b !important;
 }
 
+/* Tableaux */
+table, td, th {
+    border: 1px solid var(--global-color1);
+    text-align: left;
+}
 
-@media (max-width: 768px) {
-    .apropos-container {
-        padding: 30px 20px;
-    }
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
 
-    .apropos-container h1 {
-        font-size: 24px;
-    }
-
-    .apropos-content > p {
-        font-size: 16px;
-    }
-
-    .apropos-values {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
+th, td {
+    padding: 10px;
 }
 
 /* Responsive */
@@ -1175,6 +1105,23 @@ footer {
     .stat-chiffre {
         font-size: 36px;
     }
+
+    .apropos-container {
+        padding: 30px 20px;
+    }
+
+    .apropos-container h1 {
+        font-size: 24px;
+    }
+
+    .apropos-content > p {
+        font-size: 16px;
+    }
+
+    .apropos-values {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1206,19 +1153,4 @@ footer {
         width: 300px;
         height: 200px;
     }
-
-
-}
-table, td, th {
-  border: 1px solid var(--global-color1);
-  text-align: left;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th, td {
-  padding: 10px;
 }
