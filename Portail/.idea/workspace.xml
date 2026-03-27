@@ -4,71 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b5f064e-259d-49f7-945d-9a2421e25234" name="Changes" comment="">
+    <list default="true" id="6b5f064e-259d-49f7-945d-9a2421e25234" name="Changes" comment="Fixes">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Animateur.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/PortailApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/PortailApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AnimateurController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AnimateurController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/ParentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/ParentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/ActiviteAdmin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/ActiviteAdmin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Inscription.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Inscription.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/InscriptionEnfant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/InscriptionEnfant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/SessionAdmin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/SessionAdmin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Utilisateur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Utilisateur.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/ActiviteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/ActiviteRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/RoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/RoleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/SessionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/SessionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteDejaFullException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteDejaFullException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteIntrouvableException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteIntrouvableException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/RoleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/SessionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/SessionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/animateur.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/animateur.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/style-admin.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/style-admin.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/styleInscriptionEnfant.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/styleInscriptionEnfant.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/administrateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/administrateur.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/animateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/animateur.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/animateur.html.bkp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/animateur.html.bkp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/connexion.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/connexion.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/animateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/animateur.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/fragmentAdministrateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/fragmentAdministrateur.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/parent.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/parent.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inscription-enfant.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inscription-enfant.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inscription.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inscription.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/parent.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/parent.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/manara/portail/PortailApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/manara/portail/PortailApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/manara/portail/controller/adminControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/manara/portail/controller/adminControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/css/animateur.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/animateur.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/css/style-admin.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/style-admin.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/css/styleInscriptionEnfant.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/styleInscriptionEnfant.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/administrateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/administrateur.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/animateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/animateur.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/animateur.html.bkp" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/animateur.html.bkp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/connexion.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/connexion.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/fragments.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/fragments.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/fragments/animateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/fragments/animateur.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/fragments/fragmentAdministrateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/fragments/fragmentAdministrateur.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/fragments/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/fragments/main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/fragments/parent.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/fragments/parent.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/inscription-enfant.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/inscription-enfant.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/inscription.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/inscription.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/parent.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/parent.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/ActiviteAdminReposistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/ActiviteAdminReposistory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sql/Role.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../sql/Role.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -95,6 +48,11 @@
     "kotlin-language-version-configured": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.manara.portail.model" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="PortailApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
@@ -131,6 +89,15 @@
       <option name="presentableId" value="Default" />
       <updated>1774653023002</updated>
     </task>
+    <task id="LOCAL-00001" summary="Fixes">
+      <option name="closed" value="true" />
+      <created>1774653564762</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1774653564763</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -155,5 +122,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixes" />
   </component>
 </project>
