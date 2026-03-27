@@ -4,258 +4,156 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <list default="true" id="35507da5-958b-421a-8e8d-ee3287785ab7" name="Changes" comment="ajout des getmapping des futurs page animateur">
+    <list default="true" id="6b5f064e-259d-49f7-945d-9a2421e25234" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/PortailApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/PortailApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AnimateurController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AnimateurController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/animateur_inscription.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/animateur_inscription.html" afterDir="false" />
-=======
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AdminController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AnimateurController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AnimateurController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/HomeController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/ParentController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/dto/ActiviteDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/dto/CommunicationDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/dto/EnfantDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/dto/IncidentDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/dto/InscriptionEnfantDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/dto/ParentDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/dto/SessionDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/exception/ResourceNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/ActiviteAdmin.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/ActiviteParent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Communication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Enfant.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Incident.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Inscription.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/InscriptionEnfant.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Parent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Presence.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/SessionAdmin.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/SessionParent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/ActiviteParentRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/ActiviteRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/CommunicationRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/EnfantRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/IncidentRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/InscriptionEnfantRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/ParentRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/PresenceRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/SessionParentRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/SessionRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteDejaFullException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteIntrouvableException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteParentService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/CommunicationService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/InscriptionEnfantService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ParentService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/SessionService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/UtilisateurNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/PortailApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/controller/AdminController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/controller/AnimateurController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/controller/AuthController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/controller/HomeController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/controller/ParentController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/model/ActiviteAdmin.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/model/Inscription.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/model/InscriptionEnfant.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/model/Role.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/model/SessionAdmin.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/model/Utilisateur.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/repository/ActiviteRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/repository/RoleRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/repository/SessionRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/repository/UtilisateurRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/service/ActiviteDejaFullException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/service/ActiviteIntrouvableException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/service/ActiviteNotFoundException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/service/ActiviteService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/service/RoleService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/service/SessionService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/service/UtilisateurNotFoundException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/manara/portail/service/UtilisateurService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/ParentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/ParentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/ActiviteAdmin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/ActiviteAdmin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Inscription.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Inscription.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/InscriptionEnfant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/InscriptionEnfant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/SessionAdmin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/SessionAdmin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Utilisateur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Utilisateur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/ActiviteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/ActiviteRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/RoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/RoleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/SessionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/SessionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteDejaFullException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteDejaFullException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteIntrouvableException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteIntrouvableException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/RoleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/SessionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/SessionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/animateur.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/animateur.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/style-admin.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/style-admin.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/styleInscriptionEnfant.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/styleInscriptionEnfant.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/administrateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/administrateur.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/animateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/animateur.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/animateur.html.bkp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/animateur.html.bkp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/connexion.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/connexion.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/animateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/animateur.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/fragmentAdministrateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/fragmentAdministrateur.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/parent.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/parent.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inscription-enfant.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inscription-enfant.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inscription.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inscription.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/parent.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/parent.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/manara/portail/PortailApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/manara/portail/PortailApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/manara/portail/controller/adminControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/manara/portail/controller/adminControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/animateur.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/animateur.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/style-admin.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/style-admin.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/styleInscriptionEnfant.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/styleInscriptionEnfant.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/administrateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/administrateur.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/animateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/animateur.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/animateur.html.bkp" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/animateur.html.bkp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/connexion.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/connexion.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/fragments.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/fragments.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/fragments/animateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/fragments/animateur.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/fragments/fragmentAdministrateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/fragments/fragmentAdministrateur.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/fragments/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/fragments/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/fragments/parent.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/fragments/parent.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/templates/inscription-enfant.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/inscription-enfant.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/manara/portail/controller/AuthControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/manara/portail/controller/AuthControllerTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/manara/portail/controller/adminControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/manara/portail/controller/adminControllerTest.class" afterDir="false" />
->>>>>>> main
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inscription.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/inscription.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/parent.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/parent.html" afterDir="false" />
     </list>
-=======
-    <list default="true" id="35507da5-958b-421a-8e8d-ee3287785ab7" name="Changes" comment="" />
->>>>>>> 1a366cd16c45184dac81c6b7492b8c5ebdc454ee
-=======
-    <list default="true" id="35507da5-958b-421a-8e8d-ee3287785ab7" name="Changes" comment="" />
->>>>>>> 7a270fda2ca6861c7ecc9fffdd2a9c236b153fb6
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
-      </MavenGeneralSettings>
-    </option>
-    <option name="explicitlyEnabledProfiles" value="native,nativeTest" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
+  "associatedIndex": 6
 }]]></component>
-  <component name="ProjectId" id="3BOS2u7lkUTyYEFQgMM3rSgz28I" />
+  <component name="ProjectId" id="3BY5AU8xqSv4fgQVwiJXP78kZSA" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.PortailApplication.executor": "Run",
-    "JUnit.AuthControllerTest.executor": "Run",
-    "JUnit.AuthControllerTest.testPageInscription.executor": "Run",
-    "JUnit.AuthControllerTest.testpageInscription.executor": "Run",
-    "JUnit.PortailApplicationTests.executor": "Run",
-    "JUnit.adminControllerTest.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.PortailApplication.executor": "Run",
-    "last_opened_file_path": "C:/Users/6230903/Downloads/crm-manara/crm-manara_marc-andre_gille-aurel_julien-jose-408b5ea75bde125a4bc6435a0007b7dc3a3319f7/Portail",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+    "git-widget-placeholder": "Manu",
+    "kotlin-language-version-configured": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Spring Boot.PortailApplication">
-    <configuration name="AuthControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager">
+    <configuration name="PortailApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
       <module name="Portail" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.manara.portail.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.manara.portail.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.manara.portail.controller.AuthControllerTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AuthControllerTest.testPageInscription" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Portail" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.manara.portail.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.manara.portail.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.manara.portail.controller.AuthControllerTest" />
-      <option name="METHOD_NAME" value="testPageInscription" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AuthControllerTest.testpageInscription" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Portail" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.manara.portail.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.manara.portail.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.manara.portail.controller.AuthControllerTest" />
-      <option name="METHOD_NAME" value="testpageInscription" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PortailApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Portail" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.manara.portail.PortailApplication" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.manara.portail.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.manara.portail" />
-      <option name="MAIN_CLASS_NAME" value="com.manara.portail.PortailApplicationTests" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="adminControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Portail" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.manara.portail.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.manara.portail.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.manara.portail.controller.adminControllerTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PortailApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="Portail" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.manara.portail.PortailApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.AuthControllerTest" />
-        <item itemvalue="JUnit.adminControllerTest" />
-        <item itemvalue="JUnit.PortailApplicationTests" />
-        <item itemvalue="JUnit.AuthControllerTest.testPageInscription" />
-        <item itemvalue="JUnit.AuthControllerTest.testpageInscription" />
+        <item itemvalue="Spring Boot.PortailApplication" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
-        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
       </set>
     </attachedChunks>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="35507da5-958b-421a-8e8d-ee3287785ab7" name="Changes" comment="" />
-      <created>1774358419976</created>
+      <changelist id="6b5f064e-259d-49f7-945d-9a2421e25234" name="Changes" comment="" />
+      <created>1774653023002</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1774358419976</updated>
-      <workItem from="1774358421011" duration="6456000" />
+      <updated>1774653023002</updated>
     </task>
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/Manu" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

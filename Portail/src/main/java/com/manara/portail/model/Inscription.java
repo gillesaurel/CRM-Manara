@@ -3,7 +3,7 @@ package com.manara.portail.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "inscriptions")
+@Table(name = "inscription")
 public class Inscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
