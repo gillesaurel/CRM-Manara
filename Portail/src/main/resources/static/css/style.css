@@ -1,5 +1,9 @@
 :root {
+<<<<<<< HEAD
     --global-color1: #043d5b;
+=======
+  --global-color1: #043d5b; /* global scope */
+>>>>>>> temporary-brench-manu
 }
 
 * {
@@ -78,6 +82,10 @@ nav a[href*="/login"]:hover {
 
 /* Section bienvenue */
 .bienvenue-section {
+<<<<<<< HEAD
+=======
+    height: 100px;
+>>>>>>> temporary-brench-manu
     background-color: var(--global-color1);
     display: flex;
     align-items: center;
@@ -206,6 +214,7 @@ nav a[href*="/login"]:hover {
     to { transform: translateX(-50%); }
 }
 
+<<<<<<< HEAD
 /* Section Statistiques */
 .statistiques-section {
     background-color: #fccd2c;
@@ -333,6 +342,9 @@ nav a[href*="/login"]:hover {
 }
 
 /* Formulaire */
+=======
+/*Formulaire*/
+>>>>>>> temporary-brench-manu
 .formulaire-section {
     background-color: var(--global-color1);
     padding: 60px 20px;
@@ -386,6 +398,7 @@ nav a[href*="/login"]:hover {
     box-shadow: 0 0 0 3px rgba(4,61,91,0.1);
 }
 
+<<<<<<< HEAD
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -402,6 +415,13 @@ nav a[href*="/login"]:hover {
     flex: 1;
     padding: 12px;
     background: #043d5b;
+=======
+/* Boutons */
+.formulaire-section button {
+    width: 100%;
+    padding: 14px;
+    background: var(--global-color1);
+>>>>>>> temporary-brench-manu
     color: #fccd2c;
     border: none;
     border-radius: 8px;
@@ -423,6 +443,11 @@ nav a[href*="/login"]:hover {
     background: #6c757d;
     color: white;
     text-align: center;
+<<<<<<< HEAD
+=======
+    margin-top: 16px;
+    color: var(--global-color1);
+>>>>>>> temporary-brench-manu
     text-decoration: none;
     border-radius: 8px;
     font-size: 16px;
@@ -1149,8 +1174,104 @@ th, td {
         height: 200px;
     }
 
+<<<<<<< HEAD
     .carrousel-images img {
         width: 300px;
         height: 200px;
     }
+=======
+ .btn-group-inscription button {
+     width: 100%;
+     padding: 12px 20px;
+     background-color: #fccd2c;
+     color: var(--global-color1) !important;
+     border: 2px solid var(--global-color1);
+     border-radius: 24px;
+     font-weight: bold;
+     font-size: 16px;
+     cursor: not-allowed;
+ }
+
+ .btn-group-inscription a {
+     color: white !important;
+     text-decoration: none;
+     font-weight: bold;
+     padding: 8px 16px;
+     border-radius: 24px;
+     transition: all 0.3s ease;
+ }
+
+ .btn-group-inscription a:hover {
+     background-color: var(--global-color1);
+     color: #fccd2c !important;
+     transform: translateY(-1px);
+ }
+/* Bottom nav (uniforme, basee sur animateur) */
+.bottom-nav{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid rgba(4,61,91,0.12);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 8px 10px;
+    z-index: 200;
+}
+
+.bottom-nav .nav-item{
+    text-decoration:none;
+    color: rgba(4,61,91,0.75);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 8px 6px;
+    border-radius: 12px;
+}
+
+.bottom-nav .nav-item i{
+    font-size: 16px;
+}
+
+.bottom-nav .nav-item.active{
+    color: var(--global-color1);
+    background: rgba(252,205,44,0.35);
+    border: 1px solid rgba(252,205,44,0.60);
+}
+
+/* Spacer to avoid nav overlap */
+.bottom-spacer{
+    height: 74px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    padding: 20px;
+    border-radius: 12px;
+}
+.form.formulaire-section {
+    padding: 20px;
+    height: auto;
+}
+
+table, td, th {
+  border: 1px solid var(--global-color1);
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 10px;
+>>>>>>> temporary-brench-manu
 }

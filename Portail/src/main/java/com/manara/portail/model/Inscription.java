@@ -3,7 +3,11 @@ package com.manara.portail.model;
 import jakarta.persistence.*;
 
 @Entity
+<<<<<<< HEAD
 @Table(name = "inscriptions")
+=======
+@Table(name = "inscription")
+>>>>>>> temporary-brench-manu
 public class Inscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -29,7 +29,11 @@ public class AuthController {
     // PAGE INSCRIPTION
     @GetMapping("/register")
     public String pageInscription(Model model,
+<<<<<<< HEAD
                                   @CookieValue(name = "role", required = false) String role) {
+=======
+                                  @CookieValue(name = "role" , required = false) String role) {
+>>>>>>> temporary-brench-manu
         model.addAttribute("role", role);
         model.addAttribute("utilisateur", new Utilisateur());
         return "inscription";
@@ -77,9 +81,81 @@ public class AuthController {
         return "connexion";
     }
 
+<<<<<<< HEAD
     // DÉCONNEXION
     @GetMapping("/deconnexion")
     public String deconnexion() {
         return "redirect:/login?logout=true";
     }
 }
+=======
+
+    @PostMapping("/login/save")
+    public String connecterUtilisateur(
+            @ModelAttribute("utilisateur") Utilisateur utilisateur,
+            RedirectAttributes redirectAttributes,
+            HttpServletResponse response
+    ) throws IOException {
+
+        Utilisateur tempUtilisateur = UtilService.getUtilisateurByEmailAndMotDePasse(
+                utilisateur.getEmail(),
+                utilisateur.getMotdepasse()
+        );
+        System.out.println("email : " + utilisateur.getEmail());
+        System.out.println("mdp : " + utilisateur.getMotdepasse());
+
+        try {
+
+
+            System.out.println("tempUtilisateur : " + tempUtilisateur.getEmail());
+
+
+            if (tempUtilisateur != null) {
+
+                response.addCookie(createCookie("email",tempUtilisateur.getEmail()));
+                response.addCookie(createCookie("role", tempUtilisateur.getRole().getNom()));
+                response.addCookie(createCookie("prenom", tempUtilisateur.getPrenom()));
+                response.addCookie(createCookie("nom", tempUtilisateur.getNom()));
+                response.addCookie(createCookie("id", tempUtilisateur.getId().toString()));
+                return "redirect:/";
+            }
+
+            return "redirect:/login";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return "redirect:/login";
+        }
+    }
+
+    @GetMapping("/deconnexion")
+    public String pageConnexion(Model model, HttpServletResponse response) {
+        model.addAttribute("utilisateur", new Utilisateur());
+
+        response.addCookie(deleteCookie("email"));
+        response.addCookie(deleteCookie("role"));
+        response.addCookie(deleteCookie("prenom"));
+        response.addCookie(deleteCookie("nom"));
+        response.addCookie(deleteCookie("id"));
+
+        return "index";
+    }
+
+    // creer un cookie utilisateur lorsque l'utilisateur se connecte
+    private Cookie createCookie(String name, String value) {
+        Cookie cookie = new Cookie(name, value);
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24 * 7);
+        cookie.setHttpOnly(true);
+        return cookie;
+    }
+
+    private Cookie deleteCookie(String name) {
+        Cookie cookie = new Cookie(name, "");
+        cookie.setPath("/");
+        cookie.setMaxAge(-1);
+        cookie.setHttpOnly(true);
+        return cookie;
+    }
+   
+}
+>>>>>>> temporary-brench-manu

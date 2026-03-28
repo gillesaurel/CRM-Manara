@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="bcc50988-cdbf-45b5-9add-aed54808f742" name="Changes" comment="" />
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <list default="true" id="bcc50988-cdbf-45b5-9add-aed54808f742" name="Changes" comment="aa" />
+=======
+    <list default="true" id="bcc50988-cdbf-45b5-9add-aed54808f742" name="Changes" comment="" />
+>>>>>>> 1a366cd16c45184dac81c6b7492b8c5ebdc454ee
+=======
+    <list default="true" id="bcc50988-cdbf-45b5-9add-aed54808f742" name="Changes" comment="" />
+>>>>>>> 7a270fda2ca6861c7ecc9fffdd2a9c236b153fb6
+>>>>>>> temporary-brench-manu
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+=======
+>>>>>>> temporary-brench-manu
   <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
   <component name="KubernetesApiProvider"><![CDATA[{
   "isMigrated": true
@@ -14,6 +38,10 @@
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 3
 }]]></component>
+<<<<<<< HEAD
+=======
+>>>>>>> 7a270fda2ca6861c7ecc9fffdd2a9c236b153fb6
+>>>>>>> temporary-brench-manu
   <component name="ProjectId" id="3B4ZXvjZYa4WAuTlQer6LQL64fM" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -22,7 +50,22 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
+<<<<<<< HEAD
     "last_opened_file_path": "C:/Users/6230903/Downloads/crm-manara_marc-andre_gille-aurel_julien-jose-main",
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "Manu",
+=======
+>>>>>>> 1a366cd16c45184dac81c6b7492b8c5ebdc454ee
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Manes/Downloads/CRM",
+=======
+    "last_opened_file_path": "C:/Users/6230903/Downloads/crm-manara_marc-andre_gille-aurel_julien-jose-main",
+>>>>>>> 7a270fda2ca6861c7ecc9fffdd2a9c236b153fb6
+>>>>>>> temporary-brench-manu
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",

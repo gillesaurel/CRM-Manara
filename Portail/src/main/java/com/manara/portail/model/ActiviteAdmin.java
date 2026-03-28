@@ -10,7 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+<<<<<<< HEAD
 @Table(name = "activites")
+=======
+@Table(name = "activite")
+>>>>>>> temporary-brench-manu
 public class ActiviteAdmin {
 
     @Id

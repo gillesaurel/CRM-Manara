@@ -20,8 +20,28 @@ public class InscriptionEnfant {
     private Enfant enfant;
 
     @ManyToOne
+<<<<<<< HEAD
     @JoinColumn(name = "session_id")
     private SessionParent session;
+=======
+    @JoinColumn(name = "enfant_id")
+    private Enfant enfant;
+
+    @ManyToOne
+    @JoinColumn(name = "session_id")
+    private SessionParent session;
+
+    public SessionParent getSession() { return session; }
+    public void setSession(SessionParent session) { this.session = session; }
+
+    // + getter and setter
+    public Enfant getEnfant() { return enfant; }
+    public void setEnfant(Enfant enfant) { this.enfant = enfant; }
+
+    public ActiviteAdmin getActivite() {
+        return activite;
+    }
+>>>>>>> temporary-brench-manu
 
     // Getters et Setters
     public Long getId() { return id; }

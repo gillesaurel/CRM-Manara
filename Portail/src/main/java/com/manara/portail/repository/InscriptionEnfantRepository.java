@@ -1,6 +1,7 @@
 package com.manara.portail.repository;
 
 import com.manara.portail.model.InscriptionEnfant;
+<<<<<<< HEAD
 import com.manara.portail.model.Enfant;
 import com.manara.portail.model.SessionParent;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,10 +12,19 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+=======
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+>>>>>>> temporary-brench-manu
 
 @Repository
 public interface InscriptionEnfantRepository extends JpaRepository<InscriptionEnfant, Long> {
 
+<<<<<<< HEAD
     List<InscriptionEnfant> findByEnfant(Enfant enfant);
 
     @Query("SELECT i FROM InscriptionEnfant i WHERE i.enfant.id = :enfantId")
@@ -74,4 +84,8 @@ public interface InscriptionEnfantRepository extends JpaRepository<InscriptionEn
     @Modifying
     @Query("DELETE FROM InscriptionEnfant i WHERE i.session.date < :date")
     void deleteAnciennesInscriptions(@Param("date") LocalDate date);
+=======
+    @Query("SELECT i FROM InscriptionEnfant i WHERE i.session.id = :sessionId")
+    List<InscriptionEnfant> findBySessionId(@Param("sessionId") Integer sessionId);
+>>>>>>> temporary-brench-manu
 }
