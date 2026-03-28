@@ -5,9 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b5f064e-259d-49f7-945d-9a2421e25234" name="Changes" comment="Fixed">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/InscriptionEnfantRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/InscriptionEnfantService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AnimateurController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AnimateurController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/animateur_inscription.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/animateur_inscription.html" afterDir="false" />
     </list>
@@ -107,7 +104,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774655629902</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Fixed">
+      <option name="closed" value="true" />
+      <created>1774659054579</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1774659054579</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -6,6 +6,8 @@ import com.manara.portail.model.ActiviteParent;
 import com.manara.portail.model.Enfant;
 import com.manara.portail.model.InscriptionEnfant;
 import com.manara.portail.model.SessionParent;
+import com.manara.portail.repository.InscriptionEnfantRepository;
+import com.manara.portail.service.InscriptionEnfantService;
 import com.manara.portail.service.SessionParentService;
 import com.manara.portail.service.UtilisateurService;
 import jakarta.servlet.http.Cookie;
@@ -30,6 +32,9 @@ public class AnimateurController {
     @Autowired
     SessionParentService sessionParentService;
 
+    @Autowired
+    InscriptionEnfantService inscriptionEnfantService;
+
     @GetMapping("/animateur")
     public String pageAccueil(HttpServletRequest request, Model model) {
         getCookieValue(request, "role");
@@ -47,24 +52,18 @@ public class AnimateurController {
         List<SessionParent> sessions = sessionParentService
                 .getSessionsAvecEnfantsByAnimateur(animateurId);
 
-        System.out.println("=== SESSIONS (" + sessions.size() + ") ===");
+        // Build a map of sessionId -> inscriptions
+        Map<Integer, List<InscriptionEnfant>> inscriptionsParSession = new LinkedHashMap<>();
         for (SessionParent sess : sessions) {
-            System.out.println("  Session id=" + sess.getId()
-                    + " | activite=" + (sess.getActivite() != null ? sess.getActivite().getNom() : "NULL")
-                    + " | animateur_id=" + (sess.getAnimateur() != null ? sess.getAnimateur().getId() : "NULL"));
-
-            System.out.println("  Inscriptions (" + sess.getInscriptions().size() + "):");
-            for (InscriptionEnfant inscription : sess.getInscriptions()) {
-                System.out.println("    -> inscription id=" + inscription.getId()
-                        + " | nomEnfant=" + inscription.getNomEnfant()
-                        + " | enAttente=" + inscription.isEnAttente()
-                        + " | enfant=" + (inscription.getEnfant() != null
-                        ? inscription.getEnfant().getNom() + " " + inscription.getEnfant().getPrenom()
-                        : "NULL"));
-            }
+            List<InscriptionEnfant> inscriptions = inscriptionEnfantService
+                    .getInscriptionsBySession(sess.getId());
+            System.out.println("Session " + sess.getId() + " -> " + inscriptions.size() + " inscriptions");
+            inscriptionsParSession.put(sess.getId(), inscriptions);
         }
 
         model.addAttribute("sessions", sessions);
+        model.addAttribute("inscriptionsParSession", inscriptionsParSession);
+
         return "animateur_inscription";
     }
 

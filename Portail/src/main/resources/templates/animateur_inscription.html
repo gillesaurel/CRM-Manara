@@ -18,50 +18,47 @@
 <header th:replace="fragments/main::header"></header>
 
 <main class="dash">
-  <!-- Titre + petit badge profil -->
+
   <section class="dash-top">
     <div>
       <h1>Portail Manara</h1>
       <p class="subtitle">Tableau de bord</p>
     </div>
-
     <div class="profile-pill">
       <i class="fa-solid fa-user-tie"></i>
       <span>Profil : Animateur</span>
     </div>
   </section>
 
-  <!-- Carte Tableau -->
+  <h2>Inscriptions</h2>
+  <p>Consulter les listes d'inscrits.</p>
 
-    <h2>Inscriptions</h2>
-    <p>Consulter les listes d'inscrits.</p>
-
-    <div th:each="sess : ${sessions}">
-      <section class="card welcome">
-      <h3 th:text="${sess.activite.nom}">Activité</h3>
+  <div th:each="sess : ${sessions}">
+    <section class="card welcome">
+      <h3 th:text="${sess.activite != null ? sess.activite.nom : 'Activité inconnue'}">Activité</h3>
       <div class="quick-grid">
         <table>
           <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Age</th>
-              <th>Attendance</th>
-            </tr>
+          <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>En attente</th>
+          </tr>
           </thead>
           <tbody>
-            <tr th:each="inscription : ${sess.inscriptions}">
-              <td th:text="${inscription.enfant.nom}">Nom</td>
-              <td th:text="${inscription.enfant.prenom}">Prénom</td>
-              <td th:text="${inscription.enfant.en_attente}">Aucune valeur</td>
-            </tr>
+          <tr th:each="inscription : ${inscriptionsParSession[sess.id]}">
+            <td th:text="${inscription.nomEnfant}">Nom</td>
+            <td th:text="${inscription.enAttente ? 'Oui' : 'Non'}">Statut</td>
+          </tr>
+          <tr th:if="${#lists.isEmpty(inscriptionsParSession[sess.id])}">
+            <td colspan="3">Aucune inscription pour cette session</td>
+          </tr>
           </tbody>
         </table>
       </div>
-      </section>
-    </div>
+    </section>
+  </div>
 
-
-  <!-- espace pour que la nav bottom ne cache pas le contenu -->
   <div class="bottom-spacer"></div>
 </main>
 
