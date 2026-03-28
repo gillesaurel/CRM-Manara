@@ -5,6 +5,7 @@ package com.manara.portail.service;
 import com.manara.portail.model.Utilisateur;
 import com.manara.portail.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +29,14 @@ public class UtilisateurService {
         }
         return utilisateurRepository.save(utilisateur);
     }
+    public Utilisateur getUtilisateurByEmailAndMotDePasse(String email, String password){
+        return utilisateurRepository.getUtilisateurByEmailAndMotDePasse(email,password);}
 
-    public Utilisateur getUtilisateurByEmailAndMotDePasse(String email, String password){return utilisateurRepository.getUtilisateurByEmailAndMotDePasse(email,password);}
 
 
+
+    public Utilisateur findByEmail(String email) {
+        return utilisateurRepository.findByEmail(email);
+    }
 
 }

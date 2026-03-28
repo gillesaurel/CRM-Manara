@@ -108,8 +108,9 @@ public class AuthController {
         response.addCookie(deleteCookie("role"));
         response.addCookie(deleteCookie("prenom"));
         response.addCookie(deleteCookie("nom"));
+        response.addCookie(deleteCookie("id"));
 
-        return "index";
+        return "redirect:/";
     }
 
     // creer un cookie utilisateur lorsque l'utilisateur se connecte
@@ -124,9 +125,9 @@ public class AuthController {
     private Cookie deleteCookie(String name) {
         Cookie cookie = new Cookie(name, "");
         cookie.setPath("/");
-        cookie.setMaxAge(-1);
+        cookie.setMaxAge(0);
         cookie.setHttpOnly(true);
         return cookie;
     }
-   
+
 }

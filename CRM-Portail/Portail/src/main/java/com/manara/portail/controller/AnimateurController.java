@@ -78,9 +78,6 @@ public class AnimateurController {
         return "animateur_horaire";
     }
 
-
-
-
     private String getCookieValue(HttpServletRequest request, String cookieName) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
