@@ -46,24 +46,31 @@ public class AnimateurController {
     @GetMapping("/animateur/inscriptions")
     public String pageInscription(HttpServletRequest request, Model model) {
         String animateurIdStr = getCookieValue(request, "id");
-        Integer animateurId = Integer.parseInt(animateurIdStr);
-        System.out.println("animateurId from cookie: " + animateurId);
+        if (animateurIdStr == null) return "redirect:/login";
 
+        Integer animateurId = Integer.parseInt(animateurIdStr);
         List<SessionParent> sessions = sessionParentService
                 .getSessionsAvecEnfantsByAnimateur(animateurId);
 
-        // Build a map of sessionId -> inscriptions
-        Map<Integer, List<InscriptionEnfant>> inscriptionsParSession = new LinkedHashMap<>();
+        // Group inscriptions by activite name
+        Map<String, List<InscriptionEnfant>> inscriptionsParActivite = new LinkedHashMap<>();
         for (SessionParent sess : sessions) {
+            String nomActivite = sess.getActivite() != null ? sess.getActivite().getNom() : "Activité inconnue";
+            inscriptionsParActivite.computeIfAbsent(nomActivite, k -> new ArrayList<>());
+
             List<InscriptionEnfant> inscriptions = inscriptionEnfantService
                     .getInscriptionsBySession(sess.getId());
-            System.out.println("Session " + sess.getId() + " -> " + inscriptions.size() + " inscriptions");
-            inscriptionsParSession.put(sess.getId(), inscriptions);
+
+            for (InscriptionEnfant inscription : inscriptions) {
+                // Avoid duplicates
+                if (inscriptionsParActivite.get(nomActivite).stream()
+                        .noneMatch(i -> i.getId().equals(inscription.getId()))) {
+                    inscriptionsParActivite.get(nomActivite).add(inscription);
+                }
+            }
         }
 
-        model.addAttribute("sessions", sessions);
-        model.addAttribute("inscriptionsParSession", inscriptionsParSession);
-
+        model.addAttribute("inscriptionsParActivite", inscriptionsParActivite);
         return "animateur_inscription";
     }
 

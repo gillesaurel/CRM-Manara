@@ -31,11 +31,11 @@
   </section>
 
   <h2>Inscriptions</h2>
-  <p>Consulter les listes d'inscrits.</p>
+  <p>Consulter les listes d'inscrits par activité.</p>
 
-  <div th:each="sess : ${sessions}">
+  <div th:each="entry : ${inscriptionsParActivite}">
     <section class="card welcome">
-      <h3 th:text="${sess.activite != null ? sess.activite.nom : 'Activité inconnue'}">Activité</h3>
+      <h3 th:text="${entry.key}">Nom Activité</h3>
       <div class="quick-grid">
         <table>
           <thead>
@@ -46,18 +46,23 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:each="inscription : ${inscriptionsParSession[sess.id]}">
-            <td th:text="${inscription.enfant.nom}">Nom</td>
-            <td th:text="${inscription.enfant.prenom}">Prenom</td>
-
+          <tr th:each="inscription : ${entry.value}">
+            <td th:text="${inscription.enfant != null ? inscription.enfant.nom : inscription.nomEnfant}">Nom</td>
+            <td th:text="${inscription.enfant != null ? inscription.enfant.prenom : ''}">Prénom</td>
             <td th:text="${inscription.enAttente ? 'Oui' : 'Non'}">Statut</td>
           </tr>
-          <tr th:if="${#lists.isEmpty(inscriptionsParSession[sess.id])}">
-            <td colspan="3">Aucune inscription pour cette session</td>
+          <tr th:if="${#lists.isEmpty(entry.value)}">
+            <td colspan="3">Aucune inscription pour cette activité</td>
           </tr>
           </tbody>
         </table>
       </div>
+    </section>
+  </div>
+
+  <div th:if="${#maps.isEmpty(inscriptionsParActivite)}">
+    <section class="card welcome">
+      <p>Aucune inscription trouvée.</p>
     </section>
   </div>
 

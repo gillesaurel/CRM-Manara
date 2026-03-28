@@ -108,6 +108,7 @@ public class AuthController {
         response.addCookie(deleteCookie("role"));
         response.addCookie(deleteCookie("prenom"));
         response.addCookie(deleteCookie("nom"));
+        response.addCookie(deleteCookie("id"));
 
         return "index";
     }
