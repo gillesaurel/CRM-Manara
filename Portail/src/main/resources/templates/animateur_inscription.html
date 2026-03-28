@@ -47,7 +47,9 @@
           </thead>
           <tbody>
           <tr th:each="inscription : ${inscriptionsParSession[sess.id]}">
-            <td th:text="${inscription.nomEnfant}">Nom</td>
+            <td th:text="${inscription.enfant.nom}">Nom</td>
+            <td th:text="${inscription.enfant.prenom}">Prenom</td>
+
             <td th:text="${inscription.enAttente ? 'Oui' : 'Non'}">Statut</td>
           </tr>
           <tr th:if="${#lists.isEmpty(inscriptionsParSession[sess.id])}">
