@@ -32,34 +32,34 @@
   </section>
 
   <!-- Carte Tableau -->
-  <section class="card welcome">
-    <h2>Inscriptions</h2>
-    <p>
-      Consulter les listes d’inscrits.
-    </p>
-    <div class="quick-grid">
-      <table>
-        <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Age</th>
-          <th>Attendance</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Loop through the "enfant" attribute from your model -->
-        <tr th:each="u : ${enfant}">
-          <!-- Access properties of the Utilisateur object -->
-          <td th:text="${u.nom}">Nom</td>
-          <td >0</td>
-          <!-- Example: If attendance is a boolean, show 'Oui'/'Non' -->
-          <td     >Non</td>
-        </tr>
-        </tbody>
-      </table>
 
+    <h2>Inscriptions</h2>
+    <p>Consulter les listes d'inscrits.</p>
+
+    <div th:each="sess : ${sessions}">
+      <section class="card welcome">
+      <h3 th:text="${sess.activite.nom}">Activité</h3>
+      <div class="quick-grid">
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Age</th>
+              <th>Attendance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="inscription : ${sess.inscriptions}">
+              <td th:text="${inscription.enfant.nom}">Nom</td>
+              <td th:text="${inscription.enfant.prenom}">Prénom</td>
+              <td th:text="${inscription.enfant.en_attente}">Aucune valeur</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </section>
     </div>
-  </section>
+
 
   <!-- espace pour que la nav bottom ne cache pas le contenu -->
   <div class="bottom-spacer"></div>
