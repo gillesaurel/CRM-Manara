@@ -2,8 +2,8 @@ USE crm_manara;
 
 -- 1. Utilisateur (animateur) first
 INSERT INTO utilisateur (id, email, motdepasse, nom, prenom, telephone, role_id)
-VALUES (1, 'utilisateur@gmail.com', 'motdepasse', 'Nom', 'Prenom', '5555555555', 3),
- (2, 'parent@gmail.com', 'motdepasse', 'Nom', 'Prenom', '5555555555', 2);
+VALUES (1, 'utilisateur@gmail.com', 'motdepasse', 'Nom', 'Prenom', '5555555555', 2),
+ (2, 'parent@gmail.com', 'motdepasse', 'Nom', 'Prenom', '5555555555', 3);
 
 -- 2. Activite
 INSERT INTO activite (id, capacite, date_creation, date_debut, description, nom)
@@ -21,7 +21,10 @@ INSERT INTO parent values
 (1, 2);
 
 INSERT INTO enfant values
-(1,2, "2000-01-01", 'nom', 'medical','prenom', 1);
+(1,2, "2000-01-01", 'nom', 'medical','prenom', 1),
+(2,2, "2000-01-01", 'enfant 2', 'medical','prenom', 1);
+
 
 INSERT INTO inscription_enfant values
-(1, 1, 'nom enfant', 1, 1, 1, 2);
+(1, 1, 'nom enfant', 1, 1, 1, 2),
+(2, 1, 'nom enfant', 1, 2, 1, 2);
