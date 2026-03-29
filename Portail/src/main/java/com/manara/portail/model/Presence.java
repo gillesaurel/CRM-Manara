@@ -23,6 +23,12 @@ public class Presence {
     @JoinColumn(name = "enfant_id", nullable = false)
     private Enfant enfant;
 
+    @ManyToOne
+    @JoinColumn(name = "session_id")
+    private SessionParent session;
+
+    public SessionParent getSession() { return session; }
+    public void setSession(SessionParent session) { this.session = session; }
 
     public Presence() {}
 
