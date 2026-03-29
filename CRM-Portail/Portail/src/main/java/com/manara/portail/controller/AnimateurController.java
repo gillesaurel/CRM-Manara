@@ -75,6 +75,14 @@ public class AnimateurController {
 
     @GetMapping("/animateur/horaire")
     public String pageHoraire(HttpServletRequest request, Model model) {
+        String animateurIdStr = getCookieValue(request, "id");
+        if (animateurIdStr == null) return "redirect:/login";
+
+        Integer animateurId = Integer.parseInt(animateurIdStr);
+        List<SessionParent> sessions = sessionParentService
+                .getSessionsAvecEnfantsByAnimateur(animateurId);
+
+        model.addAttribute("sessions", sessions);
         return "animateur_horaire";
     }
 
