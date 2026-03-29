@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portail Manara — Parent</title>
+
+    <link th:rel="stylesheet" th:href="@{/css/style.css}">
+    <link th:rel="stylesheet" th:href="@{/css/animateur.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="page-parents page-animateurs">
+
+<header th:replace="fragments/main::header"></header>
+
+<main class="dash">
+    <section class="dash-top">
+        <div>
+            <h1>Portail Manara</h1>
+            <p class="subtitle">Espace parent</p>
+        </div>
+
+        <div class="profile-pill">
+            <i class="fa-solid fa-user-group"></i>
+            <span>Profil : Parent</span>
+        </div>
+    </section>
+
+    <section class="card welcome">
+        <h2>Bienvenue</h2>
+        <p>
+            Retrouvez rapidement les activites, le planning et les informations de vos enfants.
+            Interface optimisee pour mobile et ordinateur.
+        </p>
+    </section>
+
+    <section class="card">
+        <div class="card-head">
+            <h3>Actions rapides</h3>
+            <p class="hint">Acces direct aux taches les plus frequentes.</p>
+        </div>
+
+        <div class="quick-grid">
+            <a class="quick-btn" th:href="@{/parent/activites}">
+                <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
+                <span class="text">
+                    <strong>Activites</strong>
+                    <small>Explorer les sessions</small>
+                </span>
+            </a>
+
+            <a class="quick-btn" th:href="@{/parent/enfants}">
+                <span class="icon"><i class="fa-solid fa-child-reaching"></i></span>
+                <span class="text">
+                    <strong>Enfants</strong>
+                    <small>Profils et suivis</small>
+                </span>
+            </a>
+
+            <a class="quick-btn" th:href="@{/parent/planning}">
+                <span class="icon"><i class="fa-solid fa-clipboard-list"></i></span>
+                <span class="text">
+                    <strong>Planning</strong>
+                    <small>Semaine a venir</small>
+                </span>
+            </a>
+
+            <a class="quick-btn warn" th:href="@{/parent/messages}">
+                <span class="icon"><i class="fa-solid fa-envelope-open-text"></i></span>
+                <span class="text">
+                    <strong>Messages</strong>
+                    <small>Rappels et annonces</small>
+                </span>
+            </a>
+        </div>
+    </section>
+
+    <section class="card">
+        <div class="card-head">
+            <h3>Activites a venir</h3>
+            <p class="hint">Prochaines sessions de la famille.</p>
+        </div>
+
+        <div class="session-list">
+            <article class="session-item" th:each="s : ${activitesFamille}">
+                <div class="session-main">
+                    <strong th:text="${s.nomActivite}">Natation — Groupe debutant</strong>
+                    <small>
+                        <span th:text="${s.nomEnfant}">Adam</span>
+                        • <span th:text="${s.dateTexte}">Sam 10:00</span>
+                        • <span th:text="${s.lieu}">Piscine municipale</span>
+                    </small>
+                </div>
+
+                <div class="session-side">
+                    <span class="chip" th:text="${s.statut ?: 'Confirmee'}">Confirmee</span>
+                    <span class="status open" th:if="${s.paiementOk == null or s.paiementOk}">Paiement OK</span>
+                    <span class="status full" th:if="${s.paiementOk != null and !s.paiementOk}">Paiement requis</span>
+                </div>
+            </article>
+
+            <div class="empty" th:if="${activitesFamille == null or activitesFamille.isEmpty()}">
+                Aucune activite planifiee pour le moment.
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <div class="card-head">
+            <h3>Mes enfants</h3>
+            <p class="hint">Resume rapide des inscriptions et prochaines activites.</p>
+        </div>
+
+        <div class="session-list">
+            <article class="session-item" th:each="e : ${enfants}">
+                <div class="session-main">
+                    <strong th:text="${e.nomComplet}">Maya Tremblay</strong>
+                    <small>
+                        <span th:text="'Age : ' + (${e.age} ?: 8)">Age : 8</span>
+                        • <span th:text="'Activites : ' + (${e.nbActivites} ?: 2)">Activites : 2</span>
+                    </small>
+                </div>
+
+                <div class="session-side">
+                    <span class="chip" th:text="${e.prochaineActivite ?: 'Aucune activite'}">Danse - Lun 17:00</span>
+                </div>
+            </article>
+
+            <div class="empty" th:if="${enfants == null or enfants.isEmpty()}">
+                Aucun enfant ajoute au dossier.
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <div class="card-head">
+            <h3>Apercu</h3>
+            <p class="hint">Indicateurs rapides pour votre famille.</p>
+        </div>
+
+        <div class="kpi-grid">
+            <div class="kpi">
+                <small>Enfants inscrits</small>
+                <strong th:text="${nbEnfants ?: 0}">0</strong>
+            </div>
+
+            <div class="kpi">
+                <small>Activites actives</small>
+                <strong th:text="${nbActivitesActives ?: 0}">0</strong>
+            </div>
+
+            <div class="kpi">
+                <small>Sessions cette semaine</small>
+                <strong th:text="${sessionsSemaine ?: 0}">0</strong>
+            </div>
+
+            <div class="kpi">
+                <small>Messages non lus</small>
+                <strong th:text="${messagesNonLus ?: 0}">0</strong>
+            </div>
+        </div>
+    </section>
+
+    <div class="bottom-spacer"></div>
+</main>
+
+<div th:replace="~{fragments/parent :: bottomNav('dashboard')}"></div>
+
+</body>
+</html>
