@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <title>Inscription à une activité - Manara</title>
+</head>
+<body>
+
+<header th:replace="fragments/main::header"></header>
+
+<main class="formulaire-section">
+  <div class="form-container">
+    <h1>Inscrire un enfant à une activité</h1>
+
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <form th:action="@{/parent/inscription}" method="post">
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+      <!-- Sélection de l'enfant -->
+      <div class="form-group">
+        <label for="enfantId">Choisir un enfant *</label>
+        <select id="enfantId" name="enfantId" class="form-control" required>
+          <option value="">-- Sélectionner un enfant --</option>
+          <option th:each="enfant : ${enfants}"
+                  th:value="${enfant.id}"
+                  th:text="${enfant.prenom} + ' ' + ${enfant.nom} + ' (' + ${enfant.age} + ' ans)'">
+          </option>
+        </select>
+      </div>
+
+      <!-- Sélection de l'activité -->
+      <div class="form-group">
+        <label for="sessionId">Choisir une activité *</label>
+        <select id="sessionId" name="sessionId" class="form-control" required>
+          <option value="">-- Sélectionner une activité --</option>
+          <option th:each="session : ${sessions}"
+                  th:value="${session.id}"
+                  th:text="${session.activite.nom} + ' - ' + ${#temporals.format(session.date, 'dd/MM/yyyy')} + ' à ' + ${session.heureDebut} + ' (' + ${session.lieu} + ')'">
+          </option>
+        </select>
+      </div>
+
+      <!-- Commentaire optionnel -->
+      <div class="form-group">
+        <label for="commentaire">Commentaire (optionnel)</label>
+        <textarea id="commentaire" name="commentaire" class="form-control"
+                  rows="3" placeholder="Informations complémentaires..."></textarea>
+      </div>
+
+      <!-- Message gratuité -->
+      <div class="info-message">
+        <span class="info-icon">🎉</span>
+        <p>Toutes nos activités sont gratuites !</p>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">Inscrire</button>
+        <a th:href="@{/parent/activites}" class="btn-cancel">Annuler</a>
+      </div>
+    </form>
+  </div>
+</main>
+
+<footer th:replace="fragments/main::footer"></footer>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link th:rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Connexion</title>
+</head>
+<body>
+
+<header th:replace="fragments/main::header"></header>
+
+<main class="formulaire-section">
+    <div class="form-container">
+        <h1>Connexion</h1>
+
+        <!-- Messages Spring Security -->
+        <div th:if="${param.error}" class="alert alert-danger">
+            Email ou mot de passe incorrect
+        </div>
+        <div th:if="${param.logout}" class="alert alert-success">
+            Vous avez été déconnecté
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="form-group">
+                <label for="username">Courriel *</label>
+                <input type="text"
+                       id="username"
+                       name="username"
+                       class="form-control"
+                       placeholder="jean.dupont@email.com"
+                       required />
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe *</label>
+                <input type="password"
+                       id="password"
+                       name="password"
+                       class="form-control"
+                       placeholder="••••••••"
+                       required />
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">Se connecter</button>
+                <a th:href="@{/register}" class="btn-cancel">Créer un compte</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+<footer th:replace="fragments/main::footer"></footer>
+
+</body>
+</html>

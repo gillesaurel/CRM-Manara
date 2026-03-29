@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link th:rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Inscription</title>
+</head>
+<body>
+
+<header th:replace="fragments/main::header"></header>
+
+<main class="formulaire-section">
+    <div class="form-container">
+        <h1>Inscrivez-vous</h1>
+
+        <form th:action="@{/register/save}" th:object="${utilisateur}" method="post">
+            <div th:if="${message != null}" class="alert alert-danger">[[${message}]]</div>
+
+            <!-- Prénom -->
+            <div class="form-group">
+                <label for="prenom">Prénom *</label>
+                <input type="text"
+                       id="prenom"
+                       th:field="*{prenom}"
+                       class="form-control"
+                       placeholder="Jean"
+                       required />
+            </div>
+
+            <!-- Nom -->
+            <div class="form-group">
+                <label for="nom">Nom *</label>
+                <input type="text"
+                       id="nom"
+                       th:field="*{nom}"
+                       class="form-control"
+                       placeholder="Dupont"
+                       required />
+            </div>
+
+            <!-- Téléphone -->
+            <div class="form-group">
+                <label for="telephone">Téléphone</label>
+                <input type="tel"
+                       id="telephone"
+                       th:field="*{telephone}"
+                       class="form-control"
+                       placeholder="0612345678" />
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Courriel *</label>
+                <input type="email"
+                       id="email"
+                       th:field="*{email}"
+                       class="form-control"
+                       placeholder="jean.dupont@email.com"
+                       required />
+            </div>
+
+            <!-- Mot de passe -->
+            <div class="form-group">
+                <label for="motdepasse">Mot de passe *</label>
+                <input type="password"
+                       id="motdepasse"
+                       th:field="*{motdepasse}"
+                       class="form-control"
+                       placeholder="••••••••"
+                       required
+                       minlength="8" />
+            </div>
+
+            <!-- Boutons -->
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">S'inscrire</button>
+                <a th:href="@{/login}" class="btn-cancel">Déjà un compte ?</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+<footer th:replace="fragments/main::footer"></footer>
+
+</body>
+</html>
