@@ -4,7 +4,6 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-<<<<<<< HEAD
     <list default="true" id="35507da5-958b-421a-8e8d-ee3287785ab7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
@@ -46,9 +45,6 @@
       <change beforePath="$PROJECT_DIR$/target/test-classes/com/manara/portail/controller/AuthControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/manara/portail/controller/AuthControllerTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/com/manara/portail/controller/adminControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/manara/portail/controller/adminControllerTest.class" afterDir="false" />
     </list>
-=======
-    <list default="true" id="6b5f064e-259d-49f7-945d-9a2421e25234" name="Changes" comment="Fixed Animateur Controller and deletes Id now" />
->>>>>>> temporary-brench-manu
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,6 +54,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="JUnit5 Test Class" />
         <option value="Class" />
         <option value="HTML File" />
       </list>
@@ -66,31 +63,25 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-<<<<<<< HEAD
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
         <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
       </MavenGeneralSettings>
     </option>
-=======
-  <component name="McpProjectServerCommands">
-    <commands />
-    <urls />
->>>>>>> temporary-brench-manu
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 6
+  &quot;associatedIndex&quot;: 0
 }</component>
-  <component name="ProjectId" id="3BY5AU8xqSv4fgQVwiJXP78kZSA" />
+  <component name="ProjectId" id="3BOS2u7lkUTyYEFQgMM3rSgz28I" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.PortailApplication.executor": "Run",
     "DefaultHtmlFileTemplate": "HTML File",
-<<<<<<< HEAD
     "JUnit.AuthControllerTest.executor": "Run",
     "JUnit.AuthControllerTest.testPageInscription.executor": "Run",
     "JUnit.AuthControllerTest.testpageInscription.executor": "Run",
@@ -103,15 +94,10 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-=======
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
->>>>>>> temporary-brench-manu
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Spring Boot.PortailApplication.executor": "Run",
-<<<<<<< HEAD
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
@@ -139,35 +125,101 @@
     </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="com.manara.portail.repository" />
-=======
-    "git-widget-placeholder": "Manu",
-    "kotlin-language-version-configured": "true"
-  }
-}]]></component>
-  <component name="RecentsManager">
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.manara.portail.model" />
->>>>>>> temporary-brench-manu
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="PortailApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+  <component name="RunManager" selected="Spring Boot.PortailApplication">
+    <configuration name="AuthControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Portail" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.manara.portail.PortailApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.manara.portail.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.manara.portail.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.manara.portail.controller.AuthControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthControllerTest.testPageInscription" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Portail" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.manara.portail.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.manara.portail.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.manara.portail.controller.AuthControllerTest" />
+      <option name="METHOD_NAME" value="testPageInscription" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthControllerTest.testpageInscription" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Portail" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.manara.portail.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.manara.portail.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.manara.portail.controller.AuthControllerTest" />
+      <option name="METHOD_NAME" value="testpageInscription" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PortailApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Portail" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.manara.portail.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="com.manara.portail" />
+      <option name="MAIN_CLASS_NAME" value="com.manara.portail.PortailApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="adminControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Portail" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.manara.portail.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.manara.portail.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.manara.portail.controller.adminControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PortailApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="Portail" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.manara.portail.PortailApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.PortailApplication" />
+        <item itemvalue="JUnit.AuthControllerTest" />
+        <item itemvalue="JUnit.adminControllerTest" />
+        <item itemvalue="JUnit.PortailApplicationTests" />
+        <item itemvalue="JUnit.AuthControllerTest.testPageInscription" />
+        <item itemvalue="JUnit.AuthControllerTest.testpageInscription" />
       </list>
     </recent_temporary>
   </component>
@@ -181,105 +233,18 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="6b5f064e-259d-49f7-945d-9a2421e25234" name="Changes" comment="" />
-      <created>1774653023002</created>
+      <changelist id="35507da5-958b-421a-8e8d-ee3287785ab7" name="Changes" comment="" />
+      <created>1774358419976</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-<<<<<<< HEAD
       <updated>1774358419976</updated>
       <workItem from="1774358421011" duration="6456000" />
       <workItem from="1774609037265" duration="3286000" />
       <workItem from="1774612391848" duration="15054000" />
-=======
-      <updated>1774653023002</updated>
->>>>>>> temporary-brench-manu
     </task>
-    <task id="LOCAL-00001" summary="Fixes">
-      <option name="closed" value="true" />
-      <created>1774653564762</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1774653564763</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Fixed">
-      <option name="closed" value="true" />
-      <created>1774655629902</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1774655629902</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Fixed">
-      <option name="closed" value="true" />
-      <created>1774659054579</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1774659054579</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Fixed">
-      <option name="closed" value="true" />
-      <created>1774660915207</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1774660915207</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Fixed">
-      <option name="closed" value="true" />
-      <created>1774660934738</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1774660934738</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Fixed">
-      <option name="closed" value="true" />
-      <created>1774661901633</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1774661901635</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Fixed Animateur Controller and deletes Id now">
-      <option name="closed" value="true" />
-      <created>1774662042806</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1774662042806</updated>
-    </task>
-    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="origin/Manu" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixes" />
-    <MESSAGE value="Fixed" />
-    <MESSAGE value="Fixed Animateur Controller and deletes Id now" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Animateur Controller and deletes Id now" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>
