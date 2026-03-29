@@ -1,7 +1,6 @@
 package com.manara.portail.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -14,35 +13,26 @@ public class SessionParent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull(message = "L'heure de début est requise")
     @Column(name = "heure_debut", nullable = false)
     private LocalTime heureDebut;
 
-    @NotNull(message = "L'heure de fin est requise")
     @Column(name = "heure_fin", nullable = false)
     private LocalTime heureFin;
 
-    @NotNull(message = "La date est requise")
-    @FutureOrPresent(message = "La date doit être dans le présent ou le futur")
+
     @Column(nullable = false)
     private LocalDate date;
 
-    @NotNull(message = "La capacité maximale est requise")
-    @Min(value = 1, message = "La capacité maximale doit être au moins 1")
-    @Max(value = 100, message = "La capacité maximale ne peut pas dépasser 100")
+
     @Column(name = "capacite_max", nullable = false)
     private Integer capaciteMax;
 
-    @NotBlank(message = "Le lieu est requis")
-    @Size(max = 255, message = "Le lieu ne peut pas dépasser 255 caractères")
     @Column(nullable = false)
     private String lieu;
 
-    @NotBlank(message = "Le statut est requis")
     @Column(length = 50, nullable = false)
     private String statut = "PLANIFIEE";
 
-    @NotNull(message = "L'activité est requise")
     @ManyToOne
     @JoinColumn(name = "activite_id", nullable = false)
     private ActiviteParent activite;
@@ -50,9 +40,6 @@ public class SessionParent {
     @ManyToOne
     @JoinColumn(name = "animateur_id")
     private Utilisateur animateur;
-
-    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL)
-    private List<Presence> presences = new ArrayList<>();
 
     @OneToMany(mappedBy = "session", cascade = CascadeType.ALL)
     private List<InscriptionEnfant> inscriptions = new ArrayList<>();
@@ -96,9 +83,6 @@ public class SessionParent {
 
     public Utilisateur getAnimateur() { return animateur; }
     public void setAnimateur(Utilisateur animateur) { this.animateur = animateur; }
-
-    public List<Presence> getPresences() { return presences; }
-    public void setPresences(List<Presence> presences) { this.presences = presences; }
 
     public List<InscriptionEnfant> getInscriptions() { return inscriptions; }
     public void setInscriptions(List<InscriptionEnfant> inscriptions) { this.inscriptions = inscriptions; }

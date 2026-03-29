@@ -1,42 +1,37 @@
 package com.manara.portail.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "enfants")
+@Table(name = "enfant")
 public class Enfant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "Le nom de l'enfant ne peut pas être vide")
-    @Size(min = 2, max = 50, message = "Le nom doit contenir entre 2 et 50 caractères")
+
     @Column(length = 50, nullable = false)
     private String nom;
 
-    @NotBlank(message = "Le prénom de l'enfant ne peut pas être vide")
-    @Size(min = 2, max = 50, message = "Le prénom doit contenir entre 2 et 50 caractères")
+
     @Column(length = 50, nullable = false)
     private String prenom;
 
-    @NotNull(message = "La date de naissance est requise")
-    @Past(message = "La date de naissance doit être dans le passé")
+
+
     @Column(name = "date_naissance", nullable = false)
     private LocalDate dateNaissance;
 
-    @Size(max = 500, message = "Les allergies ne peuvent pas dépasser 500 caractères")
     @Column(length = 500)
     private String allergies;
 
-    @Size(max = 1000, message = "Les notes médicales ne peuvent pas dépasser 1000 caractères")
     @Column(name = "notes_medicales", length = 1000)
     private String notesMedicales;
 
-    @NotNull(message = "Le parent est requis")
     @ManyToOne
     @JoinColumn(name = "parent_id", nullable = false)
     private Parent parent;
