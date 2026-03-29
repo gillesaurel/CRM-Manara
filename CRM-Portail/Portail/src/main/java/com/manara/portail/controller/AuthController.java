@@ -31,7 +31,6 @@ public class AuthController {
     @GetMapping("/register")
     public String pageInscription(Model model,
                                   @CookieValue(name = "role" , required = false) String role) {
-        model.addAttribute("role", role);
         model.addAttribute("utilisateur", new Utilisateur());
         return "inscription";
     }
