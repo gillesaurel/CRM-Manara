@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Inscription enfant</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<h2>Inscrire un enfant à une activité</h2>
+
+<!-- Message de confirmation -->
+<div th:if="${message}">
+  <p th:text="${message}" style="color: green;"></p>
+</div>
+
+<form th:action="@{/inscriptions/save}" method="post">
+
+  <!-- ENFANT -->
+  <label>Nom de l'enfant :</label>
+  <input type="text" name="nomEnfant" required>
+
+  <br><br>
+
+  <!-- ACTIVITÉS (MENU DÉROULANT DYNAMIQUE) -->
+  <label>Choisir une activité :</label>
+  <select name="activiteId" required>
+    <option value="">-- Sélectionner --</option>
+
+    <option th:each="a : ${activites}"
+            th:value="${a.id}"
+            th:text="${a.nom + ' | Places: ' + a.capacite}">
+    </option>
+
+  </select>
+
+  <br><br>
+
+  <button type="submit">Inscrire</button>
+
+</form>
+
+</body>
+</html>

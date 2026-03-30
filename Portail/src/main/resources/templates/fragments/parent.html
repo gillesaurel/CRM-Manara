@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<nav class="bottom-nav"
+     aria-label="Navigation bas"
+     th:fragment="bottomNav(activePage)">
+
+    <a th:href="@{/parent/dashboard}"
+       th:classappend="${activePage == 'dashboard'} ? 'active'"
+       class="nav-item">
+        <i class="fa-solid fa-house"></i>
+        <span>Accueil</span>
+    </a>
+
+    <a th:href="@{/parent/activites}"
+       th:classappend="${activePage == 'activites'} ? 'active'"
+       class="nav-item">
+        <i class="fa-solid fa-calendar-days"></i>
+        <span>Activités</span>
+    </a>
+
+    <a th:href="@{/parent/enfants}"
+       th:classappend="${activePage == 'enfants'} ? 'active'"
+       class="nav-item">
+        <i class="fa-solid fa-child"></i>
+        <span>Enfants</span>
+    </a>
+
+    <a th:href="@{/parent/planning}"
+       th:classappend="${activePage == 'planning'} ? 'active'"
+       class="nav-item">
+        <i class="fa-solid fa-clipboard-list"></i>
+        <span>Planning</span>
+    </a>
+
+</nav>
+
+</body>
+</html>

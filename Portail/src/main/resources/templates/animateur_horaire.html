@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portail Manara — Animateur Sessions</title>
+
+    <link th:rel="stylesheet" th:href="@{/css/style.css}">
+    <link th:rel="stylesheet" th:href="@{/css/animateur.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="page-animateurs">
+
+<header th:replace="fragments/main::header"></header>
+
+<main class="dash">
+
+    <section class="dash-top">
+        <div>
+            <h1>Portail Manara</h1>
+            <p class="subtitle">Tableau de bord</p>
+        </div>
+        <div class="profile-pill">
+            <i class="fa-solid fa-user-tie"></i>
+            <span>Profil : Animateur</span>
+        </div>
+    </section>
+
+    <h2>Sessions à venir</h2>
+    <p>Consulter vos prochaines sessions.</p>
+
+    <div th:each="sess : ${sessions}">
+        <section class="card welcome">
+            <h3 th:text="${sess.activite != null ? sess.activite.nom : 'Activité inconnue'}">Activité</h3>
+            <div class="quick-grid">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Heure début</th>
+                        <th>Heure fin</th>
+                        <th>Lieu</th>
+                        <th>Statut</th>
+                        <th>Inscrits</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td th:text="${sess.date}">Date</td>
+                        <td th:text="${sess.heureDebut}">Heure début</td>
+                        <td th:text="${sess.heureFin}">Heure fin</td>
+                        <td th:text="${sess.lieu}">Lieu</td>
+                        <td th:text="${sess.statut}">Statut</td>
+                        <td th:text="${sess.getNbInscrits()}">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <div th:if="${#lists.isEmpty(sessions)}">
+        <section class="card welcome">
+            <p>Aucune session à venir.</p>
+        </section>
+    </div>
+
+    <div class="bottom-spacer"></div>
+</main>
+
+<div th:replace="~{fragments/animateur :: bottomNav('horaire')}"></div>
+
+</body>
+</html>
