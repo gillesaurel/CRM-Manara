@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Integer> {
-    @Query("SELECT u FROM Role u WHERE u.nom = ?1")
+    @Query("SELECT u FROM Role u WHERE u.nom LIKE %?1%")
     public Role findByNom(String nom);
 
     @Query("SELECT u FROM Role u WHERE u.nom  LIKE %?1% OR u.description  LIKE %?1%")

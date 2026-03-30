@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <header th:replace="~{fragments/main::header}">
+    <header th:replace="fragments/main::header">
 
     </header>
 
@@ -70,7 +70,7 @@
                     <label for="motdepasse">Confirmer votre mot de passe *</label>
                     <input type="password"
                            id="connfirmMotdepasse"
-                           th:field="*{confirmMotdepasse}"
+                           th:field="*{motdepasse}"
                            placeholder="••••••••"
                            required
                            minlength="8" />

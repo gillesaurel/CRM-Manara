@@ -68,12 +68,19 @@ public class AuthController {
             RedirectAttributes redirectAttributes,
             HttpServletResponse response
     ) throws IOException {
+
+        Utilisateur tempUtilisateur = UtilService.getUtilisateurByEmailAndMotDePasse(
+                utilisateur.getEmail(),
+                utilisateur.getMotdepasse()
+        );
+        System.out.println("email : " + utilisateur.getEmail());
+        System.out.println("mdp : " + utilisateur.getMotdepasse());
+
         try {
 
-            Utilisateur tempUtilisateur = UtilService.getUtilisateurByEmailAndMotDePasse(
-                    utilisateur.getEmail(),
-                    utilisateur.getMotdepasse()
-            );
+
+            System.out.println("tempUtilisateur : " + tempUtilisateur.getEmail());
+
 
             if (tempUtilisateur != null) {
 
@@ -92,6 +99,18 @@ public class AuthController {
         }
     }*/
 
+    @GetMapping("/deconnexion")
+    public String pageConnexion(Model model, HttpServletResponse response) {
+        model.addAttribute("utilisateur", new Utilisateur());
+
+        response.addCookie(deleteCookie("email"));
+        response.addCookie(deleteCookie("role"));
+        response.addCookie(deleteCookie("prenom"));
+        response.addCookie(deleteCookie("nom"));
+
+        return "index";
+    }
+
     // creer un cookie utilisateur lorsque l'utilisateur se connecte
     private Cookie createCookie(String name, String value) {
         Cookie cookie = new Cookie(name, value);
@@ -101,5 +120,12 @@ public class AuthController {
         return cookie;
     }
 
+    private Cookie deleteCookie(String name) {
+        Cookie cookie = new Cookie(name, "");
+        cookie.setPath("/");
+        cookie.setMaxAge(-1);
+        cookie.setHttpOnly(true);
+        return cookie;
+    }
    
 }
