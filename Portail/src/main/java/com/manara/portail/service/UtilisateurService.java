@@ -58,6 +58,24 @@ public class UtilisateurService {
         return utilisateurRepository.findByEmail(email);
     }
 
+    public Utilisateur enregistrerParAdmin(Utilisateur utilisateur) throws Exception {
+        if (utilisateurRepository.findByEmail(utilisateur.getEmail()) != null) {
+            throw new Exception("Email déjà utilisé !");
+        }
+
+        if (utilisateur.getRole() != null && utilisateur.getRole().getId() != null) {
+            Role roleSelectionne = roleRepository.findById(utilisateur.getRole().getId().intValue())
+                    .orElseThrow(() -> new Exception("Rôle introuvable"));
+            utilisateur.setRole(roleSelectionne);
+        } else {
+            Role roleParDefaut = roleRepository.findByNom("PARENT");
+            utilisateur.setRole(roleParDefaut);
+        }
+
+        utilisateur.setMotdepasse(passwordEncoder.encode(utilisateur.getMotdepasse()));
+
+        return utilisateurRepository.save(utilisateur);
+    }
 
 
 }

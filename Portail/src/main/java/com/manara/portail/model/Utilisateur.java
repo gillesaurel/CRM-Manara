@@ -61,6 +61,10 @@ public class Utilisateur {
         this.role = role;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getPrenom() {
         return prenom;
     }

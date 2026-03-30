@@ -19,11 +19,11 @@ public class InscriptionEnfant {
     private boolean enAttente;
 
     @ManyToOne
-    @JoinColumn(name = "activite_id")
+    @JoinColumn(name = "activite_id", nullable = false)
     private ActiviteAdmin activite;
 
     @ManyToOne
-    @JoinColumn(name = "utilisateur_id")
+    @JoinColumn(name = "utilisateur_id", nullable = false)
     private Utilisateur utilisateur;
 
     public ActiviteAdmin getActivite() {

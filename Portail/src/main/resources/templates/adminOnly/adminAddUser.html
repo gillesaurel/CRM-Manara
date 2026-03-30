@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="UTF-8">
+    <link th:rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Inscription</title>
+</head>
+<body>
+
+<header th:replace="~{fragments/main::header}">
+
+</header>
+
+<main class="formulaire-section">
+    <div class="form">
+        <h1>Inscrire un nouvel utilisateur</h1>
+        <form th:action="@{/admin/save}" th:object="${utilisateur}" method="post" >
+            <span class="error" > </span>
+            <div  th:if="${message!= null}">[[${message}]]</div>
+            <!-- Nom -->
+            <div>
+                <label for="prenom">Prénom *</label>
+                <input type="text"
+                       id="prenom"
+                       th:field="*{prenom}"
+                       placeholder="Jean"
+                       required />
+            </div>
+
+            <!-- Prénom -->
+            <div>
+                <label for="nom">Nom *</label>
+                <input type="text"
+                       id="nom"
+                       th:field="*{nom}"
+                       placeholder="Dupont"
+                       required />
+            </div>
+
+            <!-- Téléphone -->
+            <div>
+                <label for="telephone">Téléphone</label>
+                <input type="tel"
+                       id="telephone"
+                       th:field="*{telephone}"
+                       placeholder="0612345678" />
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label for="email">Courriel *</label>
+                <input type="email"
+                       id="email"
+                       th:field="*{email}"
+                       placeholder="jeandupont@gmail.com"
+                       required />
+            </div>
+
+            <!-- Mot de passe -->
+            <div>
+                <label for="motdepasse">Mot de passe *</label>
+                <input type="password"
+                       id="motdepasse"
+                       th:field="*{motdepasse}"
+                       placeholder="••••••••"
+                       required
+                       minlength="8" />
+            </div>
+            <div>
+                <label for="motdepasse">Confirmer votre mot de passe *</label>
+                <input type="password"
+                       id="connfirmMotdepasse"
+                       th:field="*{confirmMotdepasse}"
+                       placeholder="••••••••"
+                       required
+                       minlength="8" />
+            </div>
+
+            <!-- Rôle -->
+            <div style="display: flex; flex-direction: column;">
+                <label for="role">Rôle </label>
+                <select id="role" name="role.id" required>
+                    <option value=""> Choisir un rôle </option>
+                    <option th:each="r : ${roles}"
+                            th:value="${r.id}"
+                            th:text="${r.nom}">
+                    </option>
+                </select>
+            </div>
+            <!-- Photo
+            <div>
+                <label for="photo">Photo de profil</label>
+                <input type="file"
+                       id="photo"
+                       name="fileImage"
+                       accept="image/*" />
+            </div>
+            -->
+            <!-- Boutons -->
+            <div class="btn-group-inscription">
+                <button type="submit">L'inscrire</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/fragmentAdministrateur::bottomNav('users')}"></footer>
+<footer th:replace="~{fragments/main::footer}">
+
+</footer>
+
+</body>
+</html>

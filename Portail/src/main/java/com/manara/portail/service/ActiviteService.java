@@ -2,7 +2,9 @@ package com.manara.portail.service;
 
 import com.manara.portail.model.ActiviteAdmin;
 import com.manara.portail.model.Inscription;
+import com.manara.portail.model.InscriptionEnfant;
 import com.manara.portail.repository.ActiviteRepository;
+import com.manara.portail.repository.InscriptionEnfantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.util.List;
 public class ActiviteService {
     @Autowired
     private ActiviteRepository activiteRepository;
+    @Autowired
+    private InscriptionEnfantRepository inscriptionRepository;
 
     public List<ActiviteAdmin> getAllActivites() {
         return activiteRepository.findAll();
@@ -26,10 +30,11 @@ public class ActiviteService {
     }
 
     public void deleteById(Long id) {
-        if (!activiteRepository.existsById(id)) {
-            throw new ActiviteNotFoundException("L'activité avec l'ID " + id + " n'existe pas.");
+        ActiviteAdmin activite = getById(id);
+        if (activite == null) {
+            throw new RuntimeException("Activité introuvable");
         }
-        activiteRepository.deleteById(id);
+        activiteRepository.delete(activite);
     }
 
     public int getPourcentageInscription() {
@@ -39,5 +44,9 @@ public class ActiviteService {
         long totalCapacite = activites.stream().mapToInt(ActiviteAdmin::getCapacite).sum();
         if (totalCapacite == 0) return 0;
         return (int) ((totalInscrits * 100) / totalCapacite);
+    }
+
+    public boolean isComplet(ActiviteAdmin activite) {
+        return activite.isComplet();
     }
 }

@@ -4,6 +4,7 @@
   <title>Inscription enfant</title>
   <meta charset="UTF-8">
   <link rel="stylesheet" th:href="@{/css/styleInscriptionEnfant.css}">
+  <link th:rel="stylesheet" th:href="@{/css/style.css}">
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
@@ -18,7 +19,7 @@
   <p th:text="${message}" style="color: green;"></p>
 </div>
 
-<form th:action="@{/inscription-enfant/save}" method="post">
+<form th:action="@{/admin/inscriptionEnfant/save}" method="post">
 
   <!-- ENFANT -->
   <label>Nom de l'enfant :</label>
@@ -29,7 +30,7 @@
   <!-- ACTIVITÉS (MENU DÉROULANT DYNAMIQUE) -->
   <label>Choisir une activité :</label>
   <select name="activiteId" required>
-    <option value="">-- Sélectionner --</option>
+    <option value=""> Sélectionner </option>
 
     <option th:each="a : ${activites}"
             th:value="${a.id}"
@@ -44,6 +45,7 @@
 
 </form>
 </div>
-<div th:replace="~{fragments/parent :: bottomNav('dashboard')}"></div>
+<footer th:replace="~{fragments/fragmentAdministrateur::bottomNav('users')}"></footer>
+<footer th:replace="~{fragments/main::footer}"></footer>
 </body>
 </html>

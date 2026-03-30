@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestion des utilisateurs - Admin</title>
+  <link rel="stylesheet" th:href="@{/css/style-admin.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<header th:replace="fragments/main::header"></header>
+
+<main class="admin-main">
+
+  <h1>Gestion des utilisateurs</h1>
+
+  <div th:if="${message}" class="alert success" th:text="${message}"></div>
+  <div th:if="${error}" class="alert error" th:text="${error}"></div>
+
+  <!-- Barre de recherche -->
+  <form th:action="@{/admin/adminOnly/utilisateurs}" method="get" class="search-form">
+    <input type="text" name="keyword" th:value="${keyword}" placeholder="Rechercher...">
+    <button type="submit"><i class="fas fa-search"></i> Rechercher</button>
+  </form>
+
+  <!-- Tableau Parents -->
+  <h2>Parents</h2>
+  <table class="admin-table">
+    <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Email</th>
+      <th>Téléphone</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${parents}">
+      <td th:text="${user.nom}">Nom</td>
+      <td th:text="${user.prenom}">Prénom</td>
+      <td th:text="${user.email}">email@example.com</td>
+      <td th:text="${user.telephone}">0123456789</td>
+      <td>
+        <!-- Formulaire réinitialiser mot de passe -->
+        <form th:action="@{/admin/reset-password}" method="post" style="display:inline">
+          <input type="hidden" name="userId" th:value="${user.id}" />
+          <input type="password" name="password" placeholder="Nouveau mot de passe" required />
+          <button type="submit" class="btn-reset">
+            <i class="fas fa-key"></i> Réinitialiser
+          </button>
+        </form>
+
+        <!-- Formulaire supprimer utilisateur -->
+        <form th:action="@{'/admin/utilisateur/delete/' + ${user.id}}" method="post" style="display:inline">
+          <input type="hidden" name="_method" value="delete"/>
+          <button type="submit" class="btn-delete" onclick="return confirm('Supprimer cet utilisateur ?')">
+            <i class="fas fa-trash"></i> Supprimer
+          </button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Tableau Animateurs -->
+  <h2>Animateurs</h2>
+  <table class="admin-table">
+    <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Email</th>
+      <th>Téléphone</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${animateurs}">
+      <td th:text="${user.nom}">Nom</td>
+      <td th:text="${user.prenom}">Prénom</td>
+      <td th:text="${user.email}">email@example.com</td>
+      <td th:text="${user.telephone}">0123456789</td>
+      <td>
+        <!-- réinitialiser le pwd -->
+        <form th:action="@{/admin/reset-password}" method="post" style="display:inline">
+          <input type="hidden" name="userId" th:value="${user.id}" />
+          <input type="password" name="password" placeholder="Nouveau mot de passe" required />
+          <button type="submit" class="btn-reset">
+            <i class="fas fa-key"></i> Réinitialiser
+          </button>
+        </form>
+
+        <!-- supprimer utilisateur -->
+        <form th:action="@{'/admin/utilisateur/delete/' + ${user.id}}" method="post" style="display:inline">
+          <input type="hidden" name="_method" value="delete"/>
+          <button type="submit" class="btn-delete" onclick="return confirm('Supprimer cet utilisateur ?')">
+            <i class="fas fa-trash"></i> Supprimer
+          </button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Tableau Enfants -->
+  <h2>Enfants</h2>
+  <table class="admin-table">
+    <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Date de naissance</th>
+      <th>Parent</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="child : ${enfants}">
+      <td th:text="${child.nom}">Nom</td>
+      <td th:text="${child.prenom}">Prénom</td>
+      <td th:text="${#temporals.format(child.dateNaissance, 'dd/MM/yyyy')}">01/01/2020</td>
+      <td th:text="${child.parent.nom + ' ' + child.parent.prenom}">Parent</td>
+    </tr>
+    </tbody>
+  </table>
+
+</main>
+
+<footer th:replace="~{fragments/fragmentAdministrateur::bottomNav('users')}"></footer>
+<footer th:replace="~{fragments/main::footer}"></footer>
+
+<script>
+  setTimeout(() => {
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => {
+      alert.style.transition = 'opacity 0.5s';
+      alert.style.opacity = '0';
+      setTimeout(() => alert.remove(), 500);
+    });
+  }, 5000);
+
+  function deleteUser(id) {
+      if(!confirm("Supprimer cet utilisateur ?")) return;
+      fetch('/admin/users/delete/' + id, { method: 'DELETE' })
+          .then(res => res.text())
+          .then(data => {
+              if(data === "success") location.reload();
+              else alert("Erreur suppression");
+          })
+          .catch(() => alert("Erreur serveur"));
+  }
+</script>
+</body>
+</html>

@@ -36,11 +36,11 @@ public class ActiviteAdmin {
     @Column(name = "date_creation")
     private LocalDateTime dateCreation = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "activite", cascade = CascadeType.ALL)
-    private List<Inscription> inscriptions =  new ArrayList<>();
+    @OneToMany(mappedBy = "activite", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<InscriptionEnfant> inscriptions = new ArrayList<>();
 
     public long getNbEnAttente() {
-        return inscriptions.stream().filter(Inscription::isEnAttente).count();
+        return inscriptions.stream().filter(InscriptionEnfant::isEnAttente).count();
     }
 
     public long getNbInscrits() {
@@ -95,5 +95,22 @@ public class ActiviteAdmin {
 
     public void setDateDebut(LocalDateTime dateDebut) {
         this.dateDebut = dateDebut;
+    }
+
+    public List<InscriptionEnfant> getInscriptions() {
+        return inscriptions;
+    }
+
+    public void setInscriptions(List<InscriptionEnfant> inscriptions) {
+        this.inscriptions = inscriptions;
+    }
+
+    public int getTauxRemplissage() {
+        if (capacite == 0) return 0;
+        return (int)((getNbInscrits() * 100) / capacite);
+    }
+
+    public boolean isComplet() {
+        return getNbInscrits() >= capacite;
     }
 }
