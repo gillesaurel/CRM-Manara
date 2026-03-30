@@ -2,7 +2,6 @@ package com.manara.portail.security;
 
 import com.manara.portail.model.Utilisateur;
 import com.manara.portail.service.UtilisateurService;
-import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -18,8 +17,7 @@ public class UtilisateurDetailsService implements UserDetailsService {
     @Autowired
     private org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
 
-    @NonNull
-    public UserDetails loadUserByUsername(@NonNull String email) throws UsernameNotFoundException{
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
 
         Utilisateur user = utilisateurService.findByEmail(email);
 

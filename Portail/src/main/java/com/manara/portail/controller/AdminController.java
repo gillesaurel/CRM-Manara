@@ -1,22 +1,32 @@
-// fait par Gilles Aurel
-
 package com.manara.portail.controller;
 
-import com.manara.portail.model.*;
-import com.manara.portail.repository.AdminRepository;
+import com.manara.portail.model.ActiviteAdmin;
 import com.manara.portail.model.InscriptionEnfant;
+import com.manara.portail.model.Role;
+import com.manara.portail.model.Utilisateur;
+import com.manara.portail.repository.AdminRepository;
 import com.manara.portail.repository.RoleRepository;
 import com.manara.portail.repository.UtilisateurRepository;
-import com.manara.portail.service.*;
+import com.manara.portail.service.ActiviteService;
+import com.manara.portail.service.AdminService;
+import com.manara.portail.service.InscriptionEnfantService;
+import com.manara.portail.service.SessionService;
+import com.manara.portail.service.UtilisateurService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,7 +51,6 @@ public class AdminController {
     @Autowired
     private InscriptionEnfantService inscriptionEnfantService;
 
-    // ---------- ADMINI ----------
     @GetMapping("/administrateur")
     public String pageAdministrateur(Model model) {
         List<ActiviteAdmin> activites = activiteService.getAllActivites();
@@ -52,44 +61,37 @@ public class AdminController {
         return "administrateur";
     }
 
-    // ---------- ACTIVITES ----------
     @GetMapping("/adminOnly/activites")
     public String showActivites(Model model) {
         List<ActiviteAdmin> activites = activiteService.getAllActivites();
         model.addAttribute("activites", activites);
-
-        int tauxGlobal = activiteService.getPourcentageInscription();
-        model.addAttribute("tauxGlobal", tauxGlobal);
+        model.addAttribute("tauxGlobal", activiteService.getPourcentageInscription());
         model.addAttribute("activite", new ActiviteAdmin());
-
         return "/adminOnly/activites";
     }
 
     @PostMapping("/activities/save")
-    public String saveOrUpdateActivite(
-            @Valid @ModelAttribute ActiviteAdmin activite,
-            BindingResult resulta,
-            RedirectAttributes redirectAttributes,
-            Model model) {
-        if(resulta.hasErrors()) {
-            model.addAttribute("activite", activiteService.getAllActivites());
+    public String saveOrUpdateActivite(@Valid @ModelAttribute ActiviteAdmin activite,
+                                       BindingResult result,
+                                       RedirectAttributes redirectAttributes,
+                                       Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("activites", activiteService.getAllActivites());
             return "administrateur";
         }
-        activiteService.save(activite);
-        redirectAttributes.addFlashAttribute("message",
-                "Activité enregistrée avec succès.");
 
+        activiteService.save(activite);
+        redirectAttributes.addFlashAttribute("message", "Activité enregistrée avec succès.");
         return "redirect:/admin/administrateur";
     }
 
     @GetMapping("/activities/edit/{id}")
     public String modifyActivite(@PathVariable Long id, Model model) {
-        ActiviteAdmin activite = this.activiteService.getById(id);
+        ActiviteAdmin activite = activiteService.getById(id);
         model.addAttribute("activite", activite);
         model.addAttribute("activites", activiteService.getAllActivites());
         return "administrateur";
     }
-
 
     @GetMapping("/activities/delete/{id}")
     public String removeActivite(@PathVariable Long id, RedirectAttributes redirectAttributes) {
@@ -102,59 +104,46 @@ public class AdminController {
         return "redirect:/admin/adminOnly/activites";
     }
 
-    // Valider un inscrit (sortir de la liste d’attente)
     @GetMapping("/adminOnly/listeAttente")
     public String listeAttente(Model model) {
-        List<ActiviteAdmin> activites = activiteService.getAllActivites();
-        model.addAttribute("activites", activites);
-
         List<InscriptionEnfant> inscriptions = inscriptionEnfantService.getListeAttente();
 
         Map<String, Long> stats = inscriptions.stream().collect(Collectors.groupingBy(
-                i -> i.getSession().getActivite().getNom(),
+                this::inscriptionLabel,
                 Collectors.counting()
         ));
 
         Map<String, List<InscriptionEnfant>> groupedInscriptions = inscriptions.stream()
-                .collect(Collectors.groupingBy(
-                        i -> i.getSession().getActivite().getNom()
-                ));
+                .collect(Collectors.groupingBy(this::inscriptionLabel));
 
+        model.addAttribute("activites", activiteService.getAllActivites());
         model.addAttribute("stats", stats);
         model.addAttribute("groupedInscriptions", groupedInscriptions);
-
-        return "adminOnly/listeAttente"; // doit exister dans resources/templates/adminOnly/listeAttente.html
+        return "adminOnly/listeAttente";
     }
 
     @PostMapping("/inscriptions/valider/{id}")
-    public String validerInscription(@PathVariable Long id,
-                                     RedirectAttributes redirectAttributes) {
-
+    public String validerInscription(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             inscriptionEnfantService.confirmerInscriptionAvecEmail(id);
             redirectAttributes.addFlashAttribute("message", "Inscription validée !");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Activité complète !");
         }
-
-        return "redirect:/admin/adminOnly/activites";
+        return "redirect:/admin/adminOnly/listeAttente";
     }
 
-    // Supprimer un inscrit
     @GetMapping("/inscriptions/delete/{id}")
-    public String deleteInscription(@PathVariable Long id,
-                                    RedirectAttributes redirectAttributes) {
+    public String deleteInscription(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             inscriptionEnfantService.deleteById(id);
             redirectAttributes.addFlashAttribute("message", "Inscription supprimée");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-
-        return "redirect:/admin/liste-attente";
+        return "redirect:/admin/adminOnly/listeAttente";
     }
 
-    // ---------- AJOUT UTILISATEUR ----------
     @GetMapping("adminOnly/adminAddUser")
     public String pageAjouterUser(Model model) {
         Utilisateur utilisateur = new Utilisateur();
@@ -171,11 +160,11 @@ public class AdminController {
             return "redirect:/admin/adminOnly/adminAddUser";
         } catch (Exception e) {
             model.addAttribute("Erreur : ", e.getMessage());
+            model.addAttribute("roles", roleRepository.findAll());
             return "adminOnly/adminAddUser";
         }
     }
 
-    // ---------- GESTION UTILISATEURS ----------
     @PostMapping("utilisateur/delete/{id}")
     public String deleteUserForm(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
@@ -187,7 +176,6 @@ public class AdminController {
         return "redirect:/admin/adminOnly/utilisateurs";
     }
 
-    // Page utilisateurs
     @GetMapping("/adminOnly/utilisateurs")
     public String listUsers(@RequestParam(required = false) String keyword,
                             @RequestParam(required = false) String roleFilter,
@@ -225,7 +213,6 @@ public class AdminController {
         }
     }
 
-    // ---------- EMAIL ----------
     @GetMapping("adminOnly/email")
     public String emailPage(Model model) {
         model.addAttribute("parents", adminRepository.findByRole("PARENT"));
@@ -240,7 +227,6 @@ public class AdminController {
                             @RequestParam String subject,
                             @RequestParam String message,
                             RedirectAttributes redirectAttributes) {
-
         try {
             switch (type) {
                 case "PARENT_ONE":
@@ -258,6 +244,8 @@ public class AdminController {
                 case "ALL":
                     adminService.envoyerEmailToutLeMonde(subject, message);
                     break;
+                default:
+                    throw new IllegalArgumentException("Type d'envoi inconnu");
             }
             redirectAttributes.addFlashAttribute("message", "Email envoyé !");
         } catch (Exception e) {
@@ -265,5 +253,15 @@ public class AdminController {
         }
 
         return "redirect:/admin/adminOnly/email";
+    }
+
+    private String inscriptionLabel(InscriptionEnfant inscription) {
+        if (inscription.getSession() != null && inscription.getSession().getActivite() != null) {
+            return inscription.getSession().getActivite().getNom();
+        }
+        if (inscription.getActivite() != null) {
+            return inscription.getActivite().getNom();
+        }
+        return "Sans activité";
     }
 }

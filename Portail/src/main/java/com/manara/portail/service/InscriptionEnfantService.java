@@ -1,20 +1,20 @@
 package com.manara.portail.service;
 
-import com.manara.portail.model.InscriptionEnfant;
-
-import com.manara.portail.model.Enfant;
-import com.manara.portail.model.SessionParent;
-import com.manara.portail.repository.InscriptionEnfantRepository;
-import com.manara.portail.repository.EnfantRepository;
-import com.manara.portail.repository.SessionParentRepository;
 import com.manara.portail.exception.ResourceNotFoundException;
+import com.manara.portail.model.ActiviteAdmin;
+import com.manara.portail.model.Enfant;
+import com.manara.portail.model.InscriptionEnfant;
+import com.manara.portail.model.SessionParent;
+import com.manara.portail.model.Utilisateur;
+import com.manara.portail.repository.ActiviteRepository;
+import com.manara.portail.repository.EnfantRepository;
+import com.manara.portail.repository.InscriptionEnfantRepository;
+import com.manara.portail.repository.SessionParentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class InscriptionEnfantService {
@@ -23,15 +23,21 @@ public class InscriptionEnfantService {
     private final EnfantRepository enfantRepository;
     private final SessionParentRepository sessionRepository;
     private final CommunicationService communicationService;
+    private final ActiviteRepository activiteRepository;
+    private final EmailService emailService;
 
     public InscriptionEnfantService(InscriptionEnfantRepository inscriptionRepository,
                                     EnfantRepository enfantRepository,
                                     SessionParentRepository sessionRepository,
-                                    CommunicationService communicationService) {
+                                    CommunicationService communicationService,
+                                    ActiviteRepository activiteRepository,
+                                    EmailService emailService) {
         this.inscriptionRepository = inscriptionRepository;
         this.enfantRepository = enfantRepository;
         this.sessionRepository = sessionRepository;
         this.communicationService = communicationService;
+        this.activiteRepository = activiteRepository;
+        this.emailService = emailService;
     }
 
     public List<InscriptionEnfant> getAllInscriptions() {
@@ -41,6 +47,10 @@ public class InscriptionEnfantService {
     public InscriptionEnfant getInscriptionById(Long id) {
         return inscriptionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Inscription non trouvee avec id: " + id));
+    }
+
+    public InscriptionEnfant getById(Long id) {
+        return getInscriptionById(id);
     }
 
     public List<InscriptionEnfant> getInscriptionsBySession(Integer sessionId) {
@@ -79,6 +89,10 @@ public class InscriptionEnfantService {
         return inscriptionRepository.findListeAttenteBySession(sessionId);
     }
 
+    public List<InscriptionEnfant> getListeAttente() {
+        return inscriptionRepository.findListeAttente();
+    }
+
     @Transactional
     public InscriptionEnfant inscrireEnfant(Integer enfantId, Integer sessionId, String commentaire) {
         Enfant enfant = enfantRepository.findById(enfantId)
@@ -103,17 +117,43 @@ public class InscriptionEnfantService {
         InscriptionEnfant inscription = new InscriptionEnfant();
         inscription.setEnfant(enfant);
         inscription.setSession(session);
-        inscription.setEnAttente(false);
 
         long nbInscrits = inscriptionRepository.countConfirmationsBySession(sessionId);
-        if (nbInscrits < session.getCapaciteMax()) {
-            inscription.setEnAttente(false);
-        } else {
-            inscription.setEnAttente(true);
-        }
+        inscription.setEnAttente(nbInscrits >= session.getCapaciteMax());
 
         InscriptionEnfant saved = inscriptionRepository.save(inscription);
-        communicationService.envoyerConfirmationInscription(enfant, session, saved.isEnAttente() ? "EN_ATTENTE" : "CONFIRMEE");
+        communicationService.envoyerConfirmationInscription(
+                enfant,
+                session,
+                saved.isEnAttente() ? "EN_ATTENTE" : "CONFIRMEE"
+        );
+
+        return saved;
+    }
+
+    @Transactional
+    public InscriptionEnfant inscriptionEnfant(String nom, Long activiteId, Utilisateur parent) {
+        ActiviteAdmin activite = activiteRepository.findById(activiteId)
+                .orElseThrow(() -> new ActiviteIntrouvableException("L'activité n'existe pas"));
+
+        InscriptionEnfant inscription = new InscriptionEnfant();
+        inscription.setActivite(activite);
+        inscription.setUtilisateur(parent);
+        inscription.setNomEnfant(nom);
+
+        boolean estComplet = activite.getNbInscrits() >= activite.getCapacite();
+        inscription.setEnAttente(estComplet);
+
+        InscriptionEnfant saved = inscriptionRepository.save(inscription);
+        if (estComplet) {
+            emailService.sendEmail(
+                    parent.getEmail(),
+                    "Liste d'attente",
+                    "L'activité " + activite.getNom() + " est complète.\nVotre enfant est placé sur liste d'attente."
+            );
+        } else {
+            envoyerEmailInscription(saved);
+        }
 
         return saved;
     }
@@ -131,16 +171,74 @@ public class InscriptionEnfantService {
     }
 
     @Transactional
+    public InscriptionEnfant confirmerInscriptionAvecEmail(Long inscriptionId) {
+        InscriptionEnfant inscription = confirmerInscription(inscriptionId);
+        if (inscription.getUtilisateur() != null && inscription.getActivite() != null) {
+            envoyerEmailInscription(inscription);
+        }
+        return inscription;
+    }
+
+    @Transactional
     public InscriptionEnfant annulerInscription(Long inscriptionId) {
         InscriptionEnfant inscription = getInscriptionById(inscriptionId);
 
         inscriptionRepository.delete(inscription);
-        communicationService.notifierAnnulation(inscription);
+        if (inscription.getEnfant() != null && inscription.getSession() != null) {
+            communicationService.notifierAnnulation(inscription);
+        }
 
         return inscription;
     }
 
     public boolean estInscrit(Integer enfantId, Integer sessionId) {
         return inscriptionRepository.findByEnfantIdAndSessionId(enfantId, sessionId).isPresent();
+    }
+
+    public InscriptionEnfant save(InscriptionEnfant inscription) {
+        return inscriptionRepository.save(inscription);
+    }
+
+    @Transactional
+    public void deleteById(Long id) {
+        InscriptionEnfant inscription = getById(id);
+        Long activiteId = inscription.getActivite() != null ? inscription.getActivite().getId() : null;
+
+        inscriptionRepository.deleteById(id);
+
+        if (activiteId == null) {
+            return;
+        }
+
+        List<InscriptionEnfant> listeAttente =
+                inscriptionRepository.findByActiviteIdAndEnAttenteTrueOrderByIdAsc(activiteId);
+
+        if (!listeAttente.isEmpty()) {
+            InscriptionEnfant next = listeAttente.get(0);
+            next.setEnAttente(false);
+            inscriptionRepository.save(next);
+            envoyerEmailInscription(next);
+        }
+    }
+
+    public long countInscrits(Long activiteId) {
+        return inscriptionRepository.countByActiviteIdAndEnAttenteFalse(activiteId);
+    }
+
+    private void envoyerEmailInscription(InscriptionEnfant inscription) {
+        if (inscription.getUtilisateur() == null || inscription.getActivite() == null) {
+            return;
+        }
+
+        emailService.sendEmail(
+                inscription.getUtilisateur().getEmail(),
+                "Votre enfant est inscrit !",
+                "Bonjour " + inscription.getUtilisateur().getNom() + ",\n\n"
+                        + "Une place est confirmée pour l'activité "
+                        + inscription.getActivite().getNom() + ".\n"
+                        + "Votre enfant " + inscription.getNomEnfant()
+                        + " est maintenant inscrit.\n"
+                        + "Date de l'activité : " + inscription.getActivite().getDateDebut() + "\n\nMerci."
+        );
     }
 }

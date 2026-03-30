@@ -3,7 +3,6 @@ package com.manara.portail.security;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
 public class CookiesRoleEmail implements AuthenticationSuccessHandler {
 
     @Override
-    public void onAuthenticationSuccess(@NonNull HttpServletRequest request,
+    public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException {
         System.out.println("onAuthenticationSuccess appellée");
