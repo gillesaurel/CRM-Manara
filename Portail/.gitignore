@@ -40,3 +40,4 @@ src/main/resources/application.properties
 application.properties
 application-dev.properties
 application-prod.properties
+.DS_Store
