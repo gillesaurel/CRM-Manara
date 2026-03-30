@@ -16,7 +16,7 @@ public class Inscription {
     private boolean enAttente;
 
     @ManyToOne
-    @JoinColumn(name = "activite_id")
+    @JoinColumn(name = "activites_id")
     private ActiviteAdmin activite;
 
     public Long getId() {

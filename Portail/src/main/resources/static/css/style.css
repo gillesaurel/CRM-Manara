@@ -188,7 +188,7 @@ nav a[href*="/login"]:hover {
     to { transform: translateX(-50%); }
 }
 
-/* ====== SECTION FORMULAIRE ====== */
+/*Formulaire*/
 .formulaire-section {
     background-color: #043d5b;
     padding: 60px 20px;
@@ -210,7 +210,7 @@ nav a[href*="/login"]:hover {
 
 .formulaire-section h1 {
     text-align: center;
-    color: #fff;
+    color: #043d5b;
     margin-bottom: 30px;
     font-size: 28px;
     font-weight: bold;
@@ -414,46 +414,43 @@ footer {
      transform: translateY(-1px);
  }
 /* Bottom nav (uniforme, basee sur animateur) */
-.bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+.bottom-nav{
     position: fixed;
-    bottom: 0;
     left: 0;
     right: 0;
-    width: 100%;
-    background: white;
-    padding: 10px 5px;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-    z-index: 1000;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid rgba(4,61,91,0.12);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 8px 10px;
+    z-index: 200;
 }
 
-.bottom-nav .nav-item {
-    text-decoration: none;
+.bottom-nav .nav-item{
+    text-decoration:none;
     color: rgba(4,61,91,0.75);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
     gap: 4px;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 800;
-    padding: 8px 4px;
+    padding: 8px 6px;
     border-radius: 12px;
-    flex: 1;
-    min-width: 0;
 }
 
-.bottom-nav .nav-item i {
-    font-size: 18px;
+.bottom-nav .nav-item i{
+    font-size: 16px;
 }
 
-.bottom-nav .nav-item.active {
+.bottom-nav .nav-item.active{
     color: #043d5b;
     background: rgba(252,205,44,0.35);
     border: 1px solid rgba(252,205,44,0.60);
 }
 
+/* Spacer to avoid nav overlap */
 .bottom-spacer{
     height: 74px;
 }

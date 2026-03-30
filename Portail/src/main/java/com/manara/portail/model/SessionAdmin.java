@@ -19,7 +19,7 @@ public class SessionAdmin {
     private LocalDateTime dateFin;
 
     @ManyToOne
-    @JoinColumn(name = "activite_id", nullable = false)
+    @JoinColumn(name = "activites_id", nullable = false)
     private ActiviteAdmin activite;
 
     public SessionAdmin() {
