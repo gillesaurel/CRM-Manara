@@ -3,17 +3,19 @@
 package com.manara.portail.controller;
 
 import com.manara.portail.model.Enfant;
+import com.manara.portail.model.Incident;
 import com.manara.portail.model.InscriptionEnfant;
 import com.manara.portail.model.SessionParent;
-import com.manara.portail.service.InscriptionEnfantService;
-import com.manara.portail.service.SessionParentService;
-import com.manara.portail.service.UtilisateurService;
+import com.manara.portail.service.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -31,6 +33,12 @@ public class AnimateurController {
 
     @Autowired
     InscriptionEnfantService inscriptionEnfantService;
+
+    @Autowired
+    IncidentService incidentService;
+
+    @Autowired
+    EnfantService enfantService;
 
     @GetMapping("/animateur")
     public String pageAccueil(HttpServletRequest request, Model model) {
@@ -109,6 +117,50 @@ public class AnimateurController {
         model.addAttribute("sessions", sessions);
         return "animateur_horaire";
     }
+
+
+    @GetMapping("/animateur/incidents")
+    public String pageIncidents(HttpServletRequest request, Model model) {
+        String animateurIdStr = getCookieValue(request, "id");
+        if (animateurIdStr == null) return "redirect:/login";
+
+        Integer animateurId = Integer.parseInt(animateurIdStr);
+
+        List<Incident> incidents = incidentService.getIncidentsByAnimateur(animateurId);
+        List<Enfant> enfants = enfantService.getAllEnfants();
+
+        model.addAttribute("incidents", incidents);
+        model.addAttribute("enfants", enfants);
+        return "animateur_incidents";
+    }
+
+    @PostMapping("/animateur/incidents/save")
+    public String signalerIncident(
+            HttpServletRequest request,
+            @RequestParam("enfantId") Integer enfantId,
+            @RequestParam("type") String type,
+            @RequestParam("description") String description,
+            @RequestParam("gravite") Integer gravite,
+            @RequestParam(value = "actionsPrises", required = false) String actionsPrises,
+            RedirectAttributes redirectAttributes
+    ) {
+        String animateurIdStr = getCookieValue(request, "id");
+        if (animateurIdStr == null) return "redirect:/login";
+
+        Integer animateurId = Integer.parseInt(animateurIdStr);
+
+        try {
+            incidentService.signalerIncident(enfantId, animateurId, type, description, gravite, actionsPrises);
+            redirectAttributes.addFlashAttribute("message", "Incident signalé avec succès.");
+            redirectAttributes.addFlashAttribute("messageType", "success");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", "Erreur lors du signalement : " + e.getMessage());
+            redirectAttributes.addFlashAttribute("messageType", "error");
+        }
+
+        return "redirect:/animateur/incidents";
+    }
+
 
     private String getCookieValue(HttpServletRequest request, String cookieName) {
         Cookie[] cookies = request.getCookies();

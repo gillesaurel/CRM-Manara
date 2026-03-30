@@ -1,5 +1,11 @@
 USE crm_manara;
 
+INSERT INTO role (id, nom, description) VALUES
+(1, 'ADMINISTRATEUR', 'Accès haut'),
+(2, 'ANIMATEUR', 'Accès moyen'),
+(3, 'PARENT', 'Accès bas'),
+(4, 'ENFANT', 'Accès nul');
+
 -- 1. Utilisateurs
 INSERT INTO utilisateur (id, email, motdepasse, nom, prenom, telephone, role_id)
 VALUES 
@@ -9,7 +15,7 @@ VALUES
   (4, 'kevin.roy@manara.com', 'motdepasse', 'Roy', 'Kevin', '4381112222', 2);
 
 -- 2. Activite (admin)
-INSERT INTO activite (id, capacite, date_creation, date_debut, description, nom)
+INSERT INTO activites (id, capacite, date_creation, date_debut, description, nom)
 VALUES 
   (1, 20, '2025-01-10 08:00:00', '2025-04-01 08:00:00', 'Activité sportive pour enfants', 'Soccer jeunesse'),
   (2, 15, '2025-01-15 08:00:00', '2025-04-05 08:00:00', 'Cours de peinture et dessin', 'Atelier arts plastiques');
@@ -28,7 +34,7 @@ VALUES
   (2, 15, '2026-04-12', '09:00:00', '11:00:00', 'Centre sportif Rosemont', 'PLANIFIEE', 1, 1),
   (3, 10, '2026-04-07', '13:00:00', '15:00:00', 'Salle polyvalente A', 'PLANIFIEE', 2, 4),
   (4, 10, '2026-04-14', '13:00:00', '15:00:00', 'Salle polyvalente A', 'PLANIFIEE', 2, 4),
-  (5, 12, '2026-04-09', '10:00:00', '12:00:00', 'Studio musical Manara', 'PLANIFIEE', 3, 1);
+  (5, 12, '2026-04-09', '10:00:00', '12:00:00', 'Studio musical Manara', 'PLANIFIEE', 2, 1);
 
 -- 5. Parents
 INSERT INTO parent VALUES
@@ -43,7 +49,7 @@ INSERT INTO enfant VALUES
   (4, NULL, '2021-01-30', 'Gagnon', NULL, 'Léa', 2);
 
 -- 7. Inscriptions
-INSERT INTO inscription_enfant (id, en_attente, nom_enfant, activite_id, enfant_id, session_id, utilisateur_id)
+INSERT INTO inscription_enfant (id, en_attente, nom_enfant, activites_id, enfant_id, session_id, utilisateur_id)
 VALUES
   (1, 0, 'Luca Tremblay',  1, 1, 1, 2),
   (2, 0, 'Emma Tremblay',  1, 2, 2, 2),
