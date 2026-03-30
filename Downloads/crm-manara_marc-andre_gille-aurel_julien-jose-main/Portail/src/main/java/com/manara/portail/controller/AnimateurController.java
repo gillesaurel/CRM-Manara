@@ -2,7 +2,6 @@
 
 package com.manara.portail.controller;
 
-import com.manara.portail.model.ActiviteParent;
 import com.manara.portail.model.Enfant;
 import com.manara.portail.model.InscriptionEnfant;
 import com.manara.portail.model.SessionParent;
@@ -13,7 +12,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 
@@ -72,11 +70,30 @@ public class AnimateurController {
         return "animateur_inscription";
     }
 
-
-
     @GetMapping("/animateur/presences")
     public String pagePresences(HttpServletRequest request, Model model) {
+        String animateurIdStr = getCookieValue(request, "id");
+        if (animateurIdStr == null) return "redirect:/login";
 
+        Integer animateurId = Integer.parseInt(animateurIdStr);
+        List<SessionParent> sessions = sessionParentService
+                .getSessionsAvecEnfantsByAnimateur(animateurId);
+
+        // Map: activite name → (session label → list of confirmed enfants)
+        Map<String, Map<String, List<Enfant>>> presencesParActivite = new LinkedHashMap<>();
+
+        for (SessionParent sess : sessions) {
+            String nomActivite = sess.getActivite() != null ? sess.getActivite().getNom() : "Activité inconnue";
+            String sessionLabel = sess.getDate() + " | " + sess.getHeureDebut() + " – " + sess.getHeureFin()
+                    + " | " + sess.getLieu();
+
+            presencesParActivite.computeIfAbsent(nomActivite, k -> new LinkedHashMap<>());
+
+            List<Enfant> enfants = inscriptionEnfantService.getEnfantsConfirmesBySession(sess.getId());
+            presencesParActivite.get(nomActivite).put(sessionLabel, enfants);
+        }
+
+        model.addAttribute("presencesParActivite", presencesParActivite);
         return "animateur_presences";
     }
 
