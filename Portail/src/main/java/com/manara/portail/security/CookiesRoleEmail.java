@@ -40,7 +40,7 @@ public class CookiesRoleEmail implements AuthenticationSuccessHandler {
         emailCookie.setMaxAge(60 * 60 * 24 * 7);
         response.addCookie(emailCookie);
 
-        boolean isAdmin = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+        boolean isAdmin = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMINISTRATEUR"));
         boolean isAnimateur = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ANIMATEUR"));
         String contextPath = request.getContextPath();
         if (isAdmin) {
@@ -49,7 +49,7 @@ public class CookiesRoleEmail implements AuthenticationSuccessHandler {
             response.sendRedirect(contextPath + "/animateur");
         }
         else {
-            response.sendRedirect(contextPath + "/");
+            response.sendRedirect(contextPath + "/parent");
         }
     }
 }

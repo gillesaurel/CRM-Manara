@@ -5,85 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35507da5-958b-421a-8e8d-ee3287785ab7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/config/WebConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/dto/ActiviteDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/dto/CommunicationDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/dto/EnfantDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/dto/IncidentDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/dto/InscriptionEnfantDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/dto/ParentDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/dto/SessionDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/exception/ResourceNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/interceptor/CookieInterceptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/ActiviteParent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Communication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Enfant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Incident.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Parent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Presence.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/SessionParent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/ActiviteAdminReposistory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/ActiviteParentRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/CommunicationRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/EnfantRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/IncidentRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/ParentRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/PresenceRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/SessionParentRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteParentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/CommunicationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/EnfantService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/IncidentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/SessionParentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/animateur_horaire.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/animateur_incidents.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/animateur_inscription.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/animateur_presences.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/manara/portail/controller/adminControllerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sql/Temp.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sql/quickInsert.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sql/reworkedInserts.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/PortailApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/PortailApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AnimateurController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/AnimateurController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/ParentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/controller/ParentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Inscription.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Inscription.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/SessionAdmin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/SessionAdmin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/ActiviteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/ActiviteRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/RoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/RoleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/SessionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/SessionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteDejaFullException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteDejaFullException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteIntrouvableException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteIntrouvableException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/ActiviteNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/SessionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/SessionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/animateur.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/animateur.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/animateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/animateur.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/animateur.html.bkp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/animateur.html.bkp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/animateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/animateur.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/parent.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/parent.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/parent.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/parent.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/manara/portail/PortailApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/manara/portail/PortailApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/manara/portail/controller/AuthControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/manara/portail/controller/AuthControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sql/Role.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../sql/Role.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sql/Utilisateur.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../sql/Utilisateur.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/InscriptionEnfant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/InscriptionEnfant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Utilisateur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/model/Utilisateur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/InscriptionEnfantRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/repository/InscriptionEnfantRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/security/CookiesRoleEmail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/security/CookiesRoleEmail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/InscriptionEnfantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/manara/portail/service/InscriptionEnfantService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/images/manara_logo 2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inscription.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inscription.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,22 +35,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitLabMergeRequestFiltersHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPENED",
-    "assignee": {
-      "type": "org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue",
-      "username": "gnguemkam",
-      "fullname": "Gilles Aurel Nguemkam"
+  <component name="GitLabMergeRequestFiltersHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPENED&quot;,
+    &quot;assignee&quot;: {
+      &quot;type&quot;: &quot;org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue&quot;,
+      &quot;username&quot;: &quot;gnguemkam&quot;,
+      &quot;fullname&quot;: &quot;Gilles Aurel Nguemkam&quot;
     }
   }
-}]]></component>
-  <component name="GitLabMergeRequestsSettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "first": "https://git.dti.crosemont.quebec/2527276/crm-manara_marc-andre_gille-aurel_julien-jose.git",
-    "second": "60723935-aed3-4a1d-8d4c-81f37274a688"
+}</component>
+  <component name="GitLabMergeRequestsSettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;first&quot;: &quot;https://git.dti.crosemont.quebec/2527276/crm-manara_marc-andre_gille-aurel_julien-jose.git&quot;,
+    &quot;second&quot;: &quot;60723935-aed3-4a1d-8d4c-81f37274a688&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -143,6 +75,7 @@
     "JUnit.AuthControllerTest.testpageInscription.executor": "Run",
     "JUnit.PortailApplicationTests.executor": "Run",
     "JUnit.adminControllerTest.executor": "Run",
+    "Maven.Portail [install].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
@@ -157,7 +90,7 @@
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "Merging RetourAuTravailAvantPull",
+    "git-widget-placeholder": "RetourAuTravailAvantPull",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Manes/Downloads/crm-manara_marc-andre_gille-aurel_julien-jose-main/Portail",
     "node.js.detected.package.eslint": "true",
@@ -302,5 +235,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

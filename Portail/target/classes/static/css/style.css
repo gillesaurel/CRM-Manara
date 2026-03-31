@@ -1,7 +1,3 @@
-:root {
-  --global-color1: #043d5b; /* global scope */
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -15,7 +11,7 @@ html {
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
-    background-color: var(--global-color1);
+    background-color: #043d5b;
     min-height: 100vh;
     height: 100%;
     display: flex;
@@ -50,7 +46,7 @@ nav {
 
 nav a {
     text-decoration: none;
-    color: var(--global-color1);
+    color: #043d5b;
     font-weight: bold;
     padding: 8px 16px;
     border-radius: 24px;
@@ -67,7 +63,7 @@ nav a:hover {
 
 nav a[href*="/login"] {
     color: white !important;
-    background-color: var(--global-color1) !important;
+    background-color: #043d5b !important;
 }
 
 nav a[href*="/login"]:hover {
@@ -79,7 +75,7 @@ nav a[href*="/login"]:hover {
 /* Section bienvenue*/
 .bienvenue-section {
     height: 100px;
-    background-color: var(--global-color1);
+    background-color: #043d5b;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -103,7 +99,7 @@ nav a[href*="/login"]:hover {
 /* Section Objectif*/
 .objectif-section {
     background-color: #fccd2c;
-    color: var(--global-color1);
+    color: #043d5b;
     padding: 80px 30px;
     text-align: center;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -118,7 +114,7 @@ nav a[href*="/login"]:hover {
 }
 .activity-selector {
     background-color: #fccd2c;
-    color: var(--global-color1);
+    color: #043d5b;
     padding: 80px 30px;
     text-align: center;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -147,7 +143,7 @@ nav a[href*="/login"]:hover {
 /* Bouton Explorer */
 .btn-explorer {
     display: inline-block;
-    background-color: var(--global-color1);
+    background-color: #043d5b;
     color: white;
     font-weight: bold;
     font-size: 16px;
@@ -161,7 +157,7 @@ nav a[href*="/login"]:hover {
 
 .btn-explorer:hover {
     background-color: #fff;
-    color: var(--global-color1);
+    color: #043d5b;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(65, 105, 225, 0.4);
 }
@@ -194,7 +190,7 @@ nav a[href*="/login"]:hover {
 
 /*Formulaire*/
 .formulaire-section {
-    background-color: var(--global-color1);
+    background-color: #043d5b;
     padding: 60px 20px;
     flex: 1;
     display: flex;
@@ -214,7 +210,7 @@ nav a[href*="/login"]:hover {
 
 .formulaire-section h1 {
     text-align: center;
-    color: var(--global-color1);
+    color: #043d5b;
     margin-bottom: 30px;
     font-size: 28px;
     font-weight: bold;
@@ -244,7 +240,7 @@ nav a[href*="/login"]:hover {
 
 .formulaire-section input:focus {
     outline: none;
-    border-color: var(--global-color1);
+    border-color: #043d5b;
     box-shadow: 0 0 0 3px rgba(4,61,91,0.1);
 }
 
@@ -252,7 +248,7 @@ nav a[href*="/login"]:hover {
 .formulaire-section button {
     width: 100%;
     padding: 14px;
-    background: var(--global-color1);
+    background: #043d5b;
     color: #fccd2c;
     border: none;
     border-radius: 8px;
@@ -270,7 +266,7 @@ nav a[href*="/login"]:hover {
     display: block;
     text-align: center;
     margin-top: 16px;
-    color: var(--global-color1);
+    color: #043d5b;
     text-decoration: none;
     font-weight: 500;
 }
@@ -395,8 +391,8 @@ footer {
      width: 100%;
      padding: 12px 20px;
      background-color: #fccd2c;
-     color: var(--global-color1) !important;
-     border: 2px solid var(--global-color1);
+     color: #043d5b !important;
+     border: 2px solid #043d5b;
      border-radius: 24px;
      font-weight: bold;
      font-size: 16px;
@@ -413,7 +409,7 @@ footer {
  }
 
  .btn-group-inscription a:hover {
-     background-color: var(--global-color1);
+     background-color: #043d5b;
      color: #fccd2c !important;
      transform: translateY(-1px);
  }
@@ -449,7 +445,7 @@ footer {
 }
 
 .bottom-nav .nav-item.active{
-    color: var(--global-color1);
+    color: #043d5b;
     background: rgba(252,205,44,0.35);
     border: 1px solid rgba(252,205,44,0.60);
 }
@@ -470,18 +466,4 @@ footer {
 .form.formulaire-section {
     padding: 20px;
     height: auto;
-}
-
-table, td, th {
-  border: 1px solid var(--global-color1);
-  text-align: left;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th, td {
-  padding: 10px;
 }

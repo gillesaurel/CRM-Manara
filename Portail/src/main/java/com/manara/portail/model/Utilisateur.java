@@ -24,7 +24,6 @@ public class Utilisateur {
     private String email;
     @Column(nullable = false)
     private String motdepasse;
-    @Column(nullable = false)
     @Transient
     private String confirmMotdepasse;
 

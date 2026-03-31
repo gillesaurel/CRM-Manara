@@ -36,7 +36,7 @@
 
     <!-- Gestion des Sessions (User Story: Créer & Planifier) -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2 style="color: #043d5b;">Sessions Actives</h2>
+        <h2 style="color: #ffffff;">Sessions Actives</h2>
         <button id="openModal" class="btn-explorer" style="margin-bottom:20px;">+ Nouvelle Activité</button>
 
         <!-- Pop-up modal -->
@@ -49,6 +49,7 @@
                     <div class="form-group">
                         <label for="nom">Nom de l'activité</label>
                         <input type="text" id="nom" th:field="*{nom}" placeholder="Ex: Atelier Peinture" required>
+                        <div th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></div>
                     </div>
                     <div class="form-group">
                         <label for="date">Date et Heure</label>
@@ -85,7 +86,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="act : ${activites}">
+        <tr th:each="act : ${activites}" th:id="'numero-' + ${act.id}">
             <td th:text="${act.nom}">Nom</td>
             <td th:text="${#temporals.format(act.dateDebut, 'dd/MM/yyyy HH:mm')}">Date</td>
             <td>0</td>
@@ -97,7 +98,7 @@
                     <i class="fas fa-edit"></i>
                 </a>
                 <a style="color:#ff0808;"
-                   th:href="@{/admin/activities/delete/{id}(id=${act.id})}"
+                   th:onclick="'deleteActivite(' + ${act.id} + ')'"
                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette activité ?')">
                     <i class="fas fa-trash"></i></a>
             </td>
@@ -145,6 +146,22 @@
         }
     });
 
+    function deleteActivite(id) {
+    if (!confirm("Êtes-vous sûr ?")) return;
+
+    fetch('/admin/activities/delete/' + id, {
+        method: 'DELETE'
+    })
+    .then(res => res.text())
+    .then(data => {
+        if (data === "success") {
+            document.getElementById("numero-" + id).remove();
+        } else {
+            alert("Erreur suppression");
+        }
+    })
+    .catch(() => alert("Erreur serveur"));
+}
 </script>
 
 </html>
