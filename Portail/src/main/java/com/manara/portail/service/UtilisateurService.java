@@ -76,5 +76,8 @@ public class UtilisateurService {
         return utilisateurRepository.save(utilisateur);
     }
 
-
+    public Integer getIdByEmail(String email) {
+        Utilisateur u = utilisateurRepository.findByEmail(email);
+        return u != null ? u.getId().intValue() : null;
+    }
 }
