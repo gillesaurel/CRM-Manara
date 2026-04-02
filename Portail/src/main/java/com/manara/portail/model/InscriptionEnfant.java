@@ -2,6 +2,8 @@ package com.manara.portail.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "inscription_enfant")
@@ -10,16 +12,18 @@ public class InscriptionEnfant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Size(min = 3, max = 100)
     private String nomEnfant;
 
     private boolean enAttente;
 
     @ManyToOne
-    @JoinColumn(name = "activites_id")
+    @JoinColumn(name = "activite_id", nullable = false)
     private ActiviteAdmin activite;
 
     @ManyToOne
-    @JoinColumn(name = "utilisateur_id")
+    @JoinColumn(name = "utilisateur_id", nullable = false)
     private Utilisateur utilisateur;
 
     @ManyToOne
@@ -32,11 +36,8 @@ public class InscriptionEnfant {
 
     public SessionParent getSession() { return session; }
     public void setSession(SessionParent session) { this.session = session; }
-
-    // + getter and setter
     public Enfant getEnfant() { return enfant; }
     public void setEnfant(Enfant enfant) { this.enfant = enfant; }
-
     public ActiviteAdmin getActivite() {
         return activite;
     }

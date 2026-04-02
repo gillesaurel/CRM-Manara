@@ -10,6 +10,8 @@ import com.manara.portail.service.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
@@ -26,7 +28,7 @@ import java.util.Map;
 public class AnimateurController {
 
     @Autowired
-    UtilisateurService UtilService;
+    UtilisateurService utilisateurService;
 
     @Autowired
     SessionParentService sessionParentService;
@@ -41,18 +43,25 @@ public class AnimateurController {
     EnfantService enfantService;
 
     @GetMapping("/animateur")
-    public String pageAccueil(HttpServletRequest request, Model model) {
-        String animateurIdStr = getCookieValue(request, "id");
-        if (animateurIdStr == null) return "redirect:/login";
+    public String pageAccueil(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated()) {
+            return "redirect:/login";
+        }
+        String email = auth.getName();
+        model.addAttribute("email", email);
+
         return "animateur";
     }
 
     @GetMapping("/animateur/inscriptions")
     public String pageInscription(HttpServletRequest request, Model model) {
-        String animateurIdStr = getCookieValue(request, "id");
-        if (animateurIdStr == null) return "redirect:/login";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated()) return "redirect:/login";
 
-        Integer animateurId = Integer.parseInt(animateurIdStr);
+        String email = auth.getName();
+        Integer animateurId = utilisateurService.getIdByEmail(email);
+        if (animateurId == null) return "redirect:/login";
         List<SessionParent> sessions = sessionParentService
                 .getSessionsAvecEnfantsByAnimateur(animateurId);
 
@@ -80,10 +89,12 @@ public class AnimateurController {
 
     @GetMapping("/animateur/presences")
     public String pagePresences(HttpServletRequest request, Model model) {
-        String animateurIdStr = getCookieValue(request, "id");
-        if (animateurIdStr == null) return "redirect:/login";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated()) return "redirect:/login";
 
-        Integer animateurId = Integer.parseInt(animateurIdStr);
+        String email = auth.getName();
+        Integer animateurId = utilisateurService.getIdByEmail(email);
+        if (animateurId == null) return "redirect:/login";
         List<SessionParent> sessions = sessionParentService
                 .getSessionsAvecEnfantsByAnimateur(animateurId);
 
@@ -107,10 +118,12 @@ public class AnimateurController {
 
     @GetMapping("/animateur/horaire")
     public String pageHoraire(HttpServletRequest request, Model model) {
-        String animateurIdStr = getCookieValue(request, "id");
-        if (animateurIdStr == null) return "redirect:/login";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated()) return "redirect:/login";
 
-        Integer animateurId = Integer.parseInt(animateurIdStr);
+        String email = auth.getName();
+        Integer animateurId = utilisateurService.getIdByEmail(email);
+        if (animateurId == null) return "redirect:/login";
         List<SessionParent> sessions = sessionParentService
                 .getSessionsAvecEnfantsByAnimateur(animateurId);
 
@@ -121,10 +134,12 @@ public class AnimateurController {
 
     @GetMapping("/animateur/incidents")
     public String pageIncidents(HttpServletRequest request, Model model) {
-        String animateurIdStr = getCookieValue(request, "id");
-        if (animateurIdStr == null) return "redirect:/login";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated()) return "redirect:/login";
 
-        Integer animateurId = Integer.parseInt(animateurIdStr);
+        String email = auth.getName();
+        Integer animateurId = utilisateurService.getIdByEmail(email);
+        if (animateurId == null) return "redirect:/login";
 
         List<Incident> incidents = incidentService.getIncidentsByAnimateur(animateurId);
         List<Enfant> enfants = enfantService.getAllEnfants();

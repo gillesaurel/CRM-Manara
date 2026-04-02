@@ -3,6 +3,7 @@
 package com.manara.portail.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -17,26 +18,29 @@ public class ActiviteAdmin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 150)
+    @NotBlank
+    @Size(min = 3, max = 100)
     private String nom;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Min(1)
     @Column(nullable = false)
     private int capacite;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @NotNull
     private LocalDateTime dateDebut;
 
     @Column(name = "date_creation")
     private LocalDateTime dateCreation = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "activite", cascade = CascadeType.ALL)
-    private List<Inscription> inscriptions =  new ArrayList<>();
+    @OneToMany(mappedBy = "activite", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<InscriptionEnfant> inscriptions = new ArrayList<>();
 
     public long getNbEnAttente() {
-        return inscriptions.stream().filter(Inscription::isEnAttente).count();
+        return inscriptions.stream().filter(InscriptionEnfant::isEnAttente).count();
     }
 
     public long getNbInscrits() {
@@ -91,5 +95,22 @@ public class ActiviteAdmin {
 
     public void setDateDebut(LocalDateTime dateDebut) {
         this.dateDebut = dateDebut;
+    }
+
+    public List<InscriptionEnfant> getInscriptions() {
+        return inscriptions;
+    }
+
+    public void setInscriptions(List<InscriptionEnfant> inscriptions) {
+        this.inscriptions = inscriptions;
+    }
+
+    public int getTauxRemplissage() {
+        if (capacite == 0) return 0;
+        return (int)((getNbInscrits() * 100) / capacite);
+    }
+
+    public boolean isComplet() {
+        return getNbInscrits() >= capacite;
     }
 }

@@ -7,6 +7,7 @@ import com.manara.portail.model.Utilisateur;
 import com.manara.portail.service.RoleService;
 import com.manara.portail.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,15 +23,17 @@ import java.io.IOException;
 public class AuthController {
 
     @Autowired
-    UtilisateurService UtilService;
+    RoleService RoleService;
 
     @Autowired
-    RoleService RoleService;
+    private UtilisateurService utilisateurService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // PAGE INSCRIPTION UTILISATEUR
     @GetMapping("/register")
-    public String pageInscription(Model model,
-                                  @CookieValue(name = "role" , required = false) String role) {
+    public String pageInscription(Model model) {
         model.addAttribute("utilisateur", new Utilisateur());
         return "inscription";
     }
@@ -41,12 +44,9 @@ public class AuthController {
             @ModelAttribute("utilisateur") Utilisateur utilisateur,
             @RequestParam(value = "fileImage", required = false) MultipartFile fileImage,
             RedirectAttributes redirectAttributes
-    ) throws IOException {
+    ) {
         try {
-
-            utilisateur.setRole(RoleService.findByName("PARENT"));
-            UtilService.enregistrer(utilisateur);
-
+            utilisateurService.enregistrer(utilisateur);
             return "redirect:/";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
@@ -61,7 +61,7 @@ public class AuthController {
         return "connexion";
     }
 
-
+/*
     @PostMapping("/login/save")
     public String connecterUtilisateur(
             @ModelAttribute("utilisateur") Utilisateur utilisateur,
@@ -88,7 +88,7 @@ public class AuthController {
                 response.addCookie(createCookie("role", tempUtilisateur.getRole().getNom()));
                 response.addCookie(createCookie("prenom", tempUtilisateur.getPrenom()));
                 response.addCookie(createCookie("nom", tempUtilisateur.getNom()));
-                response.addCookie(createCookie("id", tempUtilisateur.getId().toString()));
+
                 return "redirect:/";
             }
 
@@ -97,7 +97,7 @@ public class AuthController {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/login";
         }
-    }
+    }*/
 
     @GetMapping("/deconnexion")
     public String pageConnexion(Model model, HttpServletResponse response) {
@@ -107,9 +107,8 @@ public class AuthController {
         response.addCookie(deleteCookie("role"));
         response.addCookie(deleteCookie("prenom"));
         response.addCookie(deleteCookie("nom"));
-        response.addCookie(deleteCookie("id"));
 
-        return "redirect:/";
+        return "index";
     }
 
     // creer un cookie utilisateur lorsque l'utilisateur se connecte
@@ -124,9 +123,9 @@ public class AuthController {
     private Cookie deleteCookie(String name) {
         Cookie cookie = new Cookie(name, "");
         cookie.setPath("/");
-        cookie.setMaxAge(0);
+        cookie.setMaxAge(-1);
         cookie.setHttpOnly(true);
         return cookie;
     }
-
+   
 }
