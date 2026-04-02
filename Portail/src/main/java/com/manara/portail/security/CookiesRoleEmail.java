@@ -49,7 +49,7 @@ public class CookiesRoleEmail implements AuthenticationSuccessHandler {
             response.sendRedirect(contextPath + "/animateur");
         }
         else {
-            response.sendRedirect(contextPath + "/parent");
+            response.sendRedirect(contextPath + "/parent/dashboard");
         }
     }
 }

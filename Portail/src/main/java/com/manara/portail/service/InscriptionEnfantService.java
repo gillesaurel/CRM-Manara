@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class InscriptionEnfantService {
@@ -226,5 +228,20 @@ public class InscriptionEnfantService {
 
     public boolean estInscrit(Integer enfantId, Integer sessionId) {
         return inscriptionRepository.findByEnfantIdAndSessionId(enfantId, sessionId).isPresent();
+    }
+
+    // Récupérer toutes les inscriptions en attente
+    public List<InscriptionEnfant> getInscriptionsEnAttente() {
+        return inscriptionRepository.findListeAttente();
+    }
+
+    @Transactional
+    public InscriptionEnfant confirmerInscriptionAvecEmail(Long inscriptionId) {
+        InscriptionEnfant inscription = confirmerInscription(inscriptionId); // déjà dans ton service
+        envoyerEmailInscription(inscription); // envoie email à l'utilisateur
+        return inscription;
+    }
+    public List<InscriptionEnfant> getListeAttente() {
+        return inscriptionRepository.findListeAttente();
     }
 }

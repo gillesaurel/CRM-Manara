@@ -1,6 +1,6 @@
 package com.manara.portail.repository;
 
-import com.manara.portail.model.Enfants;
+import com.manara.portail.model.Enfant;
 import com.manara.portail.model.Utilisateur;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,11 +26,11 @@ public interface AdminRepository extends JpaRepository<Utilisateur, Long> {
     List<Utilisateur> rechercheUtilisateurByRole(@Param("keyword") String keyword,
                                                  @Param("role") String role);
 
-    @Query("SELECT c FROM Enfants c WHERE c.nom LIKE %?1%")
-    List<Enfants> rechercheEnfant(String keyword);
+    @Query("SELECT c FROM Enfant c WHERE c.nom LIKE %?1%")
+    List<Enfant> rechercheEnfant(String keyword);
 
-    @Query("SELECT c FROM Enfants c")
-    List<Enfants> findAllEnfants();
+    @Query("SELECT c FROM Enfant c")
+    List<Enfant> findAllEnfant();
 
     @Query("SELECT u FROM Utilisateur u WHERE u.role.nom = ?1")
     List<Utilisateur> findByRole(String role);

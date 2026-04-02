@@ -49,4 +49,8 @@ public class ActiviteService {
     public boolean isComplet(ActiviteAdmin activite) {
         return activite.isComplet();
     }
+
+    public List<ActiviteAdmin> getActivites() {
+        return activiteRepository.findAll();
+    }
 }

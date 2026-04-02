@@ -2,8 +2,10 @@
 
 package com.manara.portail.service;
 
+import com.manara.portail.model.Parent;
 import com.manara.portail.model.Role;
 import com.manara.portail.model.Utilisateur;
+import com.manara.portail.repository.ParentRepository;
 import com.manara.portail.repository.RoleRepository;
 import com.manara.portail.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class UtilisateurService {
     UtilisateurRepository utilisateurRepository;   //     UtilisateurRepository repos = new  UtilisateurRepository ()
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    private ParentRepository parentRepository;
     @Autowired
     private org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
 
@@ -45,6 +49,11 @@ public class UtilisateurService {
         }
 
         utilisateur.setRole(roleParDefaut);
+
+        if (utilisateur.getRole().getNom().equals("PARENT")) {
+            Parent parent = new Parent(utilisateur);
+            parentRepository.save(parent);
+        }
 
         return utilisateurRepository.save(utilisateur);
     }
@@ -73,7 +82,14 @@ public class UtilisateurService {
 
         utilisateur.setMotdepasse(passwordEncoder.encode(utilisateur.getMotdepasse()));
 
-        return utilisateurRepository.save(utilisateur);
+        Utilisateur savedUtilisateur = utilisateurRepository.save(utilisateur);
+
+        if (savedUtilisateur.getRole().getNom().equals("PARENT")) {
+            Parent parent = new Parent(savedUtilisateur);
+            parentRepository.save(parent);
+        }
+
+        return savedUtilisateur;
     }
 
     public Integer getIdByEmail(String email) {

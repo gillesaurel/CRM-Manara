@@ -1,6 +1,6 @@
 package com.manara.portail.service;
 
-import com.manara.portail.model.Enfants;
+import com.manara.portail.model.Enfant;
 import com.manara.portail.model.Utilisateur;
 import com.manara.portail.repository.AdminRepository;
 import com.manara.portail.repository.UtilisateurRepository;
@@ -71,16 +71,16 @@ public class AdminService {
                 .filter(u -> u.getRole().getNom().equalsIgnoreCase("ANIMATEUR"))
                 .toList();
 
-        List<Enfants> enfants;
+        List<Enfant> enfant;
         if (keyword == null || keyword.trim().isEmpty()) {
-            enfants = adminRepository.findAllEnfants();
+            enfant = adminRepository.findAllEnfant();
         } else {
-            enfants = adminRepository.rechercheEnfant(keyword);
+            enfant = adminRepository.rechercheEnfant(keyword);
         }
 
         result.put("parents", parents);
         result.put("animateurs", animateurs);
-        result.put("enfants", enfants);
+        result.put("enfant", enfant);
 
         return result;
     }

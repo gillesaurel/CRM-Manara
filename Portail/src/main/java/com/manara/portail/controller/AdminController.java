@@ -16,8 +16,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -39,6 +41,7 @@ public class AdminController {
     @Autowired
     private InscriptionEnfantService inscriptionEnfantService;
 
+    // ---------- ADMINI ----------
     @GetMapping("/administrateur")
     public String pageAdministrateur(Model model) {
         List<ActiviteAdmin> activites = activiteService.getAllActivites();
@@ -49,6 +52,7 @@ public class AdminController {
         return "administrateur";
     }
 
+    // ---------- ACTIVITES ----------
     @GetMapping("/adminOnly/activites")
     public String showActivites(Model model) {
         List<ActiviteAdmin> activites = activiteService.getAllActivites();
@@ -99,20 +103,37 @@ public class AdminController {
     }
 
     // Valider un inscrit (sortir de la liste d’attente)
+    @GetMapping("/adminOnly/listeAttente")
+    public String listeAttente(Model model) {
+        List<ActiviteAdmin> activites = activiteService.getAllActivites();
+        model.addAttribute("activites", activites);
+
+        List<InscriptionEnfant> inscriptions = inscriptionEnfantService.getListeAttente();
+
+        Map<String, Long> stats = inscriptions.stream().collect(Collectors.groupingBy(
+                i -> i.getSession().getActivite().getNom(),
+                Collectors.counting()
+        ));
+
+        Map<String, List<InscriptionEnfant>> groupedInscriptions = inscriptions.stream()
+                .collect(Collectors.groupingBy(
+                        i -> i.getSession().getActivite().getNom()
+                ));
+
+        model.addAttribute("stats", stats);
+        model.addAttribute("groupedInscriptions", groupedInscriptions);
+
+        return "adminOnly/listeAttente"; // doit exister dans resources/templates/adminOnly/listeAttente.html
+    }
+
     @PostMapping("/inscriptions/valider/{id}")
-    public String validerInscription(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    public String validerInscription(@PathVariable Long id,
+                                     RedirectAttributes redirectAttributes) {
 
-        InscriptionEnfant inscription = inscriptionEnfantService.getById(id);
-        ActiviteAdmin activite = inscription.getActivite();
-
-        long nbInscrits = inscriptionEnfantService
-                .countInscrits(activite.getId());
-
-        if (nbInscrits < activite.getCapacite()) {
-            inscription.setEnAttente(false);
-            inscriptionEnfantService.save(inscription);
-            redirectAttributes.addFlashAttribute("message", "Inscription validée.");
-        } else {
+        try {
+            inscriptionEnfantService.confirmerInscriptionAvecEmail(id);
+            redirectAttributes.addFlashAttribute("message", "Inscription validée !");
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Activité complète !");
         }
 
@@ -121,19 +142,19 @@ public class AdminController {
 
     // Supprimer un inscrit
     @GetMapping("/inscriptions/delete/{id}")
-    public String deleteInscription(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        InscriptionEnfant inscription = inscriptionEnfantService.getById(id);
-        if (inscription != null) {
-            Long activiteId = inscription.getActivite().getId();
+    public String deleteInscription(@PathVariable Long id,
+                                    RedirectAttributes redirectAttributes) {
+        try {
             inscriptionEnfantService.deleteById(id);
-            redirectAttributes.addFlashAttribute("message", "Inscription supprimée.");
-            return "redirect:/admin/activites/details/" + activiteId;
+            redirectAttributes.addFlashAttribute("message", "Inscription supprimée");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-        redirectAttributes.addFlashAttribute("message", "Inscription introuvable.");
-        return "redirect:/admin/adminOnly/activites";
+
+        return "redirect:/admin/liste-attente";
     }
 
-    // Afficher la page pour créer un nouvel utilisateur
+    // ---------- AJOUT UTILISATEUR ----------
     @GetMapping("adminOnly/adminAddUser")
     public String pageAjouterUser(Model model) {
         Utilisateur utilisateur = new Utilisateur();
@@ -145,17 +166,16 @@ public class AdminController {
 
     @PostMapping("/save")
     public String saveUserByAdmin(@ModelAttribute Utilisateur utilisateur, Model model) {
-        System.out.println("DEBUG - Role recu: " + utilisateur.getRole());
         try {
             utilisateurService.enregistrerParAdmin(utilisateur);
             return "redirect:/admin/adminOnly/adminAddUser";
         } catch (Exception e) {
             model.addAttribute("Erreur : ", e.getMessage());
-            return "/admin/adminOnly/adminAddUser";
+            return "adminOnly/adminAddUser";
         }
     }
 
-    // Afficher la page pour gérer les utilisateurs
+    // ---------- GESTION UTILISATEURS ----------
     @PostMapping("utilisateur/delete/{id}")
     public String deleteUserForm(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
@@ -205,6 +225,7 @@ public class AdminController {
         }
     }
 
+    // ---------- EMAIL ----------
     @GetMapping("adminOnly/email")
     public String emailPage(Model model) {
         model.addAttribute("parents", adminRepository.findByRole("PARENT"));

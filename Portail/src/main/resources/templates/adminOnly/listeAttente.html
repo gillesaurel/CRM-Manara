@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste d'attente</title>
+    <link rel="stylesheet" th:href="@{/css/listeAttente.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="container-large">
+    <h2>Liste d'attente par activité</h2>
+
+    <div class="cards">
+        <div class="card" th:each="entry : ${stats}">
+            <h3 th:text="${entry.key}"></h3>
+            <p><span th:text="${entry.value}"></span> en attente</p>
+        </div>
+    </div>
+
+    <div th:each="activite : ${activites}" class="activite-block">
+
+        <h3 th:text="${activite.nom}"></h3>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Enfant</th>
+                <th>Parent</th>
+                <th>Session</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="inscription : ${groupedInscriptions[activite.nom]}">
+                <td th:text="${inscription.enfant.nom}"></td>
+                <td th:text="${inscription.enfant.parent.utilisateur.nom}"></td>
+                <td th:text="${inscription.session.date}"></td>
+                <td>
+                    <form th:action="@{'/admin/inscriptions/valider/' + ${inscription.id}}" method="post">
+                        <button type="submit">Valider</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(groupedInscriptions[activite.nom])}">
+                <td colspan="4">Aucune inscription en attente</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<footer th:replace="~{fragments/fragmentAdministrateur::bottomNav('users')}"></footer>
+<footer th:replace="~{fragments/main::footer}"></footer>
+</body>
+</html>
