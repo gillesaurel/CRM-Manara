@@ -66,7 +66,15 @@
                            required
                            minlength="8" />
                 </div>
-
+                <div>
+                    <label for="motdepasse">Confirmer votre mot de passe *</label>
+                    <input type="password"
+                           id="connfirmMotdepasse"
+                           th:field="*{confirmMotdepasse}"
+                           placeholder="••••••••"
+                           required
+                           minlength="8" />
+                </div>
 
                 <!-- Photo
                 <div>
@@ -87,7 +95,7 @@
     </main>
 
 
-    <footer th:replace="fragments/main::footer">
+    <footer th:replace="~{fragments/main::footer}">
 
     </footer>
 
