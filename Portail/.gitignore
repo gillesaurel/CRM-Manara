@@ -1,4 +1,5 @@
 ### Springboot ###
+.DS_Store
 *.class
 sql/
 *.sql
