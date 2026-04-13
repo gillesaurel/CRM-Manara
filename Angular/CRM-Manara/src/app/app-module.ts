@@ -12,6 +12,12 @@ import { AdminAddUser } from './components/templates/adminOnly/admin-add-user/ad
 import { Dashboard } from './components/templates/parent/dashboard/dashboard';
 import { Administrateur } from './components/templates/administrateur/administrateur';
 import { FormsModule } from '@angular/forms';
+import { FragmentAdministrateur } from './components/templates/fragments/fragment-administrateur/fragment-administrateur';
+import { Animateur } from './components/templates/fragments/animateur/animateur';
+import { Main } from './components/templates/fragments/main/main';
+import { Parent } from './components/templates/fragments/parent/parent';
+import { Fragment } from './components/templates/fragment/fragment';
+import { Footer } from './components/templates/fragments/footer/footer';
 
 @NgModule({
   declarations: [
@@ -23,6 +29,12 @@ import { FormsModule } from '@angular/forms';
     AdminAddUser,
     Dashboard,
     Administrateur,
+    FragmentAdministrateur,
+    Animateur,
+    Main,
+    Parent,
+    Fragment,
+    Footer,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [provideBrowserGlobalErrorListeners()],

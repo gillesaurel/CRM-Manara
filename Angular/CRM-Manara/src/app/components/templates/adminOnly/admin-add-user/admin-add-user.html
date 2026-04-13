@@ -1,1 +1,71 @@
-<p>admin-add-user works!</p>
+<app-main></app-main>
+<div class="formulaire-section">
+
+    <div class="form">
+        <h1>Inscrire un nouvel utilisateur</h1>
+
+        <div *ngIf="message" class="flash-message">
+            {{ message }}
+        </div>
+
+        <form (ngSubmit)="submitForm()">
+
+            <!-- Prénom -->
+            <div>
+                <label>Prénom *</label>
+                <input type="text" [(ngModel)]="user.prenom" name="prenom" required>
+            </div>
+
+            <!-- Nom -->
+            <div>
+                <label>Nom *</label>
+                <input type="text" [(ngModel)]="user.nom" name="nom" required>
+            </div>
+
+            <!-- Téléphone -->
+            <div>
+                <label>Téléphone</label>
+                <input type="tel" [(ngModel)]="user.telephone" name="telephone">
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label>Email *</label>
+                <input type="email" [(ngModel)]="user.email" name="email" required>
+            </div>
+
+            <!-- Mot de passe -->
+            <div>
+                <label>Mot de passe *</label>
+                <input type="password" [(ngModel)]="user.motdepasse" name="motdepasse" required minlength="8">
+            </div>
+
+            <!-- Confirmation -->
+            <div>
+                <label>Confirmer mot de passe *</label>
+                <input type="password" [(ngModel)]="user.confirmMotdepasse" name="confirmMotdepasse" required
+                    minlength="8">
+            </div>
+
+            <!-- Rôle -->
+            <div>
+                <label>Rôle *</label>
+                <select [(ngModel)]="user.role.id" name="role" required>
+                    <option value="">Choisir un rôle</option>
+                    <option *ngFor="let r of roles" [value]="r.id">
+                        {{ r.nom }}
+                    </option>
+                </select>
+            </div>
+
+            <!-- Bouton -->
+            <div class="btn-group-inscription">
+                <button type="submit">L'inscrire</button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+<app-fragment-administrateur></app-fragment-administrateur>

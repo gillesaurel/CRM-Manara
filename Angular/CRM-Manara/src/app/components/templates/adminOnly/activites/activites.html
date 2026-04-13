@@ -1,1 +1,81 @@
-<p>activites works!</p>
+<app-main></app-main>
+<div class="admin-main">
+
+  <h1>Gestion des Activités et Inscriptions</h1>
+
+  <!-- Boutons -->
+  <div class="admin-actions">
+    <a routerLink="/administrateur" class="btn btn-primary">Créer une activité</a>
+    <a routerLink="/adminOnly/liste-attente" class="btn btn-primary">Liste d'attente</a>
+  </div>
+
+  <hr>
+
+  <!-- LISTE ACTIVITÉS -->
+  <div *ngFor="let act of activites" class="activite-card">
+
+    <div class="activite-header">
+      <h2>{{ act.nom }}</h2>
+
+      <div class="activite-actions">
+        <button class="edit-btn">Modifier</button>
+
+        <button (click)="deleteActivite(act.id)" class="delete-btn">
+          Supprimer
+        </button>
+      </div>
+    </div>
+
+    <p>
+      <strong>Date :</strong> {{ act.dateDebut | date:'dd/MM/yyyy HH:mm' }} |
+      <strong>Capacité :</strong> {{ act.capacite }} |
+      <strong>Inscrits :</strong> {{ act.nbInscrits }} |
+      <strong>Liste attente :</strong> {{ act.nbEnAttente }} |
+      <strong>Taux :</strong> {{ act.tauxRemplissage }}%
+    </p>
+
+    <!-- TABLE INSCRIPTIONS -->
+    <table class="inscriptions-table">
+      <thead>
+        <tr>
+          <th>Nom enfant</th>
+          <th>Parent</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let ins of act.inscriptions">
+
+          <td>{{ ins.nomEnfant }}</td>
+          <td>{{ ins.utilisateur?.nom }}</td>
+
+          <td>
+            {{ ins.enAttente ? 'Liste d’attente' : 'Inscrit' }}
+          </td>
+
+          <td>
+            <button
+              *ngIf="ins.enAttente"
+              (click)="validerInscription(ins.id)"
+              class="btn-validate">
+              Valider
+            </button>
+
+            <button
+              (click)="deleteInscription(ins.id)"
+              class="btn-delete">
+              Supprimer
+            </button>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <app-footer></app-footer>
+</div>
+
+<app-fragment-administrateur></app-fragment-administrateur>
