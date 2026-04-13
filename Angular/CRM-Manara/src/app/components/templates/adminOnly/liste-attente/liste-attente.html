@@ -1,1 +1,55 @@
-<p>liste-attente works!</p>
+<app-main></app-main>
+<div class="container-large">
+
+  <h2>Liste d'attente par activité</h2>
+
+  <!-- CARDS STATS -->
+  <div class="cards">
+    <div class="card" *ngFor="let key of getActivites()">
+      <h3>{{ key }}</h3>
+      <p>{{ stats[key] }} en attente</p>
+    </div>
+  </div>
+
+  <!-- PAR ACTIVITÉ -->
+  <div *ngFor="let activite of getActivites()" class="activite-block">
+
+    <h3>{{ activite }}</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Enfant</th>
+          <th>Parent</th>
+          <th>Session</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <!-- LIGNES -->
+        <tr *ngFor="let ins of getInscriptionByActivite(activite)">
+          <td>{{ ins.enfant?.nom }}</td>
+          <td>{{ ins.enfant?.parent?.utilisateur?.nom }}</td>
+          <td>{{ ins.session?.date | date:'dd/MM/yyyy' }}</td>
+
+          <td>
+            <button (click)="validerInscription(ins.id)">Valider</button>
+            <button (click)="deleteInscription(ins.id)">Supprimer</button>
+          </td>
+        </tr>
+
+        <!-- VIDE -->
+        <tr *ngIf="getInscriptionByActivite(activite).length === 0">
+          <td colspan="4">Aucune inscription en attente</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+
+</div>
+
+<app-fragment-administrateur></app-fragment-administrateur>

@@ -1,0 +1,46 @@
+/* =========== activites.html =========== */
+.admin-main.activites-page table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.admin-main.activites-page th,
+.admin-main.activites-page td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.admin-main.activites-page th {
+    background-color: #043d5b;
+    color: white;
+}
+
+.admin-main.activites-page tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.admin-main.activites-page form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+}
+
+.admin-main.activites-page input,
+.admin-main.activites-page textarea {
+    padding: 10px;
+    font-size: 16px;
+}
+
+.btn-send {
+    background-color: #043d5b;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* =========== Fin =========== */

@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AdminService {
-  private apiUrl = 'http://localhost:8080/api/admin';
+  private apiUrl = 'http://localhost:8080/admin';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAdminData() {
     return this.http.get(`${this.apiUrl}/administrateur`);
@@ -19,15 +19,11 @@ export class AdminService {
   }
 
   saveOrUpdateActivite(activite: any) {
-    if (activite.id) {
-      return this.http.put(`${this.apiUrl}/activites/save/${activite.id}`, activite);
-    } else {
-      return this.http.post(`${this.apiUrl}/activites/save`, activite);
-    }
+    return this.http.post(`${this.apiUrl}/activites/save`, activite);
   }
 
-  modifyActivite(activite: any) {
-    return this.http.put(`${this.apiUrl}/activites/edit/${activite.id}`, activite);
+  modifyActivite(id: number) {
+    return this.http.get(`${this.apiUrl}/activites/edit/${id}`);
   }
 
   removeActivite(id: number) {
@@ -66,11 +62,13 @@ export class AdminService {
     if (roleFilter) {
       params = params.set('role', roleFilter);
     }
-    return this.http.get(`${this.apiUrl}/adminOnly/listeUsers`, { params });
+    return this.http.get(`${this.apiUrl}/adminOnly/utilisateurs`, { params });
   }
 
   resetPassword(userId: number, newPassword: string) {
-    let params = new HttpParams().set('newPassword', newPassword);
+    let params = new HttpParams()
+    .set('userId', userId)
+    .set('newPassword', newPassword);
     return this.http.post(`${this.apiUrl}/reset-password`, {}, { params });
   }
 

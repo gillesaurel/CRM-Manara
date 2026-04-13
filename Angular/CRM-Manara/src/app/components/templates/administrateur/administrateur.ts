@@ -29,9 +29,10 @@ export class Administrateur implements OnInit {
   getAdminData() {
     this.adminService.getAdminData().subscribe({
       next: (data: any) => {
-        this.activites = data.activites;
-        this.tauxRemplissage = data.tauxRemplissage;
-        this.totalActivites = data.totalActivites;
+        console.log('Données administrateur reçues :', data);
+        this.activites = data.activities;
+        this.tauxRemplissage = data.pourcentageInscrit;
+        this.totalActivites = data.totalActivities;
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des données administrateur :', error);
@@ -43,8 +44,12 @@ export class Administrateur implements OnInit {
     this.adminService.showActivites().subscribe({
       next: (data: any) => {
         this.activites = data.activites;
-        this.tauxRemplissage = data.tauxRemplissage;
-        this.totalActivites = data.totalActivites;
+        this.tauxRemplissage = data.pourcentageInscrit;
+        this.totalActivites = data.totalActivities;
+        console.log('Activités trouvées :', this.activites);
+      },
+      error: (error) => {
+        console.error('Erreur lors de la récupération des activités :', error);
       }
     });
   }
@@ -55,6 +60,7 @@ export class Administrateur implements OnInit {
         alert('Activité enregistrée avec succès !');
         this.activiteForm = {};
         this.isEditMode = false;
+        this.getAdminData();
         this.showActivites();
       }
     });
@@ -64,6 +70,7 @@ export class Administrateur implements OnInit {
     this.adminService.modifyActivite(id).subscribe({
       next: (response) => {
         alert('Activité modifiée avec succès !');
+        this.getAdminData();
         this.showActivites();
         this.activiteForm = {};
         this.isEditMode = true;
@@ -79,6 +86,7 @@ export class Administrateur implements OnInit {
       next: () => {
         alert('Activité supprimée avec succès !');
         this.activites = this.activites.filter((activite) => activite.id !== id);
+        this.getAdminData();
         this.showActivites();
       }
     });
@@ -87,7 +95,16 @@ export class Administrateur implements OnInit {
   listeAttentes() {
     this.adminService.listeAttentes().subscribe({
       next: (data: any) => {
-        console.log( data);
+        console.log(data);
+      }
+    });
+  }
+
+  validerInscription(id: number) {
+    this.adminService.validerInscription(id).subscribe({
+      next: () => {
+        alert('Inscription validée avec succès !');
+        this.listeAttentes();
       }
     });
   }
@@ -108,6 +125,7 @@ export class Administrateur implements OnInit {
     this.adminService.saveUserByAdmin(user).subscribe({
       next: (response) => {
         alert('Utilisateur enregistré avec succès !');
+        this.getAdminData();
         this.showActivites();
       }
     });
