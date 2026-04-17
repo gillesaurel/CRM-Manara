@@ -27,10 +27,12 @@ export class Administrateur implements OnInit {
   }
 
   getAdminData() {
+    console.log("Appel de admin data");
     this.adminService.getAdminData().subscribe({
       next: (data: any) => {
         console.log('Données administrateur reçues :', data);
-        this.activites = data.activities;
+        console.log("ACTIVITES =", data?.activites);
+        this.activites = data.activites;
         this.tauxRemplissage = data.pourcentageInscrit;
         this.totalActivites = data.totalActivities;
       },

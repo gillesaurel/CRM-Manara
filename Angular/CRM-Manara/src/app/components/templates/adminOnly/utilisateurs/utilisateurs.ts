@@ -28,10 +28,14 @@ export class Utilisateurs implements OnInit {
       next: (data: any) => {
         this.parents = data.parents || [];
         this.animateurs = data.animateurs || [];
-        this.enfants = data.enfants || [];
+        this.enfants = data.enfant || [];
+        console.log('Parents trouvées :', this.parents);
       },
       error: (error) => {
-        console.error('Erreur lors de la récupération des utilisateurs :', error);
+        console.error('Erreur complète :', error);
+        console.error('Status :', error.status);
+        console.error('Message :', error.message);
+        console.error('Body :', error.error);
       }
     });
   }

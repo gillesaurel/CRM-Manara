@@ -14,6 +14,7 @@ export class Activites implements OnInit {
   constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
+    this.loadActivites();
   }
 
   loadActivites() {
