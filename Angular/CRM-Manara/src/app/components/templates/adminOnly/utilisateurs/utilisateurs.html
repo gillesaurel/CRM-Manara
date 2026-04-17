@@ -17,6 +17,7 @@
       <i class="fas fa-search"></i> Rechercher
     </button>
   </div>
+  
 
   <!-- PARENTS -->
   <h2>Parents</h2>
@@ -103,7 +104,7 @@
     <tbody>
       <tr *ngFor="let child of enfants">
         <td>{{ child.nom }}</td>
-        <td>{{ child.prenom }}</td>
+        <td>{{ child.prenom }} </td>
         <td>{{ child.dateNaissance | date:'dd/MM/yyyy' }}</td>
         <td>{{ child.parent?.nom }} {{ child.parent?.prenom }}</td>
       </tr>

@@ -18,6 +18,7 @@ import { Main } from './components/templates/fragments/main/main';
 import { Parent } from './components/templates/fragments/parent/parent';
 import { Fragment } from './components/templates/fragment/fragment';
 import { Footer } from './components/templates/fragments/footer/footer';
+import { Auth } from './components/templates/auth/auth';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { Footer } from './components/templates/fragments/footer/footer';
     Parent,
     Fragment,
     Footer,
+    Auth,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [provideBrowserGlobalErrorListeners()],
