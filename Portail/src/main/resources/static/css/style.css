@@ -392,7 +392,7 @@ nav a[href*="/login"]:hover {
     border: 2px solid #e1e5e9;
     border-radius: 8px;
     font-size: 15px;
-    box-sizing: border-box; /* Important pour que le padding ne dépasse pas */
+    box-sizing: border-box;
     transition: border-color 0.3s;
 }
 
@@ -413,7 +413,7 @@ nav a[href*="/login"]:hover {
     background-color: var(--global-accent);
     color: var(--global-color1);
     border: none;
-    border-radius: 50px; /* Effet arrondi comme sur l'image */
+    border-radius: 50px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
@@ -585,6 +585,8 @@ nav a[href*="/login"]:hover {
     color: #fccd2c !important;
     transform: translateY(-1px);
 }
+
+
 
 /* Bottom nav */
 .bottom-nav {
