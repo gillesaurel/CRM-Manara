@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Envoyer un email</title>
+  <link rel="stylesheet" th:href="@{/css/style-admin.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<header th:replace="~{fragments/main::header}"></header>
+
+<main class="admin-main email-page">
+  <div class="email-card">
+    <h1>Envoyer un Email</h1>
+
+    <!-- Message succès -->
+    <div th:if="${message}" class="flash-message">
+      <span th:text="${message}"></span>
+    </div>
+
+    <!-- FORMULAIRE -->
+    <form th:action="@{/admin/email/send}" method="post" class="email-form">
+
+      <!-- TYPE -->
+      <label>Envoyer à :</label>
+      <select name="type" id="typeSelect">
+        <option value="ALL">Tout le monde</option>
+        <option value="PARENT_ALL">Tous les parents</option>
+        <option value="ANIMATEUR_ALL">Tous les animateurs</option>
+        <option value="PARENT_ONE">Choisir un parent</option>
+        <option value="ANIMATEUR_ONE">Choisir un animateur</option>
+      </select>
+
+      <!-- Parent -->
+      <div id="parentSelect" style="display:none;">
+        <label>Parent :</label>
+        <select name="parentId">
+          <option value=""> Sélectionner un parent </option>
+          <option th:each="p : ${parents}"
+                  th:value="${p.id}"
+                  th:text="${p.nom + ' ' + p.prenom + ' (' + p.email + ')'}">
+          </option>
+        </select>
+      </div>
+
+      <!-- Animateur -->
+      <div id="animateurSelect" style="display:none;">
+        <label>Animateur :</label>
+        <select name="animateurId">
+          <option value=""> Sélectionner un animateur </option>
+          <option th:each="a : ${animateurs}"
+                  th:value="${a.id}"
+                  th:text="${a.nom + ' ' + a.prenom + ' (' + a.email + ')'}">
+          </option>
+        </select>
+      </div>
+
+      <!-- Sujet -->
+      <label>Sujet :</label>
+      <input type="text" name="subject" required>
+
+      <!-- Message -->
+      <label>Message :</label>
+      <textarea name="message" rows="6" required></textarea>
+
+      <!-- Bouton -->
+      <button type="submit" class="btn-send">
+        <i class="fas fa-paper-plane"></i> Envoyer
+      </button>
+
+    </form>
+  </div>
+</main>
+
+<footer th:replace="~{fragments/fragmentAdministrateur::bottomNav('users')}"></footer>
+<footer th:replace="~{fragments/main::footer}"></footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const typeSelect = document.getElementById("typeSelect");
+    const parentDiv = document.getElementById("parentSelect");
+    const animateurDiv = document.getElementById("animateurSelect");
+
+    typeSelect.addEventListener("change", function () {
+
+        parentDiv.style.display = "none";
+        animateurDiv.style.display = "none";
+
+        if (this.value === "PARENT_ONE") {
+            parentDiv.style.display = "block";
+        }
+
+        if (this.value === "ANIMATEUR_ONE") {
+            animateurDiv.style.display = "block";
+        }
+    });
+  });
+</script>
+
+</body>
+</html>
