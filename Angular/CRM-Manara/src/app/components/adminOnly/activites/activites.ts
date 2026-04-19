@@ -1,31 +1,45 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from '../../../../services/admin-service';
+import { AdminService } from '../../../services/admin-service';
 
 @Component({
-  selector: 'app-liste-attente',
+  selector: 'app-activites',
   standalone: false,
-  templateUrl: './liste-attente.html',
-  styleUrl: './liste-attente.css',
+  templateUrl: './activites.html',
+  styleUrl: './activites.css',
 })
-export class ListeAttente implements OnInit {
+export class Activites implements OnInit {
 
-  inscriptions: any[] = [];
-  stats: any = {};
+  activites: any[] = [];
 
   constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
-    this.loadListeAttente();
+    this.loadActivites();
   }
 
-  loadListeAttente() {
-    this.adminService.listeAttentes().subscribe({
+  loadActivites() {
+    this.adminService.showActivites().subscribe({
       next: (data: any) => {
-        this.inscriptions = data.inscriptions;
-        this.stats = data.stats;
+        this.activites = data.activites;
+        console.log('Activités trouvées :', this.activites);
       },
       error: (error) => {
-        console.error('Erreur lors de la récupération de la liste d\'attente :', error);
+        console.error('Erreur lors de la récupération des activités :', error);
+      }
+    });
+  }
+
+  deleteActivite(id: number) {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette activité ?')) {
+      return;
+    }
+    this.adminService.removeActivite(id).subscribe({
+      next: () => {
+        alert('Activité supprimée avec succès !');
+        this.loadActivites();
+      },
+      error: (error) => {
+        console.error('Erreur lors de la suppression de l\'activité :', error);
       }
     });
   }
@@ -37,14 +51,14 @@ export class ListeAttente implements OnInit {
     this.adminService.validerInscription(id).subscribe({
       next: () => {
         alert('Inscription validée avec succès !');
-        this.loadListeAttente();
+        this.loadActivites();
       },
       error: (error) => {
         console.error('Erreur lors de la validation de l\'inscription :', error);
       }
     });
   }
-  
+
   deleteInscription(id: number) {
     if (!confirm('Êtes-vous sûr de vouloir supprimer cette inscription ?')) {
       return;
@@ -52,21 +66,11 @@ export class ListeAttente implements OnInit {
     this.adminService.deleteInscription(id).subscribe({
       next: () => {
         alert('Inscription supprimée avec succès !');
-        this.loadListeAttente();
+        this.loadActivites();
       },
       error: (error) => {
         console.error('Erreur lors de la suppression de l\'inscription :', error);
       }
     });
   }
-
-  getInscriptionByActivite(nomActivite: string) {
-    return this.inscriptions.filter((inscription) => inscription.activite.nom === nomActivite);
-  }
-
-  getActivites() {
-    return Object.keys(this.stats);
-  }
-
 }
-

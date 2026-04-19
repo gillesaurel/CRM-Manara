@@ -4,21 +4,21 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
-import { Activites } from './components/templates/adminOnly/activites/activites';
-import { Utilisateurs } from './components/templates/adminOnly/utilisateurs/utilisateurs';
-import { Email } from './components/templates/adminOnly/email/email';
-import { ListeAttente } from './components/templates/adminOnly/liste-attente/liste-attente';
-import { AdminAddUser } from './components/templates/adminOnly/admin-add-user/admin-add-user';
-import { Dashboard } from './components/templates/parent/dashboard/dashboard';
-import { Administrateur } from './components/templates/administrateur/administrateur';
+import { Activites } from './components/adminOnly/activites/activites';
+import { Utilisateurs } from './components/adminOnly/utilisateurs/utilisateurs';
+import { Email } from './components/adminOnly/email/email';
+import { ListeAttente } from './components/adminOnly/liste-attente/liste-attente';
+import { AdminAddUser } from './components/adminOnly/admin-add-user/admin-add-user';
+import { Dashboard } from './components/parent/dashboard/dashboard';
+import { Administrateur } from './components/administrateur/administrateur';
 import { FormsModule } from '@angular/forms';
-import { FragmentAdministrateur } from './components/templates/fragments/fragment-administrateur/fragment-administrateur';
-import { Animateur } from './components/templates/fragments/animateur/animateur';
-import { Main } from './components/templates/fragments/main/main';
-import { Parent } from './components/templates/fragments/parent/parent';
-import { Fragment } from './components/templates/fragment/fragment';
-import { Footer } from './components/templates/fragments/footer/footer';
-import { Auth } from './components/templates/auth/auth';
+import { FragmentAdministrateur } from './components/fragments/fragment-administrateur/fragment-administrateur';
+import { Animateur } from './components/fragments/animateur/animateur';
+import { Main } from './components/fragments/main/main';
+import { Parent } from './components/fragments/parent/parent';
+import { Fragment } from './components/fragment/fragment';
+import { Footer } from './components/fragments/footer/footer';
+import { Auth } from './components/auth/auth';
 
 @NgModule({
   declarations: [
