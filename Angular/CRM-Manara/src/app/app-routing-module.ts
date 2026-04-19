@@ -8,11 +8,14 @@ import { Email } from './app/components/adminOnly/email/email';
 import { Auth } from './app/components/auth/auth';
 import { UserAuth } from './app/verifier/user-auth';
 import { Accueil } from './app/components/accueil/accueil';
-
+import { Header } from './app/components/header/header';
+import { Footer } from './app/components/footer/footer';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: Accueil },
+  { path: 'header', component: Header },
+  { path: 'footer', component: Footer },
   { path: 'login', component: Auth },
   { path: 'admin', canActivate:[UserAuth], component: Administrateur },
   { path: 'adminOnly/activites', canActivate:[UserAuth], component: Activites },

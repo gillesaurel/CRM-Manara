@@ -12,7 +12,8 @@ import { Email } from './app/components/adminOnly/email/email';
 import { Auth } from './app/components/auth/auth';
 import { Accueil } from './app/components/accueil/accueil';
 import { Main } from './app/components/fragments/main/main';
-import { Footer } from './app/components/fragments/footer/footer';
+import { Header } from './app/components/header/header';
+import { Footer } from './app/components/footer/footer';
 import { FragmentAdministrateur } from './app/components/fragments/fragment-administrateur/fragment-administrateur';
 import { ListeAttente } from './app/components/adminOnly/liste-attente/liste-attente';
 
@@ -28,6 +29,7 @@ import { ListeAttente } from './app/components/adminOnly/liste-attente/liste-att
     Accueil,
     Main,
     Footer,
+    Header,
     FragmentAdministrateur,
     ListeAttente,
   ],
