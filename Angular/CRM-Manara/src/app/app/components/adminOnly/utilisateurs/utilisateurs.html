@@ -1,0 +1,116 @@
+<app-main></app-main>
+<div class="admin-main">
+
+  <h1>Gestion des utilisateurs</h1>
+
+  <!-- Messages -->
+  <div *ngIf="message" class="alert success">{{ message }}</div>
+  <div *ngIf="error" class="alert error">{{ error }}</div>
+
+  <!-- Recherche -->
+  <div class="search-form">
+    <input type="text"
+           [(ngModel)]="keyword"
+           placeholder="Rechercher...">
+
+    <button (click)="searchUsers()">
+      <i class="fas fa-search"></i> Rechercher
+    </button>
+  </div>
+  
+
+  <!-- PARENTS -->
+  <h2>Parents</h2>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th>Téléphone</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let user of parents">
+        <td>{{ user.nom }}</td>
+        <td>{{ user.prenom }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.telephone }}</td>
+
+        <td>
+          <input #pwd type="password" placeholder="Nouveau mot de passe">
+
+          <button (click)="resetPassword(user.id, pwd.value)" class="btn-reset">
+            <i class="fas fa-key"></i> Réinitialiser
+          </button>
+
+          <button (click)="deleteUser(user.id)" class="btn-delete">
+            <i class="fas fa-trash"></i> Supprimer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ANIMATEURS -->
+  <h2>Animateurs</h2>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th>Téléphone</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let user of animateurs">
+        <td>{{ user.nom }}</td>
+        <td>{{ user.prenom }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.telephone }}</td>
+
+        <td>
+          <input #pwd2 type="password" placeholder="Nouveau mot de passe">
+
+          <button (click)="resetPassword(user.id, pwd2.value)" class="btn-reset">
+            Réinitialiser
+          </button>
+
+          <button (click)="deleteUser(user.id)" class="btn-delete">
+            Supprimer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ENFANTS -->
+  <h2>Enfants</h2>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Date de naissance</th>
+        <th>Parent</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let child of enfants">
+        <td>{{ child.nom }}</td>
+        <td>{{ child.prenom }} </td>
+        <td>{{ child.dateNaissance | date:'dd/MM/yyyy' }}</td>
+        <td>{{ child.parent?.nom }} {{ child.parent?.prenom }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<app-fragment-administrateur></app-fragment-administrateur>
