@@ -4,6 +4,16 @@ import { Administrateur } from './app/components/administrateur/administrateur';
 import { Activites } from './app/components/adminOnly/activites/activites';
 import { Utilisateurs } from './app/components/adminOnly/utilisateurs/utilisateurs';
 import { AdminAddUser } from './app/components/adminOnly/admin-add-user/admin-add-user';
+import { AjouterActivite } from './app/components/adminOnly/ajouter-activite/ajouter-activite';
+
+import { AnimateurDashboard } from './app/components/animateur/animateur-dashboard/animateur-dashboard';
+import { AnimateurInscription } from './app/components/animateur/animateur-inscription/animateur-inscription';
+
+import { AnimateurHoraire } from './app/components/animateur/animateur-horaire/animateur-horaire';
+import { AnimateurPresences } from './app/components/animateur/animateur-presences/animateur-presences';
+import { AnimateurIncidents } from './app/components/animateur/animateur-incidents/animateur-incidents';
+
+
 import { Email } from './app/components/adminOnly/email/email';
 import { Auth } from './app/components/auth/auth';
 import { UserAuth } from './app/verifier/user-auth';
@@ -22,7 +32,16 @@ const routes: Routes = [
   { path: 'adminOnly/utilisateurs', canActivate:[UserAuth], component: Utilisateurs },
   { path: 'adminOnly/adminAddUser', canActivate:[UserAuth], component: AdminAddUser },
   { path: 'adminOnly/email', canActivate:[UserAuth], component: Email },
-  { path: 'animateur/dashboard', canActivate:[UserAuth], component: Email }
+  { path: 'adminOnly/ajouter-activite', canActivate:[UserAuth], component: AjouterActivite },
+  { path: 'adminOnly/ajouter-activite/:id', canActivate:[UserAuth], component: AjouterActivite },
+  { path: 'animateur/dashboard',  component: AnimateurDashboard },
+  { path: 'animateur/inscription',  component: AnimateurInscription },
+  { path: 'animateur/horaire',  component: AnimateurHoraire },
+  { path: 'animateur/presences',  component: AnimateurPresences },
+  { path: 'animateur/incidents',  component: AnimateurIncidents },
+
+
+
 ];
 
 @NgModule({

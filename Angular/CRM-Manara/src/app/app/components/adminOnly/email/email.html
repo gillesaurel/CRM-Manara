@@ -9,13 +9,11 @@
       {{ message }}
     </div>
 
-    <form (ngSubmit)="sendEmail()" class="email-form">
+    <form (ngSubmit)="sendEmail(frm)" #frm="ngForm" class="email-form">
 
       <!-- TYPE -->
       <label>Envoyer à :</label>
-      <select [(ngModel)]="playload.type"
-              name="type"
-              (change)="onTypeChange()">
+      <select [(ngModel)]="dataSend.type" name="type" (change)="onTypeChange()">
 
         <option value="ALL">Tout le monde</option>
         <option value="PARENT_ALL">Tous les parents</option>
@@ -25,22 +23,22 @@
       </select>
 
       <!-- Parent -->
-      <div *ngIf="playload.type === 'PARENT_ONE'">
+      <div *ngIf="dataSend.type === 'PARENT_ONE'">
         <label>Parent :</label>
-        <select [(ngModel)]="playload.parentId" name="parentId">
+        <select [(ngModel)]="dataSend.parentId" name="parentId">
           <option value="">Sélectionner un parent</option>
-          <option *ngFor="let p of parents" [value]="p.id">
+          <option *ngFor="let p of parents" [ngValue]="p.id">
             {{ p.nom }} {{ p.prenom }} ({{ p.email }})
           </option>
         </select>
       </div>
 
       <!-- Animateur -->
-      <div *ngIf="playload.type === 'ANIMATEUR_ONE'">
+      <div *ngIf="dataSend.type === 'ANIMATEUR_ONE'">
         <label>Animateur :</label>
-        <select [(ngModel)]="playload.animateurId" name="animateurId">
+        <select [(ngModel)]="dataSend.animateurId" name="animateurId">
           <option value="">Sélectionner un animateur</option>
-          <option *ngFor="let a of animateurs" [value]="a.id">
+          <option *ngFor="let a of animateurs" [ngValue]="a.id">
             {{ a.nom }} {{ a.prenom }} ({{ a.email }})
           </option>
         </select>
@@ -48,27 +46,22 @@
 
       <!-- Sujet -->
       <label>Sujet :</label>
-      <input type="text"
-             [(ngModel)]="playload.subject"
-             name="subject"
-             required>
+      <input type="text" [(ngModel)]="dataSend.subject" name="subject" required>
 
       <!-- Message -->
       <label>Message :</label>
-      <textarea [(ngModel)]="playload.message"
-                name="message"
-                rows="6"
-                required>
+      <textarea [(ngModel)]="dataSend.message" name="message" rows="6" required>
       </textarea>
 
       <!-- Bouton -->
-      <button type="submit" class="btn-send">
+      <button type="submit" class="btn-send" [disabled]="frm.invalid">
         <i class="fas fa-paper-plane"></i> Envoyer
       </button>
 
     </form>
   </div>
-
+  <app-footer></app-footer>
+  <div class="bottom-espace"></div>
 </div>
 
 <app-fragment-administrateur></app-fragment-administrateur>

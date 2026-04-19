@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../services/admin-service';
 
 @Component({
@@ -17,7 +18,9 @@ export class Utilisateurs implements OnInit {
   message: string = '';
   error: string = '';
 
-  constructor(private adminService: AdminService) { }
+  constructor(
+    private adminService: AdminService,
+  private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.loadUsers();
@@ -29,9 +32,11 @@ export class Utilisateurs implements OnInit {
         this.parents = data.parents || [];
         this.animateurs = data.animateurs || [];
         this.enfants = data.enfant || [];
+        this.cdr.detectChanges();
         console.log('Parents trouvées :', this.parents);
+        console.log('Enfants trouvées :', this.enfants);
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         console.error('Erreur complète :', error);
         console.error('Status :', error.status);
         console.error('Message :', error.message);

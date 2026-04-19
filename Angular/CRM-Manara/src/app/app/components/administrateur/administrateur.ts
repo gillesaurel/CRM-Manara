@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AdminService } from '../../services/admin-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-administrateur',
@@ -9,6 +10,7 @@ import { AdminService } from '../../services/admin-service';
 })
 export class Administrateur implements OnInit {
   activites: any[] = [];
+  listeAttentesData: any[] = [];
   tauxRemplissage: number = 0;
   totalActivites: number = 0;
   activiteForm: any = {};
@@ -20,23 +22,45 @@ export class Administrateur implements OnInit {
     message: ''
   };
 
-  constructor(private adminService: AdminService) { }
+  constructor(
+    private adminService: AdminService,
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
     this.getAdminData();
+    this.listeAttentes();
   }
+
+
+  goToAddActivite(id?: number) {
+    if (id) {
+      this.router.navigate(['/adminOnly/ajouter-activite', id]);
+    } else {
+      this.router.navigate(['/adminOnly/ajouter-activite']);
+    }
+  }
+
+  loadActiviteById(id: number) {
+    this.adminService.getActiviteById(id).subscribe((data: any) => {
+      this.activiteForm = data;
+      this.isEditMode = true;
+    });
+  }
+
 
   getAdminData() {
     console.log("Appel de admin data");
     this.adminService.getAdminData().subscribe({
       next: (data: any) => {
         console.log('Données administrateur reçues :', data);
-        console.log("ACTIVITES =", data?.activites);
         this.activites = data.activites;
         this.tauxRemplissage = data.pourcentageInscrit;
         this.totalActivites = data.totalActivities;
+        this.cdr.detectChanges();
       },
-      error: (error) => {
+      error: (error: unknown) => {
         console.error('Erreur lors de la récupération des données administrateur :', error);
       },
     });
@@ -50,15 +74,15 @@ export class Administrateur implements OnInit {
         this.totalActivites = data.totalActivities;
         console.log('Activités trouvées :', this.activites);
       },
-      error: (error) => {
+      error: (error: unknown) => {
         console.error('Erreur lors de la récupération des activités :', error);
       }
     });
   }
 
   saveOrUpdateActivite() {
-    this.adminService.saveOrUpdateActivite(this.activiteForm).subscribe({
-      next: (response) => {
+    this.adminService.createActivite(this.activiteForm).subscribe({
+      next: () => {
         alert('Activité enregistrée avec succès !');
         this.activiteForm = {};
         this.isEditMode = false;
@@ -69,8 +93,8 @@ export class Administrateur implements OnInit {
   }
 
   modifyActivite(id: number) {
-    this.adminService.modifyActivite(id).subscribe({
-      next: (response) => {
+    this.adminService.updateActivite(id).subscribe({
+      next: () => {
         alert('Activité modifiée avec succès !');
         this.getAdminData();
         this.showActivites();
@@ -98,6 +122,7 @@ export class Administrateur implements OnInit {
     this.adminService.listeAttentes().subscribe({
       next: (data: any) => {
         console.log(data);
+        this.listeAttentesData = data;
       }
     });
   }
@@ -125,7 +150,7 @@ export class Administrateur implements OnInit {
 
   saveUserByAdmin(user: any) {
     this.adminService.saveUserByAdmin(user).subscribe({
-      next: (response) => {
+      next: () => {
         alert('Utilisateur enregistré avec succès !');
         this.getAdminData();
         this.showActivites();
@@ -175,12 +200,15 @@ export class Administrateur implements OnInit {
       return;
     }
     this.adminService.sendEmail(payload).subscribe({
-      next: (response) => {
+      next: () => {
         alert('Email envoyé avec succès !');
       },
-      error: (error) => {
-        alert('Erreur lors de l\'envoi de l\'email : ' + error.message);
+      error: (error: unknown) => {
+        const msg = error instanceof Error ? error.message : String(error);
+        alert('Erreur lors de l\'envoi de l\'email : ' + msg);
       },
     });
   }
+
+
 }
