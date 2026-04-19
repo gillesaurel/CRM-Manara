@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../services/admin-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-administrateur',
@@ -9,6 +10,7 @@ import { AdminService } from '../../../services/admin-service';
 })
 export class Administrateur implements OnInit {
   activites: any[] = [];
+  listeAttentesData: any[] = [];
   tauxRemplissage: number = 0;
   totalActivites: number = 0;
   activiteForm: any = {};
@@ -20,21 +22,43 @@ export class Administrateur implements OnInit {
     message: ''
   };
 
-  constructor(private adminService: AdminService) { }
+  constructor(
+    private adminService: AdminService,
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
     this.getAdminData();
+    this.listeAttentes();
   }
+
+
+  goToAddActivite(id?: number) {
+    if (id) {
+      this.router.navigate(['/adminOnly/ajouter-activite', id]);
+    } else {
+      this.router.navigate(['/adminOnly/ajouter-activite']);
+    }
+  }
+
+  loadActiviteById(id: number) {
+    this.adminService.getActiviteById(id).subscribe((data: any) => {
+      this.activiteForm = data;
+      this.isEditMode = true;
+    });
+  }
+
 
   getAdminData() {
     console.log("Appel de admin data");
     this.adminService.getAdminData().subscribe({
       next: (data: any) => {
         console.log('Données administrateur reçues :', data);
-        console.log("ACTIVITES =", data?.activites);
         this.activites = data.activites;
         this.tauxRemplissage = data.pourcentageInscrit;
         this.totalActivites = data.totalActivities;
+        this.cdr.detectChanges();
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des données administrateur :', error);
@@ -57,7 +81,7 @@ export class Administrateur implements OnInit {
   }
 
   saveOrUpdateActivite() {
-    this.adminService.saveOrUpdateActivite(this.activiteForm).subscribe({
+    this.adminService.createActivite(this.activiteForm).subscribe({
       next: (response) => {
         alert('Activité enregistrée avec succès !');
         this.activiteForm = {};
@@ -69,7 +93,7 @@ export class Administrateur implements OnInit {
   }
 
   modifyActivite(id: number) {
-    this.adminService.modifyActivite(id).subscribe({
+    this.adminService.updateActivite(id).subscribe({
       next: (response) => {
         alert('Activité modifiée avec succès !');
         this.getAdminData();
@@ -98,6 +122,7 @@ export class Administrateur implements OnInit {
     this.adminService.listeAttentes().subscribe({
       next: (data: any) => {
         console.log(data);
+        this.listeAttentesData = data;
       }
     });
   }
@@ -183,4 +208,6 @@ export class Administrateur implements OnInit {
       },
     });
   }
+
+
 }

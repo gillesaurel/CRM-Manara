@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../../services/admin-service';
 
 @Component({
@@ -9,8 +9,8 @@ import { AdminService } from '../../../../services/admin-service';
 })
 export class Email implements OnInit {
 
-  playload = {
-    type: 'All',
+  dataSend = {
+    type: 'ALL',
     parentId: null,
     animateurId: null,
     subject: '',
@@ -21,7 +21,8 @@ export class Email implements OnInit {
   animateurs: any[] = [];
   message: string = '';
 
-  constructor(private adminService: AdminService) { }
+  constructor(
+    private adminService: AdminService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.loadUsers();
@@ -39,26 +40,47 @@ export class Email implements OnInit {
     });
   }
 
-  sendEmail() {
-    if (!this.playload.subject || !this.playload.message) {
+
+
+  sendEmail(form: any) {
+    if (form.invalid) {
       alert('Veuillez remplir tous les champs.');
       return;
     }
-    this.adminService.sendEmail(this.playload).subscribe({
-      next: () => {
-        this.message = 'Email envoyé avec succès !';
+
+    const payload = {
+      type: this.dataSend.type,
+      parentId: this.dataSend.parentId,
+      animateurId: this.dataSend.animateurId,
+      subject: this.dataSend.subject?.trim(),
+      message: this.dataSend.message?.trim()
+    };
+
+    console.log("PAYLOAD FINAL:", payload);
+
+    this.adminService.sendEmail(payload).subscribe({
+      next: (res: any) => {
+        this.message = res?.message || 'Email envoyé avec succès !';
+        this.cdr.detectChanges();
+        setTimeout(() => {
+          this.message = '';
+          this.cdr.detectChanges();
+        }, 3000);
+
         this.resetForm();
+        form.resetForm();
+
       },
       error: (error) => {
         console.error(error);
-        alert('Erreur lors de l\'envoi de l\'email.');
+        alert(error?.error?.message || 'Erreur lors de l\'envoi');
       }
     });
   }
 
   resetForm() {
-    this.playload = {
-      type: 'All',
+    this.dataSend = {
+      type: 'ALL',
       parentId: null,
       animateurId: null,
       subject: '',
@@ -67,14 +89,18 @@ export class Email implements OnInit {
   }
 
   onTypeChange() {
-    if (this.playload.type === 'Parents') {
-      this.playload.animateurId = null;
-    } else if (this.playload.type === 'Animateurs') {
-      this.playload.parentId = null;
+    if (this.dataSend.type === 'PARENT_ALL') {
+      this.dataSend.animateurId = null;
+    } else if (this.dataSend.type === 'ANIMATEUR_ALL') {
+      this.dataSend.parentId = null;
+    } else if (this.dataSend.type === 'PARENT_ONE') {
+      this.dataSend.animateurId = null;
+    } else if (this.dataSend.type === 'ANIMATEUR_ONE') {
+      this.dataSend.parentId = null;
     } else {
-      this.playload.parentId = null;
-      this.playload.animateurId = null;
+      this.dataSend.parentId = null;
+      this.dataSend.animateurId = null;
     }
-  } 
+  }
 }
 

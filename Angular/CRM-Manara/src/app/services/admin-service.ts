@@ -11,10 +11,10 @@ export class AdminService {
   constructor(private http: HttpClient) { }
 
   getAdminData() {
-  return this.http.get(`${this.apiUrl}/administrateur`, {
-    withCredentials: true
-  });
-}
+    return this.http.get(`${this.apiUrl}/administrateur`, {
+      withCredentials: true
+    });
+  }
 
   showActivites() {
     return this.http.get(`${this.apiUrl}/adminOnly/activites`, {
@@ -22,23 +22,23 @@ export class AdminService {
     });
   }
 
-  saveOrUpdateActivite(activite: any) {
-  return this.http.post(`${this.apiUrl}/activites/save`, activite, {
-    withCredentials: true
-  });
-}
+  createActivite(activite: any) {
+    return this.http.post(`${this.apiUrl}/activities/save`, activite, {
+      withCredentials: true
+    });
+  }
 
-  modifyActivite(id: number) {
-    return this.http.get(`${this.apiUrl}/activites/edit/${id}`, {
+  updateActivite(activite: any) {
+    return this.http.put(`${this.apiUrl}/activities/update/${activite.id}`, activite, {
       withCredentials: true
     });
   }
 
   removeActivite(id: number) {
-  return this.http.delete(`${this.apiUrl}/activites/delete/${id}`, {
-    withCredentials: true
-  });
-}
+    return this.http.delete(`${this.apiUrl}/activities/delete/${id}`, {
+      withCredentials: true
+    });
+  }
 
   listeAttentes() {
     return this.http.get(`${this.apiUrl}/adminOnly/listeAttentes`, {
@@ -84,7 +84,7 @@ export class AdminService {
     }
 
     if (roleFilter) {
-      params = params.set('role', roleFilter);
+      params = params.set('roleFilter', roleFilter);
     }
 
     return this.http.get(`${this.apiUrl}/adminOnly/utilisateurs`, {
@@ -110,8 +110,21 @@ export class AdminService {
     });
   }
 
-  sendEmail(payload: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/email/send`, payload, {
+  sendEmail(payload: any): Observable<{ success: boolean; message: string }> {
+    return this.http.post<{ success: boolean; message: string }>(
+      `${this.apiUrl}/email/send`,
+      payload, { withCredentials: true }
+    );
+  }
+
+  getActiviteById(id: number) {
+    return this.http.get(`${this.apiUrl}/activities/edit/${id}`, {
+      withCredentials: true
+    });
+  }
+
+  getActivites(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/adminOnly/activites`, {
       withCredentials: true
     });
   }

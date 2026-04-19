@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../../services/admin-service';
 
 @Component({
@@ -11,7 +11,9 @@ export class Activites implements OnInit {
 
   activites: any[] = [];
 
-  constructor(private adminService: AdminService) { }
+  constructor(
+    private adminService: AdminService,
+    private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.loadActivites();
@@ -22,6 +24,7 @@ export class Activites implements OnInit {
       next: (data: any) => {
         this.activites = data.activites;
         console.log('Activités trouvées :', this.activites);
+        this.cdr.detectChanges();
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des activités :', error);

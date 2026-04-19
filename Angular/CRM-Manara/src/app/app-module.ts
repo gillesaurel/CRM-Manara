@@ -19,6 +19,7 @@ import { Parent } from './components/templates/fragments/parent/parent';
 import { Fragment } from './components/templates/fragment/fragment';
 import { Footer } from './components/templates/fragments/footer/footer';
 import { Auth } from './components/templates/auth/auth';
+import { AjouterActivite } from './components/templates/adminOnly/ajouter-activite/ajouter-activite';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { Auth } from './components/templates/auth/auth';
     Fragment,
     Footer,
     Auth,
+    AjouterActivite,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [provideBrowserGlobalErrorListeners()],

@@ -5,14 +5,14 @@
 
   <!-- CARDS STATS -->
   <div class="cards">
-    <div class="card" *ngFor="let key of getActivites()">
+    <div class="card" *ngFor="let key of activites">
       <h3>{{ key }}</h3>
-      <p>{{ stats[key] }} en attente</p>
+      <p>{{ stats[key] || 0 }} en attente</p>
     </div>
   </div>
 
   <!-- PAR ACTIVITÉ -->
-  <div *ngFor="let activite of getActivites()" class="activite-block">
+  <div *ngFor="let activite of activites" class="activite-block">
 
     <h3>{{ activite }}</h3>
 
@@ -29,7 +29,7 @@
       <tbody>
 
         <!-- LIGNES -->
-        <tr *ngFor="let ins of getInscriptionByActivite(activite)">
+        <tr *ngFor="let ins of groupedInscriptions[activite]">
           <td>{{ ins.enfant?.nom }}</td>
           <td>{{ ins.enfant?.parent?.utilisateur?.nom }}</td>
           <td>{{ ins.session?.date | date:'dd/MM/yyyy' }}</td>
@@ -41,7 +41,7 @@
         </tr>
 
         <!-- VIDE -->
-        <tr *ngIf="getInscriptionByActivite(activite).length === 0">
+        <tr *ngIf="stats[activite] === 0">
           <td colspan="4">Aucune inscription en attente</td>
         </tr>
 
@@ -49,7 +49,9 @@
     </table>
 
   </div>
-
 </div>
+
+<app-footer></app-footer>
+<div class="bottom-espace"></div>
 
 <app-fragment-administrateur></app-fragment-administrateur>
