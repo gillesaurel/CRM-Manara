@@ -15,6 +15,7 @@ import { Main } from './app/components/fragments/main/main';
 import { Footer } from './app/components/fragments/footer/footer';
 import { FragmentAdministrateur } from './app/components/fragments/fragment-administrateur/fragment-administrateur';
 import { ListeAttente } from './app/components/adminOnly/liste-attente/liste-attente';
+import { Header } from './header/header';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ListeAttente } from './app/components/adminOnly/liste-attente/liste-att
     Footer,
     FragmentAdministrateur,
     ListeAttente,
+    Header,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   bootstrap: [App],
