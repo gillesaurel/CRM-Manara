@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Administrateur } from './components/administrateur/administrateur';
-import { Activites } from './components/adminOnly/activites/activites';
-import { Utilisateurs } from './components/adminOnly/utilisateurs/utilisateurs';
-import { AdminAddUser } from './components/adminOnly/admin-add-user/admin-add-user';
-import { Email } from './components/adminOnly/email/email';
-import { Auth } from './components/auth/auth';
-import { UserAuth } from './verifier/user-auth';
-import { Accueil } from './components/accueil/accueil';
+import { Administrateur } from './app/components/administrateur/administrateur';
+import { Activites } from './app/components/adminOnly/activites/activites';
+import { Utilisateurs } from './app/components/adminOnly/utilisateurs/utilisateurs';
+import { AdminAddUser } from './app/components/adminOnly/admin-add-user/admin-add-user';
+import { Email } from './app/components/adminOnly/email/email';
+import { Auth } from './app/components/auth/auth';
+import { UserAuth } from './app/verifier/user-auth';
+import { Accueil } from './app/components/accueil/accueil';
 
 
 const routes: Routes = [
