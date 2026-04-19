@@ -1,47 +1,39 @@
-import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
-import { Activites } from './components/templates/adminOnly/activites/activites';
-import { Utilisateurs } from './components/templates/adminOnly/utilisateurs/utilisateurs';
-import { Email } from './components/templates/adminOnly/email/email';
-import { ListeAttente } from './components/templates/adminOnly/liste-attente/liste-attente';
-import { AdminAddUser } from './components/templates/adminOnly/admin-add-user/admin-add-user';
-import { Dashboard } from './components/templates/parent/dashboard/dashboard';
-import { Administrateur } from './components/templates/administrateur/administrateur';
-import { FormsModule } from '@angular/forms';
-import { FragmentAdministrateur } from './components/templates/fragments/fragment-administrateur/fragment-administrateur';
-import { Animateur } from './components/templates/fragments/animateur/animateur';
-import { Main } from './components/templates/fragments/main/main';
-import { Parent } from './components/templates/fragments/parent/parent';
-import { Fragment } from './components/templates/fragment/fragment';
-import { Footer } from './components/templates/fragments/footer/footer';
-import { Auth } from './components/templates/auth/auth';
-import { AjouterActivite } from './components/templates/adminOnly/ajouter-activite/ajouter-activite';
+import { Administrateur } from './app/components/administrateur/administrateur';
+import { Activites } from './app/components/adminOnly/activites/activites';
+import { Utilisateurs } from './app/components/adminOnly/utilisateurs/utilisateurs';
+import { AdminAddUser } from './app/components/adminOnly/admin-add-user/admin-add-user';
+import { Email } from './app/components/adminOnly/email/email';
+import { Auth } from './app/components/auth/auth';
+import { Accueil } from './app/components/accueil/accueil';
+import { Main } from './app/components/fragments/main/main';
+import { Header } from './app/components/header/header';
+import { Footer } from './app/components/footer/footer';
+import { FragmentAdministrateur } from './app/components/fragments/fragment-administrateur/fragment-administrateur';
+import { ListeAttente } from './app/components/adminOnly/liste-attente/liste-attente';
 
 @NgModule({
   declarations: [
     App,
+    Administrateur,
     Activites,
     Utilisateurs,
-    Email,
-    ListeAttente,
     AdminAddUser,
-    Dashboard,
-    Administrateur,
-    FragmentAdministrateur,
-    Animateur,
-    Main,
-    Parent,
-    Fragment,
-    Footer,
+    Email,
     Auth,
-    AjouterActivite,
+    Accueil,
+    Main,
+    Footer,
+    Header,
+    FragmentAdministrateur,
+    ListeAttente,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
-  providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })
 export class AppModule {}

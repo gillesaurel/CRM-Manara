@@ -1,5 +1,3 @@
-### Springboot ###
-.DS_Store
 *.class
 sql/
 *.sql
@@ -50,3 +48,10 @@ bazel-out/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+src/main/resources/application.properties
+application.properties
+application-dev.properties
+application-prod.properties
+.DS_Store

@@ -7,14 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface InscriptionEnfantRepository extends JpaRepository<InscriptionEnfant, Long> {
-    long countByActiviteIdAndEnAttenteFalse(Long activiteId);
-    List<InscriptionEnfant> findByActiviteIdAndEnAttenteTrueOrderByIdAsc(Long activiteId);
 
     List<InscriptionEnfant> findByEnfant(Enfant enfant);
 
@@ -75,4 +75,12 @@ public interface InscriptionEnfantRepository extends JpaRepository<InscriptionEn
     @Modifying
     @Query("DELETE FROM InscriptionEnfant i WHERE i.session.date < :date")
     void deleteAnciennesInscriptions(@Param("date") LocalDate date);
+
+    List<InscriptionEnfant> findByActiviteId(Long activiteId);
+
+    long countByActiviteIdAndEnAttenteFalse(Long activiteId);
+
+    long countByActiviteIdAndEnAttenteTrue(Long activiteId);
+
+    List<InscriptionEnfant> findByActiviteIdAndEnAttenteTrueOrderByIdAsc(Long activiteId);
 }
