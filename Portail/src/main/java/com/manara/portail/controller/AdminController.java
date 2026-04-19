@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class AdminController {
 
     @Autowired
@@ -68,8 +68,19 @@ public class AdminController {
     // Récupère une activité par ID
     @GetMapping("/activities/edit/{id}")
     public ResponseEntity<?> modifyActivite(@PathVariable Long id) {
-        ActiviteAdmin activite = activiteService.getById(id);
-        return ResponseEntity.ok(activite);
+        try {
+            ActiviteAdmin activite = activiteService.getById(id);
+            return ResponseEntity.ok(activite);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/activities/update/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ActiviteAdmin activite) {
+        activite.setId(id);
+        return ResponseEntity.ok(activiteService.save(activite));
     }
 
     // Supprime une activité
@@ -80,7 +91,7 @@ public class AdminController {
     }
 
     // Retourne les inscriptions en attente + statistiques
-    @GetMapping("/adminOnly/listeAttente")
+    @GetMapping("/adminOnly/listeAttentes")
     public ResponseEntity<?> listeAttente() {
 
         List<InscriptionEnfant> inscriptions = inscriptionEnfantService.getListeAttente();
@@ -180,8 +191,11 @@ public class AdminController {
             switch (type) {
 
                 case "PARENT_ONE":
+                    if (payload.get("parentId") == null) {
+                        throw new RuntimeException("parentId obligatoire");
+                    }
                     adminService.envoyerEmailParent(
-                            ((Number) payload.get("parentId")).longValue(),
+                            Long.valueOf(payload.get("parentId").toString()),
                             subject,
                             message
                     );
@@ -192,8 +206,12 @@ public class AdminController {
                     break;
 
                 case "ANIMATEUR_ONE":
+                    if (payload.get("animateurId") == null) {
+                        throw new RuntimeException("animateurId obligatoire");
+                    }
+
                     adminService.envoyerEmailAnimateur(
-                            ((Number) payload.get("animateurId")).longValue(),
+                            Long.valueOf(payload.get("animateurId").toString()),
                             subject,
                             message
                     );
@@ -206,10 +224,15 @@ public class AdminController {
                 case "ALL":
                     adminService.envoyerEmailToutLeMonde(subject, message);
                     break;
+
+                default:
+                    throw new RuntimeException("Type invalide: " + type);
             }
 
-            return ResponseEntity.ok("email sent");
-
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "message", "Email envoyé avec succès !"
+            ));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
