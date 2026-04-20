@@ -9,15 +9,13 @@
 
   <!-- Recherche -->
   <div class="search-form">
-    <input type="text"
-           [(ngModel)]="keyword"
-           placeholder="Rechercher...">
+    <input type="text" [(ngModel)]="keyword" placeholder="Rechercher...">
 
     <button (click)="searchUsers()">
       <i class="fas fa-search"></i> Rechercher
     </button>
   </div>
-  
+
 
   <!-- PARENTS -->
   <h2>Parents</h2>
@@ -110,7 +108,8 @@
       </tr>
     </tbody>
   </table>
-
+  <app-footer></app-footer>
+  <div class="bottom-espace"></div>
 </div>
 
 <app-fragment-administrateur></app-fragment-administrateur>

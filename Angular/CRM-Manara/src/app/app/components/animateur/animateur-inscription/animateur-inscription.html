@@ -1,0 +1,98 @@
+<div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="top-bar">
+      <div class="top-bar__brand">
+        <span class="top-bar__logo">M</span>
+        <span class="top-bar__title">Portail Manara</span>
+      </div>
+      <div class="top-bar__profile">
+        <i class="fa-solid fa-user-tie"></i>
+        <span>Animateur</span>
+      </div>
+    </header>
+  
+    <!-- Main -->
+    <main class="dash">
+  
+      <section class="dash-hero">
+        <div>
+          <p class="dash-hero__label">Tableau de bord</p>
+          <h1 class="dash-hero__title">Inscriptions</h1>
+          <p class="dash-hero__sub">Liste des inscrits par activité</p>
+        </div>
+      </section>
+  
+      <!-- Groups -->
+      <ng-container *ngIf="groups && groups.length > 0; else empty">
+                <section class="activity-card" *ngFor="let group of groups">
+  
+          <div class="activity-card__header">
+            <span class="activity-card__icon">
+              <i class="fa-solid fa-person-running"></i>
+            </span>
+            <h2 class="activity-card__title">{{ group.activiteNom }}</h2>
+            <span class="activity-card__badge">{{ group.inscriptions.length }} inscrits</span>
+          </div>
+  
+          <div class="table-wrap">
+            <table class="insc-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nom</th>
+                  <th>Prénom</th>
+                  <th>Statut</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let insc of group.inscriptions; let i = index"
+                    [class.row--waiting]="insc.en_attente">
+                  <td class="row__index">{{ i + 1 }}</td>
+                  <td>{{ insc.enfant ? insc.enfant.nom : insc.nom_enfant }}</td>
+                  <td>{{ insc.enfant ? insc.enfant.prenom : '—' }}</td>
+                  <td>
+                    <span class="badge" [class.badge--waiting]="insc.en_attente"
+                                        [class.badge--confirmed]="!insc.en_attente">
+                      {{ insc.en_attente ? 'En attente' : 'Confirmé' }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+  
+        </section>
+      </ng-container>
+  
+      <!-- Empty state -->
+      <ng-template #empty>
+        <section class="activity-card empty-state">
+          <i class="fa-regular fa-folder-open"></i>
+          <p>Aucune inscription trouvée.</p>
+        </section>
+      </ng-template>
+  
+    </main>
+  
+    <!-- Bottom nav -->
+    <nav class="bottom-nav">
+      <a class="bottom-nav__item bottom-nav__item--active" href="#">
+        <i class="fa-solid fa-house"></i>
+        <span>Tableau de bord</span>
+      </a>
+      <a class="bottom-nav__item" href="#">
+        <i class="fa-solid fa-calendar-days"></i>
+        <span>Sessions</span>
+      </a>
+      <a class="bottom-nav__item" href="#">
+        <i class="fa-solid fa-users"></i>
+        <span>Inscrits</span>
+      </a>
+      <a class="bottom-nav__item" href="#">
+        <i class="fa-solid fa-gear"></i>
+        <span>Paramètres</span>
+      </a>
+    </nav>
+  
+  </div>

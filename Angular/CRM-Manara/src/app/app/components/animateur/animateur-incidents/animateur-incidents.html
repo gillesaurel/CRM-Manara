@@ -1,0 +1,180 @@
+<div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="top-bar">
+      <div class="top-bar__brand">
+        <span class="top-bar__logo">M</span>
+        <span class="top-bar__title">Portail Manara</span>
+      </div>
+      <div class="top-bar__profile">
+        <i class="fa-solid fa-user-tie"></i>
+        <span>Animateur</span>
+      </div>
+    </header>
+  
+    <!-- Main -->
+    <main class="dash">
+  
+      <section class="dash-hero">
+        <p class="dash-hero__label">Tableau de bord</p>
+        <h1 class="dash-hero__title">Incidents</h1>
+        <p class="dash-hero__sub">Signaler un incident ou consulter les rapports existants</p>
+      </section>
+  
+      <!-- Message -->
+      <div class="msg-banner" *ngIf="message"
+           [class.msg-banner--success]="messageType === 'success'"
+           [class.msg-banner--error]="messageType === 'error'">
+        <i class="fa-solid" [class.fa-circle-check]="messageType === 'success'"
+                            [class.fa-circle-xmark]="messageType === 'error'"></i>
+        {{ message }}
+      </div>
+  
+      <!-- Form card -->
+      <section class="activity-card">
+        <div class="activity-card__header">
+          <span class="activity-card__icon">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </span>
+          <h2 class="activity-card__title">Signaler un incident</h2>
+          <span class="activity-card__badge">Tous les champs * sont requis</span>
+        </div>
+  
+        <div class="form-body">
+  
+          <!-- Enfant -->
+          <div class="form-group">
+            <label class="form-label">Enfant concerné *</label>
+            <select class="form-select" [(ngModel)]="enfantId">
+              <option [ngValue]="null">-- Sélectionner un enfant --</option>
+              <option *ngFor="let enfant of enfants" [ngValue]="enfant.id">
+                {{ enfant.prenom }} {{ enfant.nom }}
+              </option>
+            </select>
+          </div>
+  
+          <!-- Type -->
+          <div class="form-group">
+            <label class="form-label">Type d'incident *</label>
+            <select class="form-select" [(ngModel)]="type">
+              <option value="">-- Sélectionner un type --</option>
+              <option value="BLESSURE">Blessure</option>
+              <option value="CONFLIT">Conflit entre enfants</option>
+              <option value="MALAISE">Malaise / Problème médical</option>
+              <option value="ALLERGIE">Réaction allergique</option>
+              <option value="FUGUE">Fugue / Disparition</option>
+              <option value="COMPORTEMENT">Problème de comportement</option>
+              <option value="MATERIEL">Dommage matériel</option>
+              <option value="AUTRE">Autre</option>
+            </select>
+          </div>
+  
+          <!-- Gravité -->
+          <div class="form-group">
+            <label class="form-label">Gravité *</label>
+            <div class="gravite-grid">
+              <label class="gravite-option" *ngFor="let g of [1,2,3,4,5]"
+                     [class.gravite-option--selected]="gravite === g">
+                <input type="radio" name="gravite" [value]="g" [(ngModel)]="gravite" />
+                <span class="gravite-num">{{ g }}</span>
+                <span class="gravite-lbl">{{ graviteLabel(g) }}</span>
+              </label>
+            </div>
+          </div>
+  
+          <!-- Description -->
+          <div class="form-group">
+            <label class="form-label">Description de l'incident *</label>
+            <textarea class="form-textarea" [(ngModel)]="description"
+                      maxlength="1000" rows="4"
+                      placeholder="Décrivez précisément ce qui s'est passé..."></textarea>
+          </div>
+  
+          <!-- Actions prises -->
+          <div class="form-group">
+            <label class="form-label">Actions prises <span class="optional">(facultatif)</span></label>
+            <textarea class="form-textarea" [(ngModel)]="actionsPrises"
+                      maxlength="1000" rows="3"
+                      placeholder="Décrivez les mesures prises immédiatement..."></textarea>
+          </div>
+  
+          <button class="btn-submit" (click)="soumettre()">
+            <i class="fa-solid fa-paper-plane"></i>
+            Soumettre le rapport
+          </button>
+  
+        </div>
+      </section>
+  
+      <!-- Incidents list -->
+      <section class="activity-card">
+        <div class="activity-card__header">
+          <span class="activity-card__icon">
+            <i class="fa-solid fa-clipboard-list"></i>
+          </span>
+          <h2 class="activity-card__title">Mes rapports d'incidents</h2>
+          <span class="activity-card__badge">{{ incidents.length }} rapport{{ incidents.length > 1 ? 's' : '' }}</span>
+        </div>
+  
+        <ng-container *ngIf="incidents && incidents.length > 0; else noIncidents">
+          <div class="incident-item"
+               *ngFor="let inc of incidents"
+               [style.border-left-color]="graviteColor(inc.gravite)">
+  
+            <div class="incident-item__top">
+              <div class="incident-item__info">
+                <strong>{{ inc.enfantNom }}</strong>
+                <span class="incident-type">{{ inc.type }}</span>
+              </div>
+              <div class="incident-item__meta">
+                <span class="badge" [class.badge--danger]="inc.gravite >= 4"
+                                    [class.badge--warning]="inc.gravite === 3"
+                                    [class.badge--ok]="inc.gravite < 3">
+                  Gravité {{ inc.gravite }}/5
+                </span>
+                <span class="statut" [class.statut--resolu]="inc.statut === 'RESOLU'">
+                  {{ inc.statut }}
+                </span>
+              </div>
+            </div>
+  
+            <p class="incident-item__desc">{{ inc.description }}</p>
+            <p class="incident-item__date">
+              <i class="fa-regular fa-clock"></i> {{ formatDate(inc.dateHeure) }}
+            </p>
+  
+          </div>
+        </ng-container>
+  
+        <ng-template #noIncidents>
+          <div class="empty-state">
+            <i class="fa-regular fa-folder-open"></i>
+            <p>Aucun incident signalé pour le moment.</p>
+          </div>
+        </ng-template>
+  
+      </section>
+  
+    </main>
+  
+    <!-- Bottom nav -->
+    <nav class="bottom-nav">
+      <a class="bottom-nav__item" href="#">
+        <i class="fa-solid fa-house"></i>
+        <span>Tableau de bord</span>
+      </a>
+      <a class="bottom-nav__item" href="#">
+        <i class="fa-solid fa-calendar-days"></i>
+        <span>Sessions</span>
+      </a>
+      <a class="bottom-nav__item" href="#">
+        <i class="fa-solid fa-users"></i>
+        <span>Inscrits</span>
+      </a>
+      <a class="bottom-nav__item bottom-nav__item--active" href="#">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span>Incidents</span>
+      </a>
+    </nav>
+  
+  </div>

@@ -74,7 +74,7 @@ main {
     background: #ffffff;
     padding: 40px;
     border-radius: 15px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 /* Titre formulaire */
@@ -85,13 +85,13 @@ main {
 }
 
 /* Espacement champs */
-.form form > div {
+.form form>div {
     margin-bottom: 18px;
 }
 
 /* Labels */
 .form label {
-    
+
     display: block;
     color: #043d5b;
     margin-bottom: 8px;
@@ -184,4 +184,13 @@ footer {
         flex-wrap: wrap;
         justify-content: center;
     }
+}
+
+app-footer {
+    margin-top: auto;
+    width: 100%;
+}
+
+.bottom-espace {
+    height: 70px;
 }

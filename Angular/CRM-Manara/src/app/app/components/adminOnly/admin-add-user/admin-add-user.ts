@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../services/admin-service';
 
 @Component({
@@ -22,7 +22,9 @@ export class AdminAddUser implements OnInit {
   roles: any[] = []
   message: string = '';
 
-  constructor(private adminService: AdminService) { }
+  constructor(
+    private adminService: AdminService,
+    private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.loadRoles();
@@ -34,6 +36,7 @@ export class AdminAddUser implements OnInit {
       { id: 2, nom: 'ANIMATEUR' },
       { id: 3, nom: 'PARENT' }
     ];
+    this.cdr.detectChanges();
   }
 
   submitForm() {
@@ -43,11 +46,11 @@ export class AdminAddUser implements OnInit {
     }
 
     this.adminService.saveUserByAdmin(this.user).subscribe({
-      next: (response) => {
+      next: () => {
         this.message = 'Utilisateur ajouté avec succès !';
         this.resetForm();
       },
-      error: (error) => {
+      error: (error: unknown) => {
         console.error(error);
         alert('Erreur lors de la création de l\'utilisateur.');
       }

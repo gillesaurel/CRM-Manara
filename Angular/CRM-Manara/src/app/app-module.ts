@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';  // ← add this
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Administrateur } from './app/components/administrateur/administrateur';
@@ -16,6 +18,12 @@ import { Header } from './app/components/header/header';
 import { Footer } from './app/components/footer/footer';
 import { FragmentAdministrateur } from './app/components/fragments/fragment-administrateur/fragment-administrateur';
 import { ListeAttente } from './app/components/adminOnly/liste-attente/liste-attente';
+import { AjouterActivite } from './app/components/adminOnly/ajouter-activite/ajouter-activite';
+import { AnimateurDashboard } from './app/components/animateur/animateur-dashboard/animateur-dashboard';
+import { AnimateurHoraire } from './app/components/animateur/animateur-horaire/animateur-horaire';
+import { AnimateurInscription } from './app/components/animateur/animateur-inscription/animateur-inscription';  // ← add this
+import { AnimateurPresences } from './app/components/animateur/animateur-presences/animateur-presences';
+import { AnimateurIncidents } from './app/components/animateur/animateur-incidents/animateur-incidents';
 
 @NgModule({
   declarations: [
@@ -32,8 +40,21 @@ import { ListeAttente } from './app/components/adminOnly/liste-attente/liste-att
     Header,
     FragmentAdministrateur,
     ListeAttente,
+    AjouterActivite,
+    AnimateurDashboard,
+    AnimateurHoraire,
+    AnimateurInscription,
+    AnimateurPresences,
+    AnimateurIncidents,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    RouterModule,
+    CommonModule,
+  ],
   bootstrap: [App],
 })
 export class AppModule {}

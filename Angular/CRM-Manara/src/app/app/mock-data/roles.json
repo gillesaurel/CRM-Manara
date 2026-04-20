@@ -1,0 +1,6 @@
+[
+  { "id": 1, "nom": "ADMINISTRATEUR", "description": "Accès haut" },
+  { "id": 2, "nom": "ANIMATEUR", "description": "Accès moyen" },
+  { "id": 3, "nom": "PARENT", "description": "Accès bas" },
+  { "id": 4, "nom": "ENFANT", "description": "Accès nul" }
+]
