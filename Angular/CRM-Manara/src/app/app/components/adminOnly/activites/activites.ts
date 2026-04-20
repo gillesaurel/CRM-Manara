@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../services/admin-service';
 
 @Component({
@@ -11,9 +11,7 @@ export class Activites implements OnInit {
 
   activites: any[] = [];
 
-  constructor(
-    private adminService: AdminService,
-    private cdr: ChangeDetectorRef) { }
+  constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
     this.loadActivites();
@@ -24,9 +22,8 @@ export class Activites implements OnInit {
       next: (data: any) => {
         this.activites = data.activites;
         console.log('Activités trouvées :', this.activites);
-        this.cdr.detectChanges();
       },
-      error: (error: unknown) => {
+      error: (error) => {
         console.error('Erreur lors de la récupération des activités :', error);
       }
     });
@@ -41,7 +38,7 @@ export class Activites implements OnInit {
         alert('Activité supprimée avec succès !');
         this.loadActivites();
       },
-      error: (error: unknown) => {
+      error: (error) => {
         console.error('Erreur lors de la suppression de l\'activité :', error);
       }
     });
@@ -56,7 +53,7 @@ export class Activites implements OnInit {
         alert('Inscription validée avec succès !');
         this.loadActivites();
       },
-      error: (error: unknown) => {
+      error: (error) => {
         console.error('Erreur lors de la validation de l\'inscription :', error);
       }
     });
@@ -71,7 +68,7 @@ export class Activites implements OnInit {
         alert('Inscription supprimée avec succès !');
         this.loadActivites();
       },
-      error: (error: unknown) => {
+      error: (error) => {
         console.error('Erreur lors de la suppression de l\'inscription :', error);
       }
     });

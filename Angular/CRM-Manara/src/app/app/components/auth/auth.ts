@@ -24,7 +24,7 @@ export class Auth implements OnInit {
 
   ngOnInit(): void {
     this.authService.getMe().subscribe({
-      next: (data: Utilisateur | null) => {
+      next: (data) => {
         this.user = data;
       },
       error: () => {
@@ -44,7 +44,7 @@ export class Auth implements OnInit {
       
       setTimeout(() => {
         this.authService.getMe().subscribe({
-          next: (user: Utilisateur | null) => {
+          next: (user) => {
 
             if (!user) {
               this.error = true;

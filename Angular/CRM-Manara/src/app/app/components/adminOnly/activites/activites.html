@@ -5,8 +5,8 @@
 
   <!-- Boutons -->
   <div class="admin-actions">
-    <a routerLink="/admin" class="btn btn-primary">Créer une activité</a>
-    <a routerLink="/adminOnly/listeAttente" class="btn btn-primary">Liste d'attente</a>
+    <a routerLink="/administrateur" class="btn btn-primary">Créer une activité</a>
+    <a routerLink="/adminOnly/liste-attente" class="btn btn-primary">Liste d'attente</a>
   </div>
 
   <hr>
@@ -26,13 +26,13 @@
       </div>
     </div>
 
-    <div class="activite-infos">
-      <span><strong>Date :</strong> {{ act.dateDebut | date:'dd/MM/yyyy HH:mm' }}</span>
-      <span><strong>Capacité :</strong> {{ act.capacite }}</span>
-      <span><strong>Inscrits :</strong> {{ act.nbInscrits }}</span>
-      <span><strong>Attente :</strong> {{ act.nbEnAttente }}</span>
-      <span><strong>Taux :</strong> {{ act.tauxRemplissage }}%</span>
-    </div>
+    <p>
+      <strong>Date :</strong> {{ act.dateDebut | date:'dd/MM/yyyy HH:mm' }} |
+      <strong>Capacité :</strong> {{ act.capacite }} |
+      <strong>Inscrits :</strong> {{ act.nbInscrits }} |
+      <strong>Liste attente :</strong> {{ act.nbEnAttente }} |
+      <strong>Taux :</strong> {{ act.tauxRemplissage }}%
+    </p>
 
     <!-- TABLE INSCRIPTIONS -->
     <table class="inscriptions-table">
@@ -56,11 +56,16 @@
           </td>
 
           <td>
-            <button *ngIf="ins.enAttente" (click)="validerInscription(ins.id)" class="btn-validate">
+            <button
+              *ngIf="ins.enAttente"
+              (click)="validerInscription(ins.id)"
+              class="btn-validate">
               Valider
             </button>
 
-            <button (click)="deleteInscription(ins.id)" class="btn-delete">
+            <button
+              (click)="deleteInscription(ins.id)"
+              class="btn-delete">
               Supprimer
             </button>
           </td>
@@ -71,7 +76,6 @@
 
   </div>
   <app-footer></app-footer>
-  <div class="bottom-espace"></div>
 </div>
 
 <app-fragment-administrateur></app-fragment-administrateur>

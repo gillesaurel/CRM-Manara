@@ -1,122 +1,69 @@
+/* =========== Email.html =========== */
 .email-page {
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 60px 20px 20px;
-    background: linear-gradient(135deg, #eef3f8, #f9fbfd);
-    box-sizing: border-box;
+    padding: 40px;
+    background-color: #f5f7fa;
 }
 
-.email-card {
-    width: 100%;
-    max-width: 650px;
-}
-
-.email-card h1 {
-    text-align: center;
-    margin-bottom: 25px;
+.email-page h1 {
+    margin-bottom: 30px;
     color: #043d5b;
-    font-size: 26px;
-    font-weight: 700;
 }
 
-/* FORM CARD */
-.email-form {
-    background: #ffffff;
+.email-page .email-form {
+    background: white;
     padding: 30px;
-    border-radius: 14px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 600px;
 }
 
-/* LABEL */
-.email-form label {
-    font-weight: 600;
-    font-size: 14px;
-    color: #333;
+.email-page .email-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
-/* INPUTS */
-.email-form input,
-.email-form textarea,
-.email-form select {
-    padding: 12px 14px;
+.email-page .email-form input,
+.email-page .email-form textarea,
+.email-page .email-form select {
+    padding: 12px;
     font-size: 15px;
-    border: 1px solid #d6dee6;
-    border-radius: 8px;
-    transition: 0.2s;
-    background: #fff;
+    border: 1px solid #043d5b;
+    border-radius: 6px;
+    width: 100%;
 }
 
-.email-form input:focus,
-.email-form textarea:focus,
-.email-form select:focus {
+.email-page .email-form input:focus,
+.email-page .email-form textarea:focus,
+.email-page .email-form select:focus {
     outline: none;
     border-color: #043d5b;
-    box-shadow: 0 0 0 3px rgba(4, 61, 91, 0.1);
 }
 
-/* BUTTON */
-.btn-send {
-    margin-top: 10px;
-    background: linear-gradient(135deg, #043d5b, #065a82);
+.email-page .btn-send {
+    background-color: #043d5b;
     color: white;
     border: none;
-    padding: 13px;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 600;
+    margin: 20px auto;
+    display: block;
+    padding: 12px;
     cursor: pointer;
-    transition: 0.25s;
+    font-size: 16px;
+    border-radius: 6px;
+    transition: 0.2s;
 }
 
-.btn-send:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(4, 61, 91, 0.25);
+.email-page .btn-send:hover {
+    background-color: #065a82;
 }
 
-/* MESSAGE */
-.flash-message {
-    background: #28a745;
+.email-page .flash-message {
+    background-color: #28a745;
     color: white;
-    padding: 12px 16px;
-    border-radius: 8px;
+    padding: 12px;
+    border-radius: 6px;
     margin-bottom: 20px;
-    text-align: center;
-    font-weight: 500;
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-5px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.badge-type {
-    display: inline-block;
-    background: #e8f1f8;
-    color: #043d5b;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    margin-bottom: 10px;
-}
-
-app-footer {
-    margin-top: auto;
-    width: 100%;
-}
-
-.bottom-espace {
-    height: 45px;
 }

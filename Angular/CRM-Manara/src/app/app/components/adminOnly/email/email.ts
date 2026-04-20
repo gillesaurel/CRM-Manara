@@ -1,5 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../services/admin-service';
 
 @Component({
@@ -10,8 +9,8 @@ import { AdminService } from '../../../services/admin-service';
 })
 export class Email implements OnInit {
 
-  dataSend = {
-    type: 'ALL',
+  playload = {
+    type: 'All',
     parentId: null,
     animateurId: null,
     subject: '',
@@ -22,8 +21,7 @@ export class Email implements OnInit {
   animateurs: any[] = [];
   message: string = '';
 
-  constructor(
-    private adminService: AdminService, private cdr: ChangeDetectorRef) { }
+  constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
     this.loadUsers();
@@ -35,53 +33,32 @@ export class Email implements OnInit {
         this.parents = data.parents;
         this.animateurs = data.animateurs;
       },
-      error: (error: unknown) => {
+      error: (error) => {
         console.error('Erreur lors de la récupération des utilisateurs :', error);
       }
     });
   }
 
-
-
-  sendEmail(form: any) {
-    if (form.invalid) {
+  sendEmail() {
+    if (!this.playload.subject || !this.playload.message) {
       alert('Veuillez remplir tous les champs.');
       return;
     }
-
-    const payload = {
-      type: this.dataSend.type,
-      parentId: this.dataSend.parentId,
-      animateurId: this.dataSend.animateurId,
-      subject: this.dataSend.subject?.trim(),
-      message: this.dataSend.message?.trim()
-    };
-
-    console.log("PAYLOAD FINAL:", payload);
-
-    this.adminService.sendEmail(payload).subscribe({
-      next: (res: any) => {
-        this.message = res?.message || 'Email envoyé avec succès !';
-        this.cdr.detectChanges();
-        setTimeout(() => {
-          this.message = '';
-          this.cdr.detectChanges();
-        }, 3000);
-
+    this.adminService.sendEmail(this.playload).subscribe({
+      next: () => {
+        this.message = 'Email envoyé avec succès !';
         this.resetForm();
-        form.resetForm();
-
       },
-      error: (error: HttpErrorResponse) => {
+      error: (error) => {
         console.error(error);
-        alert(error?.error?.message || 'Erreur lors de l\'envoi');
+        alert('Erreur lors de l\'envoi de l\'email.');
       }
     });
   }
 
   resetForm() {
-    this.dataSend = {
-      type: 'ALL',
+    this.playload = {
+      type: 'All',
       parentId: null,
       animateurId: null,
       subject: '',
@@ -90,18 +67,14 @@ export class Email implements OnInit {
   }
 
   onTypeChange() {
-    if (this.dataSend.type === 'PARENT_ALL') {
-      this.dataSend.animateurId = null;
-    } else if (this.dataSend.type === 'ANIMATEUR_ALL') {
-      this.dataSend.parentId = null;
-    } else if (this.dataSend.type === 'PARENT_ONE') {
-      this.dataSend.animateurId = null;
-    } else if (this.dataSend.type === 'ANIMATEUR_ONE') {
-      this.dataSend.parentId = null;
+    if (this.playload.type === 'Parents') {
+      this.playload.animateurId = null;
+    } else if (this.playload.type === 'Animateurs') {
+      this.playload.parentId = null;
     } else {
-      this.dataSend.parentId = null;
-      this.dataSend.animateurId = null;
+      this.playload.parentId = null;
+      this.playload.animateurId = null;
     }
-  }
+  } 
 }
 
