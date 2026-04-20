@@ -144,5 +144,5 @@ public class AuthController {
         String email = authentication.getName();
         return utilisateurService.findByEmail(email);
     }
-   
+
 }

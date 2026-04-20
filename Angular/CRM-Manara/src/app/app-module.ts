@@ -52,6 +52,7 @@ import { AnimateurIncidents } from './app/components/animateur/animateur-inciden
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    CommonModule,
     RouterModule,
     CommonModule,
   ],
