@@ -31,7 +31,7 @@ export class Utilisateurs implements OnInit {
       next: (data: any) => {
         this.parents = data.parents || [];
         this.animateurs = data.animateurs || [];
-        this.enfants = data.enfant || [];
+        this.enfants = data.enfants || data.enfant || [];
         this.cdr.detectChanges();
         console.log('Parents trouvées :', this.parents);
         console.log('Enfants trouvées :', this.enfants);

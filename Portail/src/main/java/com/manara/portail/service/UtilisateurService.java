@@ -82,4 +82,31 @@ public class UtilisateurService {
         utilisateur.setMotdepasse(passwordEncoder.encode(utilisateur.getMotdepasse()));
         return utilisateurRepository.save(utilisateur);
     }
+
+    public Utilisateur mettreAJourParAdmin(Long id, Utilisateur utilisateur) throws Exception {
+        Utilisateur existing = utilisateurRepository.findById(id)
+                .orElseThrow(() -> new Exception("Utilisateur introuvable"));
+
+        Utilisateur sameEmail = utilisateurRepository.findByEmail(utilisateur.getEmail());
+        if (sameEmail != null && !sameEmail.getId().equals(id)) {
+            throw new Exception("Email déjà utilisé !");
+        }
+
+        existing.setPrenom(utilisateur.getPrenom());
+        existing.setNom(utilisateur.getNom());
+        existing.setTelephone(utilisateur.getTelephone());
+        existing.setEmail(utilisateur.getEmail());
+
+        if (utilisateur.getRole() != null && utilisateur.getRole().getId() != null) {
+            Role roleSelectionne = roleRepository.findById(utilisateur.getRole().getId().intValue())
+                    .orElseThrow(() -> new Exception("Rôle introuvable"));
+            existing.setRole(roleSelectionne);
+        }
+
+        if (utilisateur.getMotdepasse() != null && !utilisateur.getMotdepasse().isBlank()) {
+            existing.setMotdepasse(passwordEncoder.encode(utilisateur.getMotdepasse()));
+        }
+
+        return utilisateurRepository.save(existing);
+    }
 }

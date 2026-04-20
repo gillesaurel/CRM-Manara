@@ -7,6 +7,7 @@ import com.manara.portail.model.Utilisateur;
 import com.manara.portail.service.RoleService;
 import com.manara.portail.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,10 @@ import java.io.IOException;
 
 
 @Controller
+@CrossOrigin(
+        origins = {"http://localhost:4200", "http://127.0.0.1:4200", "http://manara.histoiredurock.com", "https://manara.histoiredurock.com"},
+        allowCredentials = "true"
+)
 public class AuthController {
 
     @Autowired
@@ -123,9 +128,20 @@ public class AuthController {
     private Cookie deleteCookie(String name) {
         Cookie cookie = new Cookie(name, "");
         cookie.setPath("/");
-        cookie.setMaxAge(-1);
+        cookie.setMaxAge(0);
         cookie.setHttpOnly(true);
         return cookie;
+    }
+
+    @GetMapping("/userConnecte")
+    @ResponseBody
+    public Utilisateur getCurrentUser(Authentication authentication) {
+        if (authentication == null) {
+            return null;
+        }
+
+        String email = authentication.getName();
+        return utilisateurService.findByEmail(email);
     }
    
 }

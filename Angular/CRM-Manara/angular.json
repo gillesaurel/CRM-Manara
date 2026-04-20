@@ -77,6 +77,11 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "allowedHosts": [
+              "manara.histoiredurock.com"
+            ]
+          },
           "configurations": {
             "production": {
               "buildTarget": "CRM-Manara:build:production"

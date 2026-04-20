@@ -93,7 +93,7 @@ export class Administrateur implements OnInit {
   }
 
   modifyActivite(id: number) {
-    this.adminService.updateActivite(id).subscribe({
+    this.adminService.updateActivite({ ...this.activiteForm, id }).subscribe({
       next: () => {
         alert('Activité modifiée avec succès !');
         this.getAdminData();
@@ -122,7 +122,7 @@ export class Administrateur implements OnInit {
     this.adminService.listeAttentes().subscribe({
       next: (data: any) => {
         console.log(data);
-        this.listeAttentesData = data;
+        this.listeAttentesData = data?.inscriptions || data || [];
       }
     });
   }

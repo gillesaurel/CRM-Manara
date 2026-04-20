@@ -5,6 +5,7 @@ import { Activites } from './app/components/adminOnly/activites/activites';
 import { Utilisateurs } from './app/components/adminOnly/utilisateurs/utilisateurs';
 import { AdminAddUser } from './app/components/adminOnly/admin-add-user/admin-add-user';
 import { AjouterActivite } from './app/components/adminOnly/ajouter-activite/ajouter-activite';
+import { ListeAttente } from './app/components/adminOnly/liste-attente/liste-attente';
 
 import { AnimateurDashboard } from './app/components/animateur/animateur-dashboard/animateur-dashboard';
 import { AnimateurInscription } from './app/components/animateur/animateur-inscription/animateur-inscription';
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'adminOnly/activites', canActivate:[UserAuth], component: Activites },
   { path: 'adminOnly/utilisateurs', canActivate:[UserAuth], component: Utilisateurs },
   { path: 'adminOnly/adminAddUser', canActivate:[UserAuth], component: AdminAddUser },
+  { path: 'adminOnly/listeAttente', canActivate:[UserAuth], component: ListeAttente },
   { path: 'adminOnly/email', canActivate:[UserAuth], component: Email },
   { path: 'adminOnly/ajouter-activite', canActivate:[UserAuth], component: AjouterActivite },
   { path: 'adminOnly/ajouter-activite/:id', canActivate:[UserAuth], component: AjouterActivite },
