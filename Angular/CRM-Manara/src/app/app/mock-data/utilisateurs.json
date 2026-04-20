@@ -1,0 +1,6 @@
+[
+  { "id": 1, "email": "sarah.leblanc@manara.com", "motdepasse": "motdepasse", "nom": "Leblanc", "prenom": "Sarah", "telephone": "5141234567", "role_id": 2 },
+  { "id": 2, "email": "marc.tremblay@gmail.com", "motdepasse": "motdepasse", "nom": "Tremblay", "prenom": "Marc", "telephone": "4389876543", "role_id": 3 },
+  { "id": 3, "email": "julie.gagnon@gmail.com", "motdepasse": "motdepasse", "nom": "Gagnon", "prenom": "Julie", "telephone": "5147654321", "role_id": 3 },
+  { "id": 4, "email": "kevin.roy@manara.com", "motdepasse": "motdepasse", "nom": "Roy", "prenom": "Kevin", "telephone": "4381112222", "role_id": 2 }
+]

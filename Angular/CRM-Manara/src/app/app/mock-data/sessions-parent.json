@@ -1,0 +1,7 @@
+[
+  { "id": 1, "capacite_max": 15, "date": "2026-04-05", "heure_debut": "09:00:00", "heure_fin": "11:00:00", "lieu": "Centre sportif Rosemont", "statut": "PLANIFIEE", "activite_id": 1, "animateur_id": 1 },
+  { "id": 2, "capacite_max": 15, "date": "2026-04-12", "heure_debut": "09:00:00", "heure_fin": "11:00:00", "lieu": "Centre sportif Rosemont", "statut": "PLANIFIEE", "activite_id": 1, "animateur_id": 1 },
+  { "id": 3, "capacite_max": 10, "date": "2026-04-07", "heure_debut": "13:00:00", "heure_fin": "15:00:00", "lieu": "Salle polyvalente A", "statut": "PLANIFIEE", "activite_id": 2, "animateur_id": 4 },
+  { "id": 4, "capacite_max": 10, "date": "2026-04-14", "heure_debut": "13:00:00", "heure_fin": "15:00:00", "lieu": "Salle polyvalente A", "statut": "PLANIFIEE", "activite_id": 2, "animateur_id": 4 },
+  { "id": 5, "capacite_max": 12, "date": "2026-04-09", "heure_debut": "10:00:00", "heure_fin": "12:00:00", "lieu": "Studio musical Manara", "statut": "PLANIFIEE", "activite_id": 2, "animateur_id": 1 }
+]

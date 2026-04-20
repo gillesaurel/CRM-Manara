@@ -1,0 +1,6 @@
+[
+  { "id": 1, "photo": null, "date_naissance": "2018-06-15", "nom": "Tremblay", "notes_medicales": null, "prenom": "Luca", "parent_id": 1 },
+  { "id": 2, "photo": null, "date_naissance": "2020-03-22", "nom": "Tremblay", "notes_medicales": "Allergie aux arachides", "prenom": "Emma", "parent_id": 1 },
+  { "id": 3, "photo": null, "date_naissance": "2019-11-08", "nom": "Gagnon", "notes_medicales": null, "prenom": "Noah", "parent_id": 2 },
+  { "id": 4, "photo": null, "date_naissance": "2021-01-30", "nom": "Gagnon", "notes_medicales": null, "prenom": "Léa", "parent_id": 2 }
+]

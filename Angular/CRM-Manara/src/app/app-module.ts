@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';  // ← add this
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Administrateur } from './app/components/administrateur/administrateur';
@@ -20,6 +21,9 @@ import { ListeAttente } from './app/components/adminOnly/liste-attente/liste-att
 import { AjouterActivite } from './app/components/adminOnly/ajouter-activite/ajouter-activite';
 import { AnimateurDashboard } from './app/components/animateur/animateur-dashboard/animateur-dashboard';
 import { AnimateurHoraire } from './app/components/animateur/animateur-horaire/animateur-horaire';
+import { AnimateurInscription } from './app/components/animateur/animateur-inscription/animateur-inscription';  // ← add this
+import { AnimateurPresences } from './app/components/animateur/animateur-presences/animateur-presences';
+import { AnimateurIncidents } from './app/components/animateur/animateur-incidents/animateur-incidents';
 
 @NgModule({
   declarations: [
@@ -39,6 +43,9 @@ import { AnimateurHoraire } from './app/components/animateur/animateur-horaire/a
     AjouterActivite,
     AnimateurDashboard,
     AnimateurHoraire,
+    AnimateurInscription,
+    AnimateurPresences,
+    AnimateurIncidents,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +53,7 @@ import { AnimateurHoraire } from './app/components/animateur/animateur-horaire/a
     HttpClientModule,
     FormsModule,
     RouterModule,
+    CommonModule,
   ],
   bootstrap: [App],
 })

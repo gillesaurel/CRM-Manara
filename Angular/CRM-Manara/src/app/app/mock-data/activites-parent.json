@@ -1,0 +1,5 @@
+[
+  { "id": 1, "active": true, "age_max": 12, "age_min": 5, "description": "Initiation au soccer pour les jeunes de 5 à 12 ans", "nom": "Soccer jeunesse", "prix": 25.00 },
+  { "id": 2, "active": true, "age_max": 10, "age_min": 4, "description": "Atelier créatif de peinture et dessin", "nom": "Atelier arts plastiques", "prix": 15.00 },
+  { "id": 3, "active": true, "age_max": 8, "age_min": 3, "description": "Éveil musical avec instruments adaptés aux enfants", "nom": "Éveil musical", "prix": 20.00 }
+]

@@ -1,0 +1,7 @@
+[
+  { "id": 1, "en_attente": false, "nom_enfant": "Luca Tremblay", "activites_id": 1, "enfant_id": 1, "session_id": 1, "utilisateur_id": 2 },
+  { "id": 2, "en_attente": false, "nom_enfant": "Emma Tremblay", "activites_id": 1, "enfant_id": 2, "session_id": 2, "utilisateur_id": 2 },
+  { "id": 3, "en_attente": true,  "nom_enfant": "Noah Gagnon",   "activites_id": 2, "enfant_id": 3, "session_id": 3, "utilisateur_id": 3 },
+  { "id": 4, "en_attente": false, "nom_enfant": "Léa Gagnon",    "activites_id": 2, "enfant_id": 4, "session_id": 4, "utilisateur_id": 3 },
+  { "id": 5, "en_attente": false, "nom_enfant": "Luca Tremblay", "activites_id": 1, "enfant_id": 1, "session_id": 5, "utilisateur_id": 2 }
+]

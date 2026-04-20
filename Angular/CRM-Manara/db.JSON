@@ -1,0 +1,48 @@
+F{
+    "database": "crm_manara",
+    "roles": [
+      { "id": 1, "nom": "ADMINISTRATEUR", "description": "Accès haut" },
+      { "id": 2, "nom": "ANIMATEUR", "description": "Accès moyen" },
+      { "id": 3, "nom": "PARENT", "description": "Accès bas" },
+      { "id": 4, "nom": "ENFANT", "description": "Accès nul" }
+    ],
+    "utilisateurs": [
+      { "id": 1, "email": "sarah.leblanc@manara.com", "motdepasse": "motdepasse", "nom": "Leblanc", "prenom": "Sarah", "telephone": "5141234567", "role_id": 2 },
+      { "id": 2, "email": "marc.tremblay@gmail.com", "motdepasse": "motdepasse", "nom": "Tremblay", "prenom": "Marc", "telephone": "4389876543", "role_id": 3 },
+      { "id": 3, "email": "julie.gagnon@gmail.com", "motdepasse": "motdepasse", "nom": "Gagnon", "prenom": "Julie", "telephone": "5147654321", "role_id": 3 },
+      { "id": 4, "email": "kevin.roy@manara.com", "motdepasse": "motdepasse", "nom": "Roy", "prenom": "Kevin", "telephone": "4381112222", "role_id": 2 }
+    ],
+    "activites": [
+      { "id": 1, "capacite": 20, "date_creation": "2025-01-10T08:00:00", "date_debut": "2025-04-01T08:00:00", "description": "Activité sportive pour enfants", "nom": "Soccer jeunesse" },
+      { "id": 2, "capacite": 15, "date_creation": "2025-01-15T08:00:00", "date_debut": "2025-04-05T08:00:00", "description": "Cours de peinture et dessin", "nom": "Atelier arts plastiques" }
+    ],
+    "activites_parent": [
+      { "id": 1, "active": true, "age_max": 12, "age_min": 5, "description": "Initiation au soccer pour les jeunes de 5 à 12 ans", "nom": "Soccer jeunesse", "prix": 25.00 },
+      { "id": 2, "active": true, "age_max": 10, "age_min": 4, "description": "Atelier créatif de peinture et dessin", "nom": "Atelier arts plastiques", "prix": 15.00 },
+      { "id": 3, "active": true, "age_max": 8, "age_min": 3, "description": "Éveil musical avec instruments adaptés aux enfants", "nom": "Éveil musical", "prix": 20.00 }
+    ],
+    "sessions_parent": [
+      { "id": 1, "capacite_max": 15, "date": "2026-04-05", "heure_debut": "09:00:00", "heure_fin": "11:00:00", "lieu": "Centre sportif Rosemont", "statut": "PLANIFIEE", "activite_id": 1, "animateur_id": 1 },
+      { "id": 2, "capacite_max": 15, "date": "2026-04-12", "heure_debut": "09:00:00", "heure_fin": "11:00:00", "lieu": "Centre sportif Rosemont", "statut": "PLANIFIEE", "activite_id": 1, "animateur_id": 1 },
+      { "id": 3, "capacite_max": 10, "date": "2026-04-07", "heure_debut": "13:00:00", "heure_fin": "15:00:00", "lieu": "Salle polyvalente A", "statut": "PLANIFIEE", "activite_id": 2, "animateur_id": 4 },
+      { "id": 4, "capacite_max": 10, "date": "2026-04-14", "heure_debut": "13:00:00", "heure_fin": "15:00:00", "lieu": "Salle polyvalente A", "statut": "PLANIFIEE", "activite_id": 2, "animateur_id": 4 },
+      { "id": 5, "capacite_max": 12, "date": "2026-04-09", "heure_debut": "10:00:00", "heure_fin": "12:00:00", "lieu": "Studio musical Manara", "statut": "PLANIFIEE", "activite_id": 2, "animateur_id": 1 }
+    ],
+    "parents": [
+      { "id": 1, "utilisateur_id": 2 },
+      { "id": 2, "utilisateur_id": 3 }
+    ],
+    "enfants": [
+      { "id": 1, "photo": null, "date_naissance": "2018-06-15", "nom": "Tremblay", "notes_medicales": null, "prenom": "Luca", "parent_id": 1 },
+      { "id": 2, "photo": null, "date_naissance": "2020-03-22", "nom": "Tremblay", "notes_medicales": "Allergie aux arachides", "prenom": "Emma", "parent_id": 1 },
+      { "id": 3, "photo": null, "date_naissance": "2019-11-08", "nom": "Gagnon", "notes_medicales": null, "prenom": "Noah", "parent_id": 2 },
+      { "id": 4, "photo": null, "date_naissance": "2021-01-30", "nom": "Gagnon", "notes_medicales": null, "prenom": "Léa", "parent_id": 2 }
+    ],
+    "inscriptions_enfant": [
+      { "id": 1, "en_attente": false, "nom_enfant": "Luca Tremblay", "activites_id": 1, "enfant_id": 1, "session_id": 1, "utilisateur_id": 2 },
+      { "id": 2, "en_attente": false, "nom_enfant": "Emma Tremblay", "activites_id": 1, "enfant_id": 2, "session_id": 2, "utilisateur_id": 2 },
+      { "id": 3, "en_attente": true,  "nom_enfant": "Noah Gagnon",   "activites_id": 2, "enfant_id": 3, "session_id": 3, "utilisateur_id": 3 },
+      { "id": 4, "en_attente": false, "nom_enfant": "Léa Gagnon",    "activites_id": 2, "enfant_id": 4, "session_id": 4, "utilisateur_id": 3 },
+      { "id": 5, "en_attente": false, "nom_enfant": "Luca Tremblay", "activites_id": 1, "enfant_id": 1, "session_id": 5, "utilisateur_id": 2 }
+    ]
+  }
