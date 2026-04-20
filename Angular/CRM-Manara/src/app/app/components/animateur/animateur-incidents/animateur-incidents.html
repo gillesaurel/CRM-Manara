@@ -1,180 +1,146 @@
-<div class="page-wrapper">
-
-    <!-- Header -->
-    <header class="top-bar">
-      <div class="top-bar__brand">
-        <span class="top-bar__logo">M</span>
-        <span class="top-bar__title">Portail Manara</span>
-      </div>
-      <div class="top-bar__profile">
-        <i class="fa-solid fa-user-tie"></i>
-        <span>Animateur</span>
-      </div>
-    </header>
+<div class="page-animateurs">
   
-    <!-- Main -->
     <main class="dash">
   
-      <section class="dash-hero">
-        <p class="dash-hero__label">Tableau de bord</p>
-        <h1 class="dash-hero__title">Incidents</h1>
-        <p class="dash-hero__sub">Signaler un incident ou consulter les rapports existants</p>
+      <section class="dash-top">
+        <div>
+          <h1>Portail Manara</h1>
+          <p class="subtitle">Tableau de bord</p>
+        </div>
+        <div class="profile-pill">
+          <i class="fa-solid fa-user-tie"></i>
+          <span>Profil : Animateur</span>
+        </div>
       </section>
   
+      <h2>Incidents</h2>
+      <p>Signaler un incident ou consulter les rapports existants.</p>
+  
       <!-- Message -->
-      <div class="msg-banner" *ngIf="message"
-           [class.msg-banner--success]="messageType === 'success'"
-           [class.msg-banner--error]="messageType === 'error'">
-        <i class="fa-solid" [class.fa-circle-check]="messageType === 'success'"
-                            [class.fa-circle-xmark]="messageType === 'error'"></i>
+      <div *ngIf="message" class="card welcome"
+           [style.color]="messageType === 'success' ? '#043d5b' : '#c0392b'"
+           style="font-weight: 800;">
         {{ message }}
       </div>
   
       <!-- Form card -->
-      <section class="activity-card">
-        <div class="activity-card__header">
-          <span class="activity-card__icon">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-          </span>
-          <h2 class="activity-card__title">Signaler un incident</h2>
-          <span class="activity-card__badge">Tous les champs * sont requis</span>
+      <section class="card">
+        <div class="card-head">
+          <h3>Signaler un incident</h3>
+          <p class="hint">Remplissez tous les champs obligatoires.</p>
         </div>
   
-        <div class="form-body">
+        <div style="margin-top: 14px;">
+          <label style="display: block; font-size: 13px; font-weight: 800; margin-bottom: 6px;">Enfant concerné *</label>
+          <select [(ngModel)]="enfantId"
+                  style="width: 100%; padding: 10px 12px; border-radius: 10px;
+                         border: 1px solid rgba(4,61,91,0.20); font-size: 13px;
+                         background: #fff; color: #043d5b;">
+            <option [ngValue]="null">-- Sélectionner un enfant --</option>
+            <option *ngFor="let enfant of enfants" [ngValue]="enfant.id">
+              {{ enfant.prenom }} {{ enfant.nom }}
+            </option>
+          </select>
+        </div>
   
-          <!-- Enfant -->
-          <div class="form-group">
-            <label class="form-label">Enfant concerné *</label>
-            <select class="form-select" [(ngModel)]="enfantId">
-              <option [ngValue]="null">-- Sélectionner un enfant --</option>
-              <option *ngFor="let enfant of enfants" [ngValue]="enfant.id">
-                {{ enfant.prenom }} {{ enfant.nom }}
-              </option>
-            </select>
+        <div style="margin-top: 14px;">
+          <label style="display: block; font-size: 13px; font-weight: 800; margin-bottom: 6px;">Type d'incident *</label>
+          <select [(ngModel)]="type"
+                  style="width: 100%; padding: 10px 12px; border-radius: 10px;
+                         border: 1px solid rgba(4,61,91,0.20); font-size: 13px;
+                         background: #fff; color: #043d5b;">
+            <option value="">-- Sélectionner un type --</option>
+            <option value="BLESSURE">Blessure</option>
+            <option value="CONFLIT">Conflit entre enfants</option>
+            <option value="MALAISE">Malaise / Problème médical</option>
+            <option value="ALLERGIE">Réaction allergique</option>
+            <option value="FUGUE">Fugue / Disparition</option>
+            <option value="COMPORTEMENT">Problème de comportement</option>
+            <option value="MATERIEL">Dommage matériel</option>
+            <option value="AUTRE">Autre</option>
+          </select>
+        </div>
+  
+        <div style="margin-top: 14px;">
+          <label style="display: block; font-size: 13px; font-weight: 800; margin-bottom: 6px;">
+            Gravité (1 = mineur, 5 = très grave) *
+          </label>
+          <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
+            <label *ngFor="let g of [1,2,3,4,5]"
+                   style="text-align: center; cursor: pointer; padding: 8px; border-radius: 10px;
+                          border: 1px solid rgba(4,61,91,0.12); background: #fff;">
+              <input type="radio" name="gravite" [value]="g" [(ngModel)]="gravite"
+                     style="display: block; margin: 0 auto 4px auto;" />
+              <span style="font-size: 13px; font-weight: 800; display: block;">{{ g }}</span>
+              <span style="display: block; font-size: 10px; opacity: 0.7;">{{ graviteLabel(g) }}</span>
+            </label>
           </div>
+        </div>
   
-          <!-- Type -->
-          <div class="form-group">
-            <label class="form-label">Type d'incident *</label>
-            <select class="form-select" [(ngModel)]="type">
-              <option value="">-- Sélectionner un type --</option>
-              <option value="BLESSURE">Blessure</option>
-              <option value="CONFLIT">Conflit entre enfants</option>
-              <option value="MALAISE">Malaise / Problème médical</option>
-              <option value="ALLERGIE">Réaction allergique</option>
-              <option value="FUGUE">Fugue / Disparition</option>
-              <option value="COMPORTEMENT">Problème de comportement</option>
-              <option value="MATERIEL">Dommage matériel</option>
-              <option value="AUTRE">Autre</option>
-            </select>
-          </div>
+        <div style="margin-top: 14px;">
+          <label style="display: block; font-size: 13px; font-weight: 800; margin-bottom: 6px;">Description de l'incident *</label>
+          <textarea [(ngModel)]="description" maxlength="1000" rows="4"
+                    placeholder="Décrivez précisément ce qui s'est passé..."
+                    style="width: 100%; padding: 10px 12px; border-radius: 10px;
+                           border: 1px solid rgba(4,61,91,0.20); font-size: 13px;
+                           font-family: inherit; resize: vertical; color: #043d5b;
+                           background: #fff; box-sizing: border-box;"></textarea>
+        </div>
   
-          <!-- Gravité -->
-          <div class="form-group">
-            <label class="form-label">Gravité *</label>
-            <div class="gravite-grid">
-              <label class="gravite-option" *ngFor="let g of [1,2,3,4,5]"
-                     [class.gravite-option--selected]="gravite === g">
-                <input type="radio" name="gravite" [value]="g" [(ngModel)]="gravite" />
-                <span class="gravite-num">{{ g }}</span>
-                <span class="gravite-lbl">{{ graviteLabel(g) }}</span>
-              </label>
-            </div>
-          </div>
+        <div style="margin-top: 14px;">
+          <label style="display: block; font-size: 13px; font-weight: 800; margin-bottom: 6px;">Actions prises (facultatif)</label>
+          <textarea [(ngModel)]="actionsPrises" maxlength="1000" rows="3"
+                    placeholder="Décrivez les mesures prises immédiatement..."
+                    style="width: 100%; padding: 10px 12px; border-radius: 10px;
+                           border: 1px solid rgba(4,61,91,0.20); font-size: 13px;
+                           font-family: inherit; resize: vertical; color: #043d5b;
+                           background: #fff; box-sizing: border-box;"></textarea>
+        </div>
   
-          <!-- Description -->
-          <div class="form-group">
-            <label class="form-label">Description de l'incident *</label>
-            <textarea class="form-textarea" [(ngModel)]="description"
-                      maxlength="1000" rows="4"
-                      placeholder="Décrivez précisément ce qui s'est passé..."></textarea>
-          </div>
-  
-          <!-- Actions prises -->
-          <div class="form-group">
-            <label class="form-label">Actions prises <span class="optional">(facultatif)</span></label>
-            <textarea class="form-textarea" [(ngModel)]="actionsPrises"
-                      maxlength="1000" rows="3"
-                      placeholder="Décrivez les mesures prises immédiatement..."></textarea>
-          </div>
-  
-          <button class="btn-submit" (click)="soumettre()">
-            <i class="fa-solid fa-paper-plane"></i>
+        <div style="margin-top: 18px;">
+          <button (click)="soumettre()" class="btn-explorer"
+                  style="border: none; cursor: pointer; width: 100%; text-align: center; display: block;">
             Soumettre le rapport
           </button>
-  
         </div>
       </section>
   
       <!-- Incidents list -->
-      <section class="activity-card">
-        <div class="activity-card__header">
-          <span class="activity-card__icon">
-            <i class="fa-solid fa-clipboard-list"></i>
-          </span>
-          <h2 class="activity-card__title">Mes rapports d'incidents</h2>
-          <span class="activity-card__badge">{{ incidents.length }} rapport{{ incidents.length > 1 ? 's' : '' }}</span>
+      <section class="card">
+        <div class="card-head">
+          <h3>Mes rapports d'incidents</h3>
+          <p class="hint">Incidents que vous avez signalés.</p>
         </div>
   
-        <ng-container *ngIf="incidents && incidents.length > 0; else noIncidents">
-          <div class="incident-item"
-               *ngFor="let inc of incidents"
-               [style.border-left-color]="graviteColor(inc.gravite)">
-  
-            <div class="incident-item__top">
-              <div class="incident-item__info">
+        <div class="session-list" style="margin-top: 12px;">
+          <ng-container *ngIf="incidents && incidents.length > 0; else noIncidents">
+            <article class="session-item" *ngFor="let inc of incidents"
+                     [style.border-left]="graviteColor(inc.gravite)">
+              <div class="session-main">
                 <strong>{{ inc.enfantNom }}</strong>
-                <span class="incident-type">{{ inc.type }}</span>
+                <small>
+                  <span>{{ inc.type }}</span> —
+                  <span>{{ formatDate(inc.dateHeure) }}</span>
+                </small>
+                <small>{{ inc.description }}</small>
               </div>
-              <div class="incident-item__meta">
-                <span class="badge" [class.badge--danger]="inc.gravite >= 4"
-                                    [class.badge--warning]="inc.gravite === 3"
-                                    [class.badge--ok]="inc.gravite < 3">
-                  Gravité {{ inc.gravite }}/5
-                </span>
-                <span class="statut" [class.statut--resolu]="inc.statut === 'RESOLU'">
+              <div class="session-side">
+                <span class="chip">Gravité : {{ inc.gravite }}/5</span>
+                <span class="status"
+                      [style.color]="inc.statut === 'RESOLU' ? '#27ae60' : '#e67e22'">
                   {{ inc.statut }}
                 </span>
               </div>
-            </div>
+            </article>
+          </ng-container>
   
-            <p class="incident-item__desc">{{ inc.description }}</p>
-            <p class="incident-item__date">
-              <i class="fa-regular fa-clock"></i> {{ formatDate(inc.dateHeure) }}
-            </p>
-  
-          </div>
-        </ng-container>
-  
-        <ng-template #noIncidents>
-          <div class="empty-state">
-            <i class="fa-regular fa-folder-open"></i>
-            <p>Aucun incident signalé pour le moment.</p>
-          </div>
-        </ng-template>
-  
+          <ng-template #noIncidents>
+            <div class="empty">Aucun incident signalé pour le moment.</div>
+          </ng-template>
+        </div>
       </section>
   
+      <div class="bottom-spacer"></div>
     </main>
-  
-    <!-- Bottom nav -->
-    <nav class="bottom-nav">
-      <a class="bottom-nav__item" href="#">
-        <i class="fa-solid fa-house"></i>
-        <span>Tableau de bord</span>
-      </a>
-      <a class="bottom-nav__item" href="#">
-        <i class="fa-solid fa-calendar-days"></i>
-        <span>Sessions</span>
-      </a>
-      <a class="bottom-nav__item" href="#">
-        <i class="fa-solid fa-users"></i>
-        <span>Inscrits</span>
-      </a>
-      <a class="bottom-nav__item bottom-nav__item--active" href="#">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        <span>Incidents</span>
-      </a>
-    </nav>
   
   </div>

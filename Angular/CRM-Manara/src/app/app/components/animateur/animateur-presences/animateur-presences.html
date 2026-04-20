@@ -1,55 +1,37 @@
-<div class="page-wrapper">
+<div class="page-animateurs">
 
-    <!-- Header -->
-    <header class="top-bar">
-      <div class="top-bar__brand">
-        <span class="top-bar__logo">M</span>
-        <span class="top-bar__title">Portail Manara</span>
+  <main class="dash">
+
+    <section class="dash-top">
+      <div>
+        <h1>Portail Manara</h1>
+        <p class="subtitle">Tableau de bord</p>
       </div>
-      <div class="top-bar__profile">
+      <div class="profile-pill">
         <i class="fa-solid fa-user-tie"></i>
-        <span>Animateur</span>
+        <span>Profil : Animateur</span>
       </div>
-    </header>
-  
-    <!-- Main -->
-    <main class="dash">
-  
-      <section class="dash-hero">
-        <p class="dash-hero__label">Tableau de bord</p>
-        <h1 class="dash-hero__title">Présences</h1>
-        <p class="dash-hero__sub">Liste des enfants attendus par session et activité</p>
-      </section>
-  
-      <!-- Groups -->
-      <ng-container *ngIf="groups && groups.length > 0; else empty">
-        <section class="activity-card" *ngFor="let group of groups">
-  
-          <!-- Activity header -->
-          <div class="activity-card__header">
-            <span class="activity-card__icon">
-              <i class="fa-solid fa-person-running"></i>
-            </span>
-            <h2 class="activity-card__title">{{ group.activiteNom }}</h2>
-            <span class="activity-card__badge">
-              {{ group.sessions.length }} session{{ group.sessions.length > 1 ? 's' : '' }}
-            </span>
-          </div>
-  
-          <!-- Sessions -->
-          <div class="session-block" *ngFor="let session of group.sessions">
-  
-            <div class="session-block__header">
+    </section>
+
+    <h2>Présences</h2>
+    <p>Liste des enfants attendus par session et activité.</p>
+
+    <!-- Groups -->
+    <ng-container *ngIf="groups && groups.length > 0; else empty">
+      <div *ngFor="let group of groups">
+        <section class="card welcome">
+          <h3>{{ group.activiteNom }}</h3>
+
+          <div *ngFor="let session of group.sessions">
+            <p style="margin: 12px 0 6px; font-weight: 600;">
               <i class="fa-solid fa-calendar-day"></i>
-              <span>{{ session.sessionLabel }}</span>
-              <span class="session-block__count">{{ session.enfants.length }} enfant{{ session.enfants.length > 1 ? 's' : '' }}</span>
-            </div>
-  
-            <div class="table-wrap">
-              <table class="pres-table">
+              {{ session.sessionLabel }}
+            </p>
+
+            <div class="quick-grid">
+              <table>
                 <thead>
                   <tr>
-                    <th>#</th>
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>Allergies</th>
@@ -57,65 +39,36 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let enfant of session.enfants; let i = index">
-                    <td class="row__index">{{ i + 1 }}</td>
+                  <tr *ngFor="let enfant of session.enfants">
                     <td>{{ enfant.nom }}</td>
                     <td>{{ enfant.prenom }}</td>
+                    <td>{{ enfant.allergies ? enfant.allergies : '—' }}</td>
                     <td>
-                      <span class="allergy" *ngIf="enfant.allergies; else noAllergy">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        {{ enfant.allergies }}
-                      </span>
-                      <ng-template #noAllergy>
-                        <span class="muted">—</span>
-                      </ng-template>
-                    </td>
-                    <td>
-                      <span class="badge badge--present">
+                      <span style="color: #2e7d32; font-weight: 600;">
                         <i class="fa-solid fa-circle-check"></i> Attendu
                       </span>
                     </td>
                   </tr>
                   <tr *ngIf="session.enfants.length === 0">
-                    <td colspan="5" class="muted">Aucun enfant inscrit pour cette session.</td>
+                    <td colspan="4">Aucun enfant inscrit pour cette session.</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-  
           </div>
-  
+
         </section>
-      </ng-container>
-  
-      <!-- Empty state -->
-      <ng-template #empty>
-        <section class="activity-card empty-state">
-          <i class="fa-regular fa-folder-open"></i>
-          <p>Aucune session à venir avec des enfants inscrits.</p>
-        </section>
-      </ng-template>
-  
-    </main>
-  
-    <!-- Bottom nav -->
-    <nav class="bottom-nav">
-      <a class="bottom-nav__item" href="#">
-        <i class="fa-solid fa-house"></i>
-        <span>Tableau de bord</span>
-      </a>
-      <a class="bottom-nav__item" href="#">
-        <i class="fa-solid fa-calendar-days"></i>
-        <span>Sessions</span>
-      </a>
-      <a class="bottom-nav__item" href="#">
-        <i class="fa-solid fa-users"></i>
-        <span>Inscrits</span>
-      </a>
-      <a class="bottom-nav__item bottom-nav__item--active" href="#">
-        <i class="fa-solid fa-circle-check"></i>
-        <span>Présences</span>
-      </a>
-    </nav>
-  
-  </div>
+      </div>
+    </ng-container>
+
+    <!-- Empty state -->
+    <ng-template #empty>
+      <section class="card welcome">
+        <p>Aucune session à venir avec des enfants inscrits.</p>
+      </section>
+    </ng-template>
+
+    <div class="bottom-spacer"></div>
+  </main>
+
+</div>
