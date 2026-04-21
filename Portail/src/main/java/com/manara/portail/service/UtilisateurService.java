@@ -66,14 +66,16 @@ public class UtilisateurService {
         return utilisateurRepository.findByEmail(email);
     }
 
-    public Utilisateur enregistrerParAdmin(Utilisateur utilisateur) throws Exception {
-        if (utilisateurRepository.findByEmail(utilisateur.getEmail()) != null) {
-            throw new Exception("Email déjà utilisé !");
+    @Transactional
+    public Utilisateur enregistrerParAdmin(Utilisateur utilisateur) {
+        Utilisateur existeDeja = utilisateurRepository.findByEmail(utilisateur.getEmail());
+        if (existeDeja != null && utilisateur.getId() != null && !existeDeja.getId().equals(utilisateur.getId())) {
+            throw new RuntimeException("Email déjà utilisé !");
         }
 
         if (utilisateur.getRole() != null && utilisateur.getRole().getId() != null) {
             Role roleSelectionne = roleRepository.findById(utilisateur.getRole().getId().intValue())
-                    .orElseThrow(() -> new Exception("Rôle introuvable"));
+                    .orElseThrow(() -> new RuntimeException("Rôle introuvable"));
             utilisateur.setRole(roleSelectionne);
         } else {
             Role roleParDefaut = roleRepository.findByNom("PARENT");

@@ -2,6 +2,7 @@ package com.manara.portail.controller;
 
 import com.manara.portail.model.*;
 import com.manara.portail.repository.AdminRepository;
+import com.manara.portail.repository.ParentRepository;
 import com.manara.portail.repository.RoleRepository;
 import com.manara.portail.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class AdminController {
     private UtilisateurService utilisateurService;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private ParentRepository parentRepository;
     @Autowired
     private AdminService adminService;
     @Autowired
@@ -127,10 +130,17 @@ public class AdminController {
     @PostMapping("/save")
     public ResponseEntity<?> saveUserByAdmin(@RequestBody Utilisateur utilisateur) {
         try {
-            utilisateurService.enregistrerParAdmin(utilisateur);
-            return ResponseEntity.ok("success");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Utilisateur saved = utilisateurService.enregistrerParAdmin(utilisateur);
+
+            return ResponseEntity.ok(Map.of(
+                    "message", "success",
+                    "id", saved.getId()
+            ));
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", e.getMessage()
+            ));
         }
     }
 
@@ -139,9 +149,18 @@ public class AdminController {
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         try {
             adminService.supprimerUtilisateur(id);
-            return ResponseEntity.ok("success");
+
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "message", "Utilisateur supprimé"
+            ));
+
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+
+            return ResponseEntity.badRequest().body(Map.of(
+                    "success", false,
+                    "message", e.getMessage()
+            ));
         }
     }
 
@@ -159,12 +178,21 @@ public class AdminController {
     // Réinitialise mot de passe utilisateur
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestParam Long userId,
-                                           @RequestParam String password) {
+                                           @RequestParam String newPassword) {
         try {
-            adminService.reinitialiserPassword(userId, password);
-            return ResponseEntity.ok("password updated");
+            adminService.reinitialiserPassword(userId, newPassword);
+
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "message", "Mot de passe mis à jour"
+            ));
+
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+
+            return ResponseEntity.badRequest().body(Map.of(
+                    "success", false,
+                    "message", e.getMessage()
+            ));
         }
     }
 

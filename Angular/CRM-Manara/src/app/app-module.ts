@@ -53,8 +53,7 @@ import { AnimateurIncidents } from './app/components/animateur/animateur-inciden
     HttpClientModule,
     FormsModule,
     CommonModule,
-    RouterModule,
-    CommonModule,
+    RouterModule
   ],
   bootstrap: [App],
 })

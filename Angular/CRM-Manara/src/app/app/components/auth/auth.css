@@ -120,25 +120,38 @@ main {
     margin-top: 25px;
     display: flex;
     flex-direction: column;
+    background-color: #ffffff;
     gap: 12px;
 }
 
-/* Bouton */
+/* Bouton
 .btn-group-inscription button {
     width: 100%;
     padding: 14px;
     background-color: #fccd2c;
     color: #043d5b;
+    border: 2px solid #fccd2c;
     border: none;
     border-radius: 30px;
     font-weight: bold;
     cursor: pointer;
-}
+}*/
 
 /* Hover bouton */
 .btn-group-inscription button:hover {
-    background-color: #043d5b;
-    color: #fccd2c;
+    background-color: #fccd2c;
+    color: #043d5b;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(252, 205, 44, 0.3);
+}
+
+.mon-bouton-bleu {
+  color: #fccd2c;
+  background-color: #043d5b;
+  border: 2px solid #fccd2c;
+  padding: 12px;
+  text-decoration: none;
+  border-radius: 30px;
 }
 
 /* Messages erreur */

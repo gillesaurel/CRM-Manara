@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'login', component: Auth },
   { path: 'admin', canActivate:[UserAuth], component: Administrateur },
   { path: 'adminOnly/activites', canActivate:[UserAuth], component: Activites },
-  { path: '/adminOnly/listeAttente', canActivate:[UserAuth], component: ListeAttente },
+  { path: 'adminOnly/listeAttente', canActivate:[UserAuth], component: ListeAttente },
   { path: 'adminOnly/utilisateurs', canActivate:[UserAuth], component: Utilisateurs },
   { path: 'adminOnly/adminAddUser', canActivate:[UserAuth], component: AdminAddUser },
   { path: 'adminOnly/email', canActivate:[UserAuth], component: Email },

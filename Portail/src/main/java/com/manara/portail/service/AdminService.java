@@ -3,6 +3,7 @@ package com.manara.portail.service;
 import com.manara.portail.model.Enfant;
 import com.manara.portail.model.Utilisateur;
 import com.manara.portail.repository.AdminRepository;
+import com.manara.portail.repository.ParentRepository;
 import com.manara.portail.repository.UtilisateurRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import java.util.Map;
 public class AdminService {
     @Autowired
     private UtilisateurService utilisateurService;
+    @Autowired
+    private ParentRepository parentRepository;
     @Autowired
     private UtilisateurRepository utilisateurRepository;
     @Autowired
@@ -45,6 +48,7 @@ public class AdminService {
         if (user.getRole().getNom().equals("ADMIN")) {
             throw new Exception("Impossible de supprimer un admin");
         }
+        parentRepository.deleteByUtilisateurId(id);
         utilisateurRepository.deleteById(id);
     }
 

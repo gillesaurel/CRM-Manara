@@ -59,15 +59,10 @@ export class AdminService {
   }
 
   saveUserByAdmin(user: any) {
-    if (user.id) {
-      return this.http.put(`${this.apiUrl}/save/${user.id}`, user, {
-        withCredentials: true
-      });
-    } else {
-      return this.http.post(`${this.apiUrl}/save`, user, {
-        withCredentials: true
-      });
-    }
+    return this.http.post<{ message: string, id: number }>(
+      `${this.apiUrl}/save`, user, {
+      withCredentials: true
+    });
   }
 
   deleteUser(id: number) {
@@ -95,7 +90,7 @@ export class AdminService {
 
   resetPassword(userId: number, newPassword: string) {
     let params = new HttpParams()
-      .set('userId', userId)
+      .set('userId', userId.toString())
       .set('newPassword', newPassword);
 
     return this.http.post(`${this.apiUrl}/reset-password`, {}, {
