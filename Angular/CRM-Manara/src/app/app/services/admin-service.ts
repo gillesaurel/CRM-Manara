@@ -96,7 +96,7 @@ export class AdminService {
   resetPassword(userId: number, newPassword: string) {
     let params = new HttpParams()
       .set('userId', userId)
-      .set('newPassword', newPassword);
+      .set('password', newPassword);
 
     return this.http.post(`${this.apiUrl}/reset-password`, {}, {
       params,
@@ -123,8 +123,8 @@ export class AdminService {
     });
   }
 
-  getActivites(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/adminOnly/activites`, {
+  getActivites(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/adminOnly/activites`, {
       withCredentials: true
     });
   }

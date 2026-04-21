@@ -21,6 +21,10 @@ import java.io.IOException;
 
 
 @Controller
+@CrossOrigin(
+        origins = {"http://localhost:4200", "http://127.0.0.1:4200", "http://manara.histoiredurock.com", "https://manara.histoiredurock.com"},
+        allowCredentials = "true"
+)
 public class AuthController {
 
     @Autowired
@@ -136,7 +140,6 @@ public class AuthController {
     @GetMapping("/userConnecte")
     @ResponseBody
     public Utilisateur getCurrentUser(Authentication authentication) {
-
         if (authentication == null) {
             return null;
         }

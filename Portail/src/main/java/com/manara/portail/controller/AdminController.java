@@ -4,17 +4,37 @@ import com.manara.portail.model.*;
 import com.manara.portail.repository.AdminRepository;
 import com.manara.portail.repository.ParentRepository;
 import com.manara.portail.repository.RoleRepository;
-import com.manara.portail.service.*;
+import com.manara.portail.service.ActiviteService;
+import com.manara.portail.service.AdminService;
+import com.manara.portail.service.InscriptionEnfantService;
+import com.manara.portail.service.SessionService;
+import com.manara.portail.service.UtilisateurService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import java.util.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
+@CrossOrigin(
+        origins = {"http://localhost:4200", "http://127.0.0.1:4200", "http://manara.histoiredurock.com", "https://manara.histoiredurock.com"},
+        allowCredentials = "true"
+)
 public class AdminController {
 
     @Autowired
@@ -36,8 +56,7 @@ public class AdminController {
 
     // Retourne les statistiques principales de l'admin
     @GetMapping("/administrateur")
-    public ResponseEntity<?> getAdminData() {
-
+    public ResponseEntity<Map<String, Object>> pageAdministrateur() {
         List<ActiviteAdmin> activites = activiteService.getAllActivites();
 
         Map<String, Object> data = new HashMap<>();
@@ -50,12 +69,12 @@ public class AdminController {
 
     // Retourne toutes les activités + taux global
     @GetMapping("/adminOnly/activites")
-    public ResponseEntity<?> showActivites() {
-
+    public ResponseEntity<Map<String, Object>> showActivites() {
         List<ActiviteAdmin> activites = activiteService.getAllActivites();
 
         Map<String, Object> data = new HashMap<>();
         data.put("activites", activites);
+        data.put("totalActivities", activites.size());
         data.put("pourcentageInscrit", activiteService.getPourcentageInscription());
 
         return ResponseEntity.ok(data);
@@ -71,32 +90,40 @@ public class AdminController {
     // Récupère une activité par ID
     @GetMapping("/activities/edit/{id}")
     public ResponseEntity<?> modifyActivite(@PathVariable Long id) {
-        try {
-            ActiviteAdmin activite = activiteService.getById(id);
-            return ResponseEntity.ok(activite);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body(e.getMessage());
+        ActiviteAdmin activite = activiteService.getById(id);
+        if (activite == null) {
+            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.ok(activite);
     }
 
     @PutMapping("/activities/update/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ActiviteAdmin activite) {
+    public ResponseEntity<?> updateActivite(@PathVariable Long id, @Valid @RequestBody ActiviteAdmin activite) {
         activite.setId(id);
         return ResponseEntity.ok(activiteService.save(activite));
     }
 
-    // Supprime une activité
     @DeleteMapping("/activities/delete/{id}")
     public ResponseEntity<?> removeActivite(@PathVariable Long id) {
-        activiteService.deleteById(id);
-        return ResponseEntity.noContent().build();
+        try {
+            activiteService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
-    // Retourne les inscriptions en attente + statistiques
-    @GetMapping("/adminOnly/listeAttentes")
-    public ResponseEntity<?> listeAttente() {
+    @GetMapping("/adminOnly/listeAttente")
+    public ResponseEntity<Map<String, Object>> listeAttente() {
+        return buildListeAttenteResponse();
+    }
 
+    @GetMapping("/adminOnly/listeAttentes")
+    public ResponseEntity<Map<String, Object>> listeAttentes() {
+        return buildListeAttenteResponse();
+    }
+
+    private ResponseEntity<Map<String, Object>> buildListeAttenteResponse() {
         List<InscriptionEnfant> inscriptions = inscriptionEnfantService.getListeAttente();
 
         Map<String, Long> stats = inscriptions.stream()
@@ -109,21 +136,44 @@ public class AdminController {
         data.put("inscriptions", inscriptions);
         data.put("stats", stats);
 
+        Map<String, Object> data = new HashMap<>();
+        data.put("inscriptions", inscriptions);
+        data.put("stats", stats);
+        data.put("groupedInscriptions", groupedInscriptions);
+        data.put("activites", activiteService.getAllActivites());
+
         return ResponseEntity.ok(data);
     }
 
     // Confirme une inscription + envoie email
     @PostMapping("/inscriptions/valider/{id}")
     public ResponseEntity<?> validerInscription(@PathVariable Long id) {
-        inscriptionEnfantService.confirmerInscriptionAvecEmail(id);
-        return ResponseEntity.ok("validated");
+        try {
+            inscriptionEnfantService.confirmerInscriptionAvecEmail(id);
+            return ResponseEntity.ok(Map.of("success", true, "message", "Inscription validée"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
+        }
     }
 
-    // Supprime une inscription
     @DeleteMapping("/inscriptions/delete/{id}")
     public ResponseEntity<?> deleteInscription(@PathVariable Long id) {
-        inscriptionEnfantService.deleteById(id);
-        return ResponseEntity.noContent().build();
+        try {
+            inscriptionEnfantService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("adminOnly/adminAddUser")
+    public ResponseEntity<Map<String, Object>> pageAjouterUser() {
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setRole(new Role());
+        return ResponseEntity.ok(Map.of(
+                "utilisateur", utilisateur,
+                "roles", roleRepository.findAll()
+        ));
     }
 
     // Crée un utilisateur (admin)
