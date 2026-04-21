@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../services/admin-service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-add-user',
@@ -16,7 +17,7 @@ export class AdminAddUser implements OnInit {
     email: '',
     motDePasse: '',
     confirmMotDePasse: '',
-    role: { id: null}
+    role: { id: null }
   };
 
   roles: any[] = []
@@ -24,6 +25,7 @@ export class AdminAddUser implements OnInit {
 
   constructor(
     private adminService: AdminService,
+    private router: Router,
     private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
@@ -40,19 +42,35 @@ export class AdminAddUser implements OnInit {
   }
 
   submitForm() {
-    if (this.user.motDePasse !== this.user.confirmMotDePasse) {
+    if (!this.user.motdepasse) {
+      this.message = 'Mot de passe requis';
+      return;
+    }
+
+    if (this.user.motdepasse !== this.user.confirmMotdepasse) {
       this.message = 'Les mots de passe ne correspondent pas.';
       return;
     }
 
     this.adminService.saveUserByAdmin(this.user).subscribe({
       next: () => {
-        this.message = 'Utilisateur ajouté avec succès !';
         this.resetForm();
+
+        this.router.navigate(['/adminOnly/utilisateurs'], {
+          state: {
+            message: 'Utilisateur créé avec succès !'
+          }
+        });
       },
-      error: (error: unknown) => {
-        console.error(error);
-        alert('Erreur lors de la création de l\'utilisateur.');
+
+      error: (err) => {
+        this.message =
+          err.error?.message || 'Erreur lors de la création';
+
+        alert("Error appelé");
+        setTimeout(() => {
+          this.message = '';
+        }, 2000);
       }
     });
   }
@@ -63,8 +81,8 @@ export class AdminAddUser implements OnInit {
       nom: '',
       telephone: '',
       email: '',
-      motDePasse: '',
-      confirmMotDePasse: '',
+      motdepasse: '',
+      confirmMotdepasse: '',
       role: { id: null }
     };
   }

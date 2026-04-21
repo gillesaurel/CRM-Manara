@@ -1,10 +1,8 @@
 package com.manara.portail.controller;
 
-import com.manara.portail.model.ActiviteAdmin;
-import com.manara.portail.model.InscriptionEnfant;
-import com.manara.portail.model.Role;
-import com.manara.portail.model.Utilisateur;
+import com.manara.portail.model.*;
 import com.manara.portail.repository.AdminRepository;
+import com.manara.portail.repository.ParentRepository;
 import com.manara.portail.repository.RoleRepository;
 import com.manara.portail.service.ActiviteService;
 import com.manara.portail.service.AdminService;
@@ -38,6 +36,7 @@ import java.util.stream.Collectors;
         allowCredentials = "true"
 )
 public class AdminController {
+
     @Autowired
     private ActiviteService activiteService;
     @Autowired
@@ -47,12 +46,15 @@ public class AdminController {
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
+    private ParentRepository parentRepository;
+    @Autowired
     private AdminService adminService;
     @Autowired
     private AdminRepository adminRepository;
     @Autowired
     private InscriptionEnfantService inscriptionEnfantService;
 
+    // Retourne les statistiques principales de l'admin
     @GetMapping("/administrateur")
     public ResponseEntity<Map<String, Object>> pageAdministrateur() {
         List<ActiviteAdmin> activites = activiteService.getAllActivites();
@@ -65,6 +67,7 @@ public class AdminController {
         return ResponseEntity.ok(data);
     }
 
+    // Retourne toutes les activités + taux global
     @GetMapping("/adminOnly/activites")
     public ResponseEntity<Map<String, Object>> showActivites() {
         List<ActiviteAdmin> activites = activiteService.getAllActivites();
@@ -77,11 +80,14 @@ public class AdminController {
         return ResponseEntity.ok(data);
     }
 
+    // Crée ou modifie une activité
     @PostMapping("/activities/save")
-    public ResponseEntity<?> saveOrUpdateActivite(@Valid @RequestBody ActiviteAdmin activite) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(activiteService.save(activite));
+    public ResponseEntity<?> saveOrUpdateActivite(@RequestBody ActiviteAdmin activite) {
+        ActiviteAdmin saved = activiteService.save(activite);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
+    // Récupère une activité par ID
     @GetMapping("/activities/edit/{id}")
     public ResponseEntity<?> modifyActivite(@PathVariable Long id) {
         ActiviteAdmin activite = activiteService.getById(id);
@@ -120,13 +126,15 @@ public class AdminController {
     private ResponseEntity<Map<String, Object>> buildListeAttenteResponse() {
         List<InscriptionEnfant> inscriptions = inscriptionEnfantService.getListeAttente();
 
-        Map<String, Long> stats = inscriptions.stream().collect(Collectors.groupingBy(
-                this::inscriptionLabel,
-                Collectors.counting()
-        ));
+        Map<String, Long> stats = inscriptions.stream()
+                .collect(Collectors.groupingBy(
+                        i -> i.getSession().getActivite().getNom(),
+                        Collectors.counting()
+                ));
 
-        Map<String, List<InscriptionEnfant>> groupedInscriptions = inscriptions.stream()
-                .collect(Collectors.groupingBy(this::inscriptionLabel));
+        Map<String, Object> data = new HashMap<>();
+        data.put("inscriptions", inscriptions);
+        data.put("stats", stats);
 
         Map<String, Object> data = new HashMap<>();
         data.put("inscriptions", inscriptions);
@@ -137,6 +145,7 @@ public class AdminController {
         return ResponseEntity.ok(data);
     }
 
+    // Confirme une inscription + envoie email
     @PostMapping("/inscriptions/valider/{id}")
     public ResponseEntity<?> validerInscription(@PathVariable Long id) {
         try {
@@ -167,101 +176,143 @@ public class AdminController {
         ));
     }
 
+    // Crée un utilisateur (admin)
     @PostMapping("/save")
     public ResponseEntity<?> saveUserByAdmin(@RequestBody Utilisateur utilisateur) {
         try {
-            return ResponseEntity.ok(utilisateurService.enregistrerParAdmin(utilisateur));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Utilisateur saved = utilisateurService.enregistrerParAdmin(utilisateur);
+
+            return ResponseEntity.ok(Map.of(
+                    "message", "success",
+                    "id", saved.getId()
+            ));
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", e.getMessage()
+            ));
         }
     }
 
-    @PutMapping("/save/{id}")
-    public ResponseEntity<?> updateUserByAdmin(@PathVariable Long id, @RequestBody Utilisateur utilisateur) {
-        try {
-            return ResponseEntity.ok(utilisateurService.mettreAJourParAdmin(id, utilisateur));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-    @GetMapping("/adminOnly/utilisateurs")
-    public ResponseEntity<Map<String, Object>> listUsers(@RequestParam(required = false) String keyword,
-                                                         @RequestParam(required = false) String roleFilter) {
-        return ResponseEntity.ok(adminService.rechercheToutLeMonde(keyword, roleFilter));
-    }
-
-    @PostMapping("/reset-password")
-    public ResponseEntity<?> resetPassword(@RequestParam Long userId,
-                                           @RequestParam(required = false) String password,
-                                           @RequestParam(required = false) String newPassword) {
-        try {
-            String value = password != null ? password : newPassword;
-            adminService.reinitialiserPassword(userId, value);
-            return ResponseEntity.ok(Map.of("success", true, "message", "Mot de passe réinitialisé"));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
-        }
-    }
-
+    // Supprime un utilisateur
     @DeleteMapping("/utilisateur/delete/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         try {
             adminService.supprimerUtilisateur(id);
-            return ResponseEntity.ok(Map.of("success", true));
+
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "message", "Utilisateur supprimé"
+            ));
+
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
+
+            return ResponseEntity.badRequest().body(Map.of(
+                    "success", false,
+                    "message", e.getMessage()
+            ));
         }
     }
 
-    @GetMapping("adminOnly/email")
-    public ResponseEntity<Map<String, Object>> emailPage() {
-        return ResponseEntity.ok(Map.of(
-                "parents", adminRepository.findByRole("PARENT"),
-                "animateurs", adminRepository.findByRole("ANIMATEUR")
-        ));
+    // Recherche utilisateurs
+    @GetMapping("/adminOnly/utilisateurs")
+    public ResponseEntity<?> listUsers(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String roleFilter) {
+
+        return ResponseEntity.ok(
+                adminService.rechercheToutLeMonde(keyword, roleFilter)
+        );
     }
 
+    // Réinitialise mot de passe utilisateur
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestParam Long userId,
+                                           @RequestParam String newPassword) {
+        try {
+            adminService.reinitialiserPassword(userId, newPassword);
+
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "message", "Mot de passe mis à jour"
+            ));
+
+        } catch (Exception e) {
+
+            return ResponseEntity.badRequest().body(Map.of(
+                    "success", false,
+                    "message", e.getMessage()
+            ));
+        }
+    }
+
+    // Donne les utilisateurs pour l'interface email
+    @GetMapping("/adminOnly/email")
+    public ResponseEntity<?> emailPage() {
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("parents", adminRepository.findByRole("PARENT"));
+        data.put("animateurs", adminRepository.findByRole("ANIMATEUR"));
+
+        return ResponseEntity.ok(data);
+    }
+
+    // Envoie email selon le type choisi
     @PostMapping("/email/send")
     public ResponseEntity<?> sendEmail(@RequestBody Map<String, Object> payload) {
+
         try {
             String type = (String) payload.get("type");
             String subject = (String) payload.get("subject");
             String message = (String) payload.get("message");
 
             switch (type) {
+
                 case "PARENT_ONE":
-                    adminService.envoyerEmailParent(Long.valueOf(payload.get("parentId").toString()), subject, message);
+                    if (payload.get("parentId") == null) {
+                        throw new RuntimeException("parentId obligatoire");
+                    }
+                    adminService.envoyerEmailParent(
+                            Long.valueOf(payload.get("parentId").toString()),
+                            subject,
+                            message
+                    );
                     break;
+
                 case "PARENT_ALL":
                     adminService.envoyerEmailTousParents(subject, message);
                     break;
+
                 case "ANIMATEUR_ONE":
-                    adminService.envoyerEmailAnimateur(Long.valueOf(payload.get("animateurId").toString()), subject, message);
+                    if (payload.get("animateurId") == null) {
+                        throw new RuntimeException("animateurId obligatoire");
+                    }
+
+                    adminService.envoyerEmailAnimateur(
+                            Long.valueOf(payload.get("animateurId").toString()),
+                            subject,
+                            message
+                    );
                     break;
+
                 case "ANIMATEUR_ALL":
                     adminService.envoyerEmailTousAnimateurs(subject, message);
                     break;
+
                 case "ALL":
                     adminService.envoyerEmailToutLeMonde(subject, message);
                     break;
+
                 default:
-                    throw new IllegalArgumentException("Type d'envoi inconnu");
+                    throw new RuntimeException("Type invalide: " + type);
             }
 
-            return ResponseEntity.ok(Map.of("success", true, "message", "Email envoyé !"));
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "message", "Email envoyé avec succès !"
+            ));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-    }
-
-    private String inscriptionLabel(InscriptionEnfant inscription) {
-        if (inscription.getSession() != null && inscription.getSession().getActivite() != null) {
-            return inscription.getSession().getActivite().getNom();
-        }
-        if (inscription.getActivite() != null) {
-            return inscription.getActivite().getNom();
-        }
-        return "Sans activité";
     }
 }

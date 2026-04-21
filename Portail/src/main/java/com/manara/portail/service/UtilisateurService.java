@@ -1,11 +1,14 @@
+// fait par Manu Charland-Rivard
+
 package com.manara.portail.service;
 
+import com.manara.portail.model.Parent;
 import com.manara.portail.model.Role;
 import com.manara.portail.model.Utilisateur;
+import com.manara.portail.repository.ParentRepository;
 import com.manara.portail.repository.RoleRepository;
 import com.manara.portail.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,98 +18,84 @@ import java.util.List;
 @Service
 public class UtilisateurService {
     @Autowired
-    UtilisateurRepository utilisateurRepository;
+    UtilisateurRepository utilisateurRepository;   //     UtilisateurRepository repos = new  UtilisateurRepository ()
     @Autowired
     RoleRepository roleRepository;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private ParentRepository parentRepository;
+    @Autowired
+    private org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
 
-    public List<Utilisateur> afficherUtilisateurs() {
+    public List<Utilisateur> afficherUtilisateurs(){
         return utilisateurRepository.findAll();
     }
 
-    public Utilisateur enregistrer(Utilisateur utilisateur) throws Exception {
+    public Utilisateur enregistrer(Utilisateur utilisateur)throws Exception {
         if (utilisateurRepository.findByEmail(utilisateur.getEmail()) != null) {
             throw new Exception("Email déjà utilisé !");
         }
 
-        if (utilisateur.getConfirmMotdepasse() != null
-                && !utilisateur.getConfirmMotdepasse().isBlank()
-                && !utilisateur.getMotdepasse().equals(utilisateur.getConfirmMotdepasse())) {
+        if (!utilisateur.getMotdepasse().equals(utilisateur.getConfirmMotdepasse())) {
             throw new Exception("Les mots de passe ne correspondent pas !");
         }
 
+        // Encode le mot de passe avant de sauvegarder
         utilisateur.setMotdepasse(passwordEncoder.encode(utilisateur.getMotdepasse()));
 
         Role roleParDefaut = roleRepository.findByNom("PARENT");
+
         if (roleParDefaut == null) {
             throw new Exception("Erreur : Le rôle PARENT n'existe pas.");
         }
 
         utilisateur.setRole(roleParDefaut);
+
+        if (utilisateur.getRole().getNom().equals("PARENT")) {
+            Parent parent = new Parent(utilisateur);
+            parentRepository.save(parent);
+        }
+
         return utilisateurRepository.save(utilisateur);
     }
 
-    public Utilisateur getUtilisateurByEmailAndMotDePasse(String email, String password) {
-        return utilisateurRepository.getUtilisateurByEmailAndMotDePasse(email, password);
-    }
+    /*public Utilisateur getUtilisateurByEmailAndMotDePasse(String email, String password){
+        return utilisateurRepository.getUtilisateurByEmailAndMotDePasse(email,password);}
+     */
 
     public Utilisateur findByEmail(String email) {
         return utilisateurRepository.findByEmail(email);
     }
 
-    public Integer getIdByEmail(String email) {
-        Utilisateur utilisateur = utilisateurRepository.findByEmail(email);
-        return utilisateur != null && utilisateur.getId() != null
-                ? utilisateur.getId().intValue()
-                : null;
-    }
-
-    public Utilisateur enregistrerParAdmin(Utilisateur utilisateur) throws Exception {
-        if (utilisateurRepository.findByEmail(utilisateur.getEmail()) != null) {
-            throw new Exception("Email déjà utilisé !");
+    @Transactional
+    public Utilisateur enregistrerParAdmin(Utilisateur utilisateur) {
+        Utilisateur existeDeja = utilisateurRepository.findByEmail(utilisateur.getEmail());
+        if (existeDeja != null && utilisateur.getId() != null && !existeDeja.getId().equals(utilisateur.getId())) {
+            throw new RuntimeException("Email déjà utilisé !");
         }
 
         if (utilisateur.getRole() != null && utilisateur.getRole().getId() != null) {
             Role roleSelectionne = roleRepository.findById(utilisateur.getRole().getId().intValue())
-                    .orElseThrow(() -> new Exception("Rôle introuvable"));
+                    .orElseThrow(() -> new RuntimeException("Rôle introuvable"));
             utilisateur.setRole(roleSelectionne);
         } else {
             Role roleParDefaut = roleRepository.findByNom("PARENT");
-            if (roleParDefaut == null) {
-                throw new Exception("Erreur : Le rôle PARENT n'existe pas.");
-            }
             utilisateur.setRole(roleParDefaut);
         }
 
         utilisateur.setMotdepasse(passwordEncoder.encode(utilisateur.getMotdepasse()));
-        return utilisateurRepository.save(utilisateur);
+
+        Utilisateur savedUtilisateur = utilisateurRepository.save(utilisateur);
+
+        if (savedUtilisateur.getRole().getNom().equals("PARENT")) {
+            Parent parent = new Parent(savedUtilisateur);
+            parentRepository.save(parent);
+        }
+
+        return savedUtilisateur;
     }
 
-    public Utilisateur mettreAJourParAdmin(Long id, Utilisateur utilisateur) throws Exception {
-        Utilisateur existing = utilisateurRepository.findById(id)
-                .orElseThrow(() -> new Exception("Utilisateur introuvable"));
-
-        Utilisateur sameEmail = utilisateurRepository.findByEmail(utilisateur.getEmail());
-        if (sameEmail != null && !sameEmail.getId().equals(id)) {
-            throw new Exception("Email déjà utilisé !");
-        }
-
-        existing.setPrenom(utilisateur.getPrenom());
-        existing.setNom(utilisateur.getNom());
-        existing.setTelephone(utilisateur.getTelephone());
-        existing.setEmail(utilisateur.getEmail());
-
-        if (utilisateur.getRole() != null && utilisateur.getRole().getId() != null) {
-            Role roleSelectionne = roleRepository.findById(utilisateur.getRole().getId().intValue())
-                    .orElseThrow(() -> new Exception("Rôle introuvable"));
-            existing.setRole(roleSelectionne);
-        }
-
-        if (utilisateur.getMotdepasse() != null && !utilisateur.getMotdepasse().isBlank()) {
-            existing.setMotdepasse(passwordEncoder.encode(utilisateur.getMotdepasse()));
-        }
-
-        return utilisateurRepository.save(existing);
+    public Integer getIdByEmail(String email) {
+        Utilisateur u = utilisateurRepository.findByEmail(email);
+        return u != null ? u.getId().intValue() : null;
     }
 }

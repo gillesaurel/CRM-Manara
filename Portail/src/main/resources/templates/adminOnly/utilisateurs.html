@@ -115,7 +115,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="child : ${enfants}">
+    <tr th:each="child : ${enfant}">
       <td th:text="${child.nom}">Nom</td>
       <td th:text="${child.prenom}">Prénom</td>
       <td th:text="${#temporals.format(child.dateNaissance, 'dd/MM/yyyy')}">01/01/2020</td>

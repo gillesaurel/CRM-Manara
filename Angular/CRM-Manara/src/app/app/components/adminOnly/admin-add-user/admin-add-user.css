@@ -125,20 +125,22 @@ main {
 
 /* Bouton */
 .btn-group-inscription button {
-    width: 100%;
-    padding: 14px;
     background-color: #fccd2c;
-    color: #043d5b;
-    border: none;
-    border-radius: 30px;
+    padding: 12px 24px;
+    border-radius: 25px;
+    border: 2px solid #043d5b;
     font-weight: bold;
-    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Hover bouton */
 .btn-group-inscription button:hover {
-    background-color: #043d5b;
-    color: #fccd2c;
+    background-color: #fccd2c;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(252, 205, 44, 0.3);
 }
 
 /* Messages erreur */

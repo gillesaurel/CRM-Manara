@@ -5,7 +5,6 @@ import { Activites } from './app/components/adminOnly/activites/activites';
 import { Utilisateurs } from './app/components/adminOnly/utilisateurs/utilisateurs';
 import { AdminAddUser } from './app/components/adminOnly/admin-add-user/admin-add-user';
 import { AjouterActivite } from './app/components/adminOnly/ajouter-activite/ajouter-activite';
-import { ListeAttente } from './app/components/adminOnly/liste-attente/liste-attente';
 
 import { AnimateurDashboard } from './app/components/animateur/animateur-dashboard/animateur-dashboard';
 import { AnimateurInscription } from './app/components/animateur/animateur-inscription/animateur-inscription';
@@ -21,6 +20,7 @@ import { UserAuth } from './app/verifier/user-auth';
 import { Accueil } from './app/components/accueil/accueil';
 import { Header } from './app/components/header/header';
 import { Footer } from './app/components/footer/footer';
+import { ListeAttente } from './app/components/adminOnly/liste-attente/liste-attente';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -30,9 +30,9 @@ const routes: Routes = [
   { path: 'login', component: Auth },
   { path: 'admin', canActivate:[UserAuth], component: Administrateur },
   { path: 'adminOnly/activites', canActivate:[UserAuth], component: Activites },
+  { path: 'adminOnly/listeAttente', canActivate:[UserAuth], component: ListeAttente },
   { path: 'adminOnly/utilisateurs', canActivate:[UserAuth], component: Utilisateurs },
   { path: 'adminOnly/adminAddUser', canActivate:[UserAuth], component: AdminAddUser },
-  { path: 'adminOnly/listeAttente', canActivate:[UserAuth], component: ListeAttente },
   { path: 'adminOnly/email', canActivate:[UserAuth], component: Email },
   { path: 'adminOnly/ajouter-activite', canActivate:[UserAuth], component: AjouterActivite },
   { path: 'adminOnly/ajouter-activite/:id', canActivate:[UserAuth], component: AjouterActivite },

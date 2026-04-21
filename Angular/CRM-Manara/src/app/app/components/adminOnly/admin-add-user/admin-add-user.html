@@ -1,11 +1,10 @@
-<app-main></app-main>
 <div class="formulaire-section">
 
     <div class="form">
         <h1>Inscrire un nouvel utilisateur</h1>
 
-        <div *ngIf="message" class="flash-message">
-            {{ message }}
+        <div class="alert alert-success text-center" *ngIf="message">
+            {{message}}
         </div>
 
         <form (ngSubmit)="submitForm()">

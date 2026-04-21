@@ -1,9 +1,11 @@
+*.class
 sql/
 *.sql
 .idea/
 target/
 
 HELP.md
+target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -35,6 +37,18 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Angular ###
+node_modules/
+/dist/
+/.angular/
+tmp/
+out-tsc/
+bazel-out/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
 
 src/main/resources/application.properties
 application.properties

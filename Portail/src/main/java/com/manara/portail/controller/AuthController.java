@@ -33,6 +33,10 @@ public class AuthController {
     @Autowired
     private UtilisateurService utilisateurService;
 
+    public AuthController(UtilisateurService utilisateurService) {
+        this.utilisateurService = utilisateurService;
+    }
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -143,5 +147,5 @@ public class AuthController {
         String email = authentication.getName();
         return utilisateurService.findByEmail(email);
     }
-   
+
 }

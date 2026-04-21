@@ -3,6 +3,7 @@ package com.manara.portail.security;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 public class CookiesRoleEmail implements AuthenticationSuccessHandler {
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request,
+    public void onAuthenticationSuccess(@NonNull HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException {
         System.out.println("onAuthenticationSuccess appellée");
@@ -39,16 +40,18 @@ public class CookiesRoleEmail implements AuthenticationSuccessHandler {
         emailCookie.setMaxAge(60 * 60 * 24 * 7);
         response.addCookie(emailCookie);
 
-        boolean isAdmin = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMINISTRATEUR"));
-        boolean isAnimateur = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ANIMATEUR"));
-        String contextPath = request.getContextPath();
-        if (isAdmin) {
-            response.sendRedirect(contextPath + "/admin/administrateur");
-        } else if (isAnimateur) {
-            response.sendRedirect(contextPath + "/animateur");
-        }
-        else {
-            response.sendRedirect(contextPath + "/parent/dashboard");
-        }
+        /**
+         boolean isAdmin = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMINISTRATEUR"));
+         boolean isAnimateur = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ANIMATEUR"));
+         String contextPath = request.getContextPath();
+         if (isAdmin) {
+         response.sendRedirect(contextPath + "/admin/administrateur");
+         } else if (isAnimateur) {
+         response.sendRedirect(contextPath + "/animateur");
+         }
+         else {
+         response.sendRedirect(contextPath + "/parent/dashboard");
+         }
+         */
     }
 }

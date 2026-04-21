@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../services/admin-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-utilisateurs',
@@ -20,9 +21,12 @@ export class Utilisateurs implements OnInit {
 
   constructor(
     private adminService: AdminService,
-  private cdr: ChangeDetectorRef) { }
+    private router: Router,
+    private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    const nav = this.router.getCurrentNavigation();
+    this.message = nav?.extras?.state?.['message'] || '';
     this.loadUsers();
   }
 
@@ -50,26 +54,55 @@ export class Utilisateurs implements OnInit {
   }
 
   resetPassword(userId: number, newPassword: string) {
-    if (!newPassword) {
-      alert('Veuillez entrer un nouveau mot de passe.');
+    if (!newPassword?.trim() || newPassword.length < 8) {
+      alert('Mot de passe trop court (min 8 caractères).');
       return;
+    } else {
+      (!confirm('Le mot de passe sera réinitialisé.'))
     }
+
+    console.log('Appel resetPassword envoyé');
+
     this.adminService.resetPassword(userId, newPassword).subscribe({
-      next: () => {
-        this.message = 'Mot de passe réinitialisé avec succès !';
+      next: (res: any) => {
+        this.message = res?.message || res;
+        this.loadUsers();
+        setTimeout(() => {
+          this.message = '';
+          this.cdr.detectChanges();
+        }, 3000);
+      },
+
+      error: (err) => {
+        console.error(err);
+        this.error = err.error?.message || err.error || 'Erreur';
+        this.message = '';
       }
     });
+
   }
 
   deleteUser(id: number) {
-    if (!confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
-      return;
-    }
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) return;
+
+    this.message = '';
+    this.error = '';
+
     this.adminService.deleteUser(id).subscribe({
-      next: () => {
-        this.message = 'Utilisateur supprimé avec succès !';
+      next: (res: any) => {
+        this.message = res.message;
+
         this.loadUsers();
+
+        setTimeout(() => {
+          this.message = '';
+          this.cdr.detectChanges();
+        }, 3000);
       },
+      error: (err) => {
+        console.error(err);
+        this.error = err.error?.message || 'Erreur de suppression';
+      }
     });
   }
 }

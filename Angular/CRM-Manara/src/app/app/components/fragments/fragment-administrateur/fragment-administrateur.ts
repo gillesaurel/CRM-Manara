@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-fragment-administrateur',
   standalone: false,
   templateUrl: './fragment-administrateur.html',
-  styleUrl: './fragment-administrateur.css',
+  styleUrls: ['./fragment-administrateur.css'],
 })
 export class FragmentAdministrateur {}

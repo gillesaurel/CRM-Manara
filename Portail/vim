@@ -1,0 +1,11 @@
+# Fichiers système macOS
+.DS_Store
+
+# Configuration IDE
+.idea/
+
+# Dossiers de build
+target/
+
+# Fichiers properties
+*.properties

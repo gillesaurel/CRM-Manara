@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #4facfe, #00f2fe);
+    background: linear-gradient(to right, #1688e0, #043d5b);
     margin: 0;
     padding: 0;
 }
@@ -36,7 +36,7 @@ input, select {
 }
 
 input:focus, select:focus {
-    border-color: #4facfe;
+    border-color: #fccd2c;
     outline: none;
 }
 
@@ -44,7 +44,7 @@ button {
     width: 100%;
     padding: 12px;
     margin-top: 20px;
-    background: #4facfe;
+    background: #043d5b;
     border: none;
     color: white;
     font-size: 16px;
@@ -54,7 +54,7 @@ button {
 }
 
 button:hover {
-    background: #007bff;
+    background: #fccd2c;
 }
 
 .message {

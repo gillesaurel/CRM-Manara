@@ -54,27 +54,27 @@ export class AjouterActivite implements OnInit {
   }
 
   onSubmit() {
-  const serviceCall = this.activiteForm.id 
-    ? this.adminService.updateActivite(this.activiteForm)
-    : this.adminService.createActivite(this.activiteForm);
+    const serviceCall = this.activiteForm.id
+      ? this.adminService.updateActivite(this.activiteForm)
+      : this.adminService.createActivite(this.activiteForm);
 
-  serviceCall.subscribe({
-    next: () => {
-      this.message = this.activiteForm.id 
-        ? 'Activité modifiée avec succès !' 
-        : 'Activité créée avec succès !';
+    serviceCall.subscribe({
+      next: () => {
+        this.message = this.activiteForm.id
+          ? 'Activité modifiée avec succès !'
+          : 'Activité créée avec succès !';
 
-      setTimeout(() => {
-        this.message = '';
-        this.router.navigate(['/admin']);
-      }, 2000);
-    },
-    error: (err: unknown) => {
-      console.error(err);
-      this.message = "Une erreur est survenue lors de l'enregistrement.";
-    }
-  });
-}
+        setTimeout(() => {
+          this.message = '';
+          this.router.navigate(['/admin']);
+        }, 2000);
+      },
+      error: (err: unknown) => {
+        console.error(err);
+        this.message = "Une erreur est survenue lors de l'enregistrement.";
+      }
+    });
+  }
 
 
 
