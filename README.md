@@ -20,6 +20,9 @@ CTRL + X
 
 ```bash
 npm install -g @angular/cli
+#exemple..
+```
+```bash
 ng new cours-angular --no-standalone 
 ```
 ### JSON SERVER INSTALL
