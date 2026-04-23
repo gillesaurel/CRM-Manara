@@ -1,1 +1,134 @@
-<p>dashboard works!</p>
+<main class="dashboard-container">
+  <section class="welcome-section">
+    <h1>Bonjour, {{ parent?.utilisateur?.prenom || 'Parent' }} !</h1>
+    <p>Bienvenue sur votre espace personnel</p>
+  </section>
+
+  <div class="gratuit-banner">
+    <span class="banner-icon">💙</span>
+    <p>Toutes les activités du centre sont gratuites !</p>
+  </div>
+
+  <section class="dashboard-stats">
+    <div class="stat-card">
+      <span class="stat-number">{{ enfants.length }}</span>
+      <span class="stat-label">Enfants inscrits</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">{{ inscriptions.length }}</span>
+      <span class="stat-label">Inscriptions actives</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">{{ prochainesActivites.length }}</span>
+      <span class="stat-label">Activités à venir</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">{{ messagesNonLus }}</span>
+      <span class="stat-label">Messages non lus</span>
+    </div>
+  </section>
+
+  <div class="dashboard-grid">
+    <!-- Section Mes enfants -->
+    <section class="dashboard-section">
+      <div class="section-header">
+        <h2>Mes enfants</h2>
+        <a routerLink="/parent/enfants/ajouter" class="btn-add">+ Ajouter</a>
+      </div>
+      <div *ngIf="enfants.length === 0" class="empty-state">
+        <p>Vous n'avez pas encore ajouté d'enfant</p>
+        <a routerLink="/parent/enfants/ajouter" class="btn-primary">Ajouter un enfant</a>
+      </div>
+      <div *ngIf="enfants.length > 0" class="enfants-list">
+        <div class="enfant-card" *ngFor="let enfant of enfants">
+          <div class="enfant-avatar">
+            <span>{{ enfant.prenom.charAt(0) }}{{ enfant.nom.charAt(0) }}</span>
+          </div>
+          <div class="enfant-info">
+            <h3>{{ enfant.prenom }} {{ enfant.nom }}</h3>
+            <p>{{ enfant.dateNaissance | date:'dd/MM/yyyy' }}</p>
+            <p *ngIf="enfant.allergies" class="allergies">⚠️ Allergies: {{ enfant.allergies }}</p>
+          </div>
+          <div class="enfant-actions">
+            <a [routerLink]="['/parent/enfants', enfant.id]" class="btn-icon view">👁️</a>
+            <a [routerLink]="['/parent/enfants/modifier', enfant.id]" class="btn-icon edit">✏️</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Prochaines activités -->
+    <section class="dashboard-section">
+      <div class="section-header">
+        <h2>Prochaines activités</h2>
+        <a routerLink="/parent/activites" class="btn-view-all">Voir tout</a>
+      </div>
+      <div *ngIf="prochainesActivites.length === 0" class="empty-state">
+        <p>Aucune activité à venir</p>
+        <a routerLink="/parent/activites" class="btn-primary">Explorer les activités</a>
+      </div>
+      <div *ngIf="prochainesActivites.length > 0" class="activites-list">
+        <div class="activite-item" *ngFor="let activite of prochainesActivites">
+          <div class="activite-date">
+            <span class="jour">{{ activite.date | date:'dd' }}</span>
+            <span class="mois">{{ activite.date | date:'MMM' | uppercase }}</span>
+          </div>
+          <div class="activite-details">
+            <h4>{{ activite.activite?.nom }}</h4>
+            <p>{{ activite.heureDebut }} - {{ activite.heureFin }}</p>
+            <p>{{ activite.lieu }}</p>
+          </div>
+          <span class="badge badge-success">{{ activite.statut || 'Confirmé' }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Messages récents -->
+    <section class="dashboard-section">
+      <div class="section-header">
+        <h2>Messages récents</h2>
+        <a routerLink="/parent/notifications" class="btn-view-all">Voir tout</a>
+      </div>
+      <div *ngIf="communications.length === 0" class="empty-state">
+        <p>Aucun message</p>
+      </div>
+      <div *ngIf="communications.length > 0" class="messages-list">
+        <div class="message-item" *ngFor="let message of communications" [class.unread]="!message.lu">
+          <div class="message-icon">
+            <span>{{ message.canal === 'EMAIL' ? '📧' : '📱' }}</span>
+          </div>
+          <div class="message-content">
+            <h4>{{ message.sujet }}</h4>
+            <p>{{ message.message.length > 50 ? (message.message | slice:0:50) + '...' : message.message }}</p>
+            <small>{{ message.dateEnvoi | date:'dd/MM/yyyy HH:mm' }}</small>
+          </div>
+          <span *ngIf="!message.lu" class="badge badge-info">Nouveau</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="quick-actions">
+    <h2>Actions rapides</h2>
+    <div class="actions-grid">
+      <a routerLink="/parent/enfants/ajouter" class="action-card">
+        <span class="action-icon">👤</span>
+        <span class="action-text">Ajouter un enfant</span>
+      </a>
+      <a routerLink="/parent/activites" class="action-card">
+        <span class="action-icon">🎯</span>
+        <span class="action-text">Explorer les activités</span>
+      </a>
+      <a routerLink="/parent/planning" class="action-card">
+        <span class="action-icon">📅</span>
+        <span class="action-text">Voir le planning</span>
+      </a>
+      <a routerLink="/parent/profil" class="action-card">
+        <span class="action-icon">⚙️</span>
+        <span class="action-text">Modifier mon profil</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<app-parent-nav></app-parent-nav>

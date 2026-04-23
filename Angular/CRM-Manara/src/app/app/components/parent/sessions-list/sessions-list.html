@@ -1,0 +1,66 @@
+<main class="dashboard-container">
+  <div class="page-header">
+    <h1>{{ activite?.nom }}</h1>
+    <p class="page-subtitle">{{ activite?.description }}</p>
+    <a routerLink="/parent/activites" class="btn-back">← Retour aux activités</a>
+  </div>
+
+  <div class="activite-info-bar">
+    <div class="info-item">
+      <strong>Âge requis:</strong>
+      <span>{{ activite?.ageMin }} - {{ activite?.ageMax }} ans</span>
+    </div>
+    <div class="info-item">
+      <strong>Activité:</strong>
+      <span class="gratuit-badge">✨ Gratuite</span>
+    </div>
+  </div>
+
+  <h2>Sessions disponibles</h2>
+
+  <div *ngIf="sessions.length === 0" class="empty-state">
+    <p>Aucune session disponible pour le moment</p>
+  </div>
+
+  <div *ngIf="sessions.length > 0" class="sessions-liste">
+    <div class="session-card" *ngFor="let session of sessions">
+      <div class="session-date">
+        <span class="jour">{{ session.date | date:'dd' }}</span>
+        <span class="mois">{{ session.date | date:'MMM' | uppercase }}</span>
+      </div>
+
+      <div class="session-details">
+        <h3>{{ session.activite?.nom }}</h3>
+        <p class="session-horaire">
+          {{ session.heureDebut }} - {{ session.heureFin }}
+        </p>
+        <p class="session-lieu">{{ session.lieu }}</p>
+        <div class="session-capacite">
+          <span class="places-dispo">{{ session.capaciteMax - session.nbInscrits }} places disponibles</span>
+          <span class="capacite-total">/ {{ session.capaciteMax }} places</span>
+        </div>
+      </div>
+
+      <div class="session-actions">
+        <select class="select-enfant" [(ngModel)]="selectedEnfantIds[session.id]" [required]="true">
+          <option value="">Choisir un enfant</option>
+          <option *ngFor="let enfant of enfants" [value]="enfant.id">
+            {{ enfant.prenom }} {{ enfant.nom }}
+          </option>
+        </select>
+        <button class="btn-inscrire" (click)="inscrireEnfant(session.id)">
+          S'inscrire gratuitement
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+</main>
+
+<app-parent-nav></app-parent-nav>

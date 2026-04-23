@@ -1,0 +1,44 @@
+<div class="dashboard-container">
+  <div class="page-header">
+    <h1>Activités disponibles</h1>
+    <p class="page-subtitle">Découvrez toutes nos activités gratuites pour enfants</p>
+  </div>
+
+  <div class="filters-bar">
+    <select class="filter-select" (change)="filtrerParAge($event)">
+      <option value="">Tous les âges</option>
+      <option value="0-3">0-3 ans</option>
+      <option value="3-6">3-6 ans</option>
+      <option value="6-9">6-9 ans</option>
+      <option value="9-12">9-12 ans</option>
+    </select>
+    <input type="text" class="filter-search" placeholder="Rechercher une activité..." (input)="rechercher($event)">
+  </div>
+
+  <div class="info-message">
+    <span class="info-icon">✨</span>
+    <p>Toutes nos activités sont entièrement gratuites !</p>
+  </div>
+
+  <div *ngIf="activitesFiltrees.length === 0" class="empty-state">
+    <p>Aucune activité disponible pour le moment</p>
+  </div>
+
+  <div *ngIf="activitesFiltrees.length > 0" class="activites-grid-large">
+    <div class="activite-card-large" *ngFor="let activite of activitesFiltrees">
+      <div class="activite-image" [style.background-image]="'url(' + (activite.imageUrl || '/assets/images/activite-default.png') + ')'">
+        <span class="activite-age">{{ activite.ageMin }}-{{ activite.ageMax }} ans</span>
+      </div>
+      <div class="activite-content">
+        <h3>{{ activite.nom }}</h3>
+        <p class="activite-description">{{ activite.description }}</p>
+        <div class="activite-meta">
+          <span class="activite-gratuit">✨ Gratuit</span>
+          <span class="activite-sessions">{{ activite.sessions?.length || 0 }} sessions</span>
+        </div>
+        <a [routerLink]="['/parent/activites', activite.id, 'sessions']" class="btn-primary">Voir les sessions</a>
+      </div>
+    </div>
+  </div>
+</div>
+<a routerLink="/parent/enfants" routerLinkActive="active" class="nav-item">

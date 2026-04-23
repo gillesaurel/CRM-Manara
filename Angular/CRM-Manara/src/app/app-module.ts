@@ -25,6 +25,19 @@ import { AnimateurInscription } from './app/components/animateur/animateur-inscr
 import { AnimateurPresences } from './app/components/animateur/animateur-presences/animateur-presences';
 import { AnimateurIncidents } from './app/components/animateur/animateur-incidents/animateur-incidents';
 
+import { ParentNav } from './app/components/fragments/parent/parent';  
+import { DashboardComponent } from './app/components/parent/dashboard/dashboard';
+import { EnfantsListComponent } from './app/components/parent/enfants-list/enfants-list';
+import { AjouterEnfantComponent } from './app/components/parent/ajouter-enfant/ajouter-enfant';
+import { NotificationsComponent } from './app/components/parent/notifications/notifications';
+import { PlanningComponent } from './app/components/parent/planning/planning';
+import { ProfilComponent } from './app/components/parent/profil/profil';
+import { ModifierEnfantComponent } from './app/components/parent/modifier-enfant/modifier-enfant';
+import { DetailsEnfantComponent } from './app/components/parent/details-enfant/details-enfant';
+import { ActivitesListComponent } from './app/components/parent/activites-list/activites-list';
+import { SessionsListComponent } from './app/components/parent/sessions-list/sessions-list';
+
+
 @NgModule({
   declarations: [
     App,
@@ -46,6 +59,18 @@ import { AnimateurIncidents } from './app/components/animateur/animateur-inciden
     AnimateurInscription,
     AnimateurPresences,
     AnimateurIncidents,
+
+    ParentNav,
+    DashboardComponent,
+    EnfantsListComponent,
+    AjouterEnfantComponent,
+    ModifierEnfantComponent,
+    DetailsEnfantComponent,
+    ActivitesListComponent,
+    SessionsListComponent,
+    ProfilComponent,
+    PlanningComponent,
+    NotificationsComponent,
   ],
   imports: [
     BrowserModule,
