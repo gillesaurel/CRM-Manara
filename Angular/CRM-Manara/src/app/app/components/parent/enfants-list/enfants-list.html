@@ -1,0 +1,58 @@
+<main class="dashboard-container">
+  <div class="page-header">
+    <h1>Mes enfants</h1>
+    <a routerLink="/parent/enfants/ajouter" class="btn-add">+ Ajouter un enfant</a>
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <div *ngIf="enfants.length === 0" class="empty-state">
+    <div class="empty-icon">👶</div>
+    <h2>Aucun enfant enregistré</h2>
+    <p>Commencez par ajouter vos enfants pour pouvoir les inscrire aux activités.</p>
+    <a routerLink="/parent/enfants/ajouter" class="btn-primary">Ajouter un enfant</a>
+  </div>
+
+  <div *ngIf="enfants.length > 0" class="enfants-grid">
+    <div class="enfant-card-large" *ngFor="let enfant of enfants">
+      <div class="enfant-header">
+        <div class="enfant-avatar-large">
+          <span>{{ enfant.prenom.charAt(0) }}{{ enfant.nom.charAt(0) }}</span>
+        </div>
+        <div class="enfant-titre">
+          <h2>{{ enfant.prenom }} {{ enfant.nom }}</h2>
+          <p class="enfant-age">{{ enfant.dateNaissance | date:'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+
+      <div class="enfant-details">
+        <div *ngIf="enfant.allergies" class="info-badge warning">
+          <strong>⚠️ Allergies:</strong> <span>{{ enfant.allergies }}</span>
+        </div>
+        <div *ngIf="enfant.notesMedicales" class="info-badge info">
+          <strong>📋 Notes médicales:</strong> <span>{{ enfant.notesMedicales }}</span>
+        </div>
+      </div>
+
+      <div class="enfant-stats">
+        <div class="stat-mini">
+          <span class="stat-value">{{ enfant.inscriptions?.length || 0 }}</span>
+          <span class="stat-label">Inscriptions</span>
+        </div>
+        <div class="stat-mini">
+          <span class="stat-value">{{ enfant.presences?.length || 0 }}</span>
+          <span class="stat-label">Présences</span>
+        </div>
+      </div>
+
+      <div class="enfant-actions">
+        <a [routerLink]="['/parent/enfants', enfant.id]" class="btn-action view">Voir détails</a>
+        <a [routerLink]="['/parent/enfants/modifier', enfant.id]" class="btn-action edit">Modifier</a>
+        <a href="javascript:void(0)" class="btn-action delete" (click)="supprimerEnfant(enfant.id)">Supprimer</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<app-parent-nav></app-parent-nav>

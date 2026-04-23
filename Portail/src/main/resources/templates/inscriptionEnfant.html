@@ -1,51 +1,71 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Inscription enfant</title>
   <meta charset="UTF-8">
-  <link rel="stylesheet" th:href="@{/css/styleInscriptionEnfant.css}">
-  <link th:rel="stylesheet" th:href="@{/css/style.css}">
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <title>Inscription à une activité - Manara</title>
 </head>
 <body>
+
 <header th:replace="fragments/main::header"></header>
-<div class="container">
 
-<h2>Inscrire un enfant à une activité</h2>
+<main class="formulaire-section">
+  <div class="form-container">
+    <h1>Inscrire un enfant à une activité</h1>
 
-<!-- Message de confirmation -->
-<div th:if="${message}">
-  <p th:text="${message}" style="color: green;"></p>
-</div>
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
-<form th:action="@{/admin/inscriptionEnfant/save}" method="post">
+    <form th:action="@{/parent/inscription}" method="post">
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
-  <!-- ENFANT -->
-  <label>Nom de l'enfant :</label>
-  <input type="text" name="nomEnfant" required>
+      <!-- Sélection de l'enfant -->
+      <div class="form-group">
+        <label for="enfantId">Choisir un enfant *</label>
+        <select id="enfantId" name="enfantId" class="form-control" required>
+          <option value="">-- Sélectionner un enfant --</option>
+          <option th:each="enfant : ${enfants}"
+                  th:value="${enfant.id}"
+                  th:text="${enfant.prenom} + ' ' + ${enfant.nom} + ' (' + ${enfant.age} + ' ans)'">
+          </option>
+        </select>
+      </div>
 
-  <br><br>
+      <!-- Sélection de l'activité -->
+      <div class="form-group">
+        <label for="sessionId">Choisir une activité *</label>
+        <select id="sessionId" name="sessionId" class="form-control" required>
+          <option value="">-- Sélectionner une activité --</option>
+          <option th:each="session : ${sessions}"
+                  th:value="${session.id}"
+                  th:text="${session.activite.nom} + ' - ' + ${#temporals.format(session.date, 'dd/MM/yyyy')} + ' à ' + ${session.heureDebut} + ' (' + ${session.lieu} + ')'">
+          </option>
+        </select>
+      </div>
 
-  <!-- ACTIVITÉS (MENU DÉROULANT DYNAMIQUE) -->
-  <label>Choisir une activité :</label>
-  <select name="activiteId" required>
-    <option value=""> Sélectionner </option>
+      <!-- Commentaire optionnel -->
+      <div class="form-group">
+        <label for="commentaire">Commentaire (optionnel)</label>
+        <textarea id="commentaire" name="commentaire" class="form-control"
+                  rows="3" placeholder="Informations complémentaires..."></textarea>
+      </div>
 
-    <option th:each="a : ${activites}"
-            th:value="${a.id}"
-            th:text="${a.nom + ' | Places: ' + a.capacite}">
-    </option>
+      <!-- Message gratuité -->
+      <div class="info-message">
+        <span class="info-icon">🎉</span>
+        <p>Toutes nos activités sont gratuites !</p>
+      </div>
 
-  </select>
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">Inscrire</button>
+        <a th:href="@{/parent/activites}" class="btn-cancel">Annuler</a>
+      </div>
+    </form>
+  </div>
+</main>
 
-  <br><br>
+<footer th:replace="fragments/main::footer"></footer>
 
-  <button type="submit">Inscrire</button>
-
-</form>
-</div>
-<footer th:replace="~{fragments/fragmentAdministrateur::bottomNav('users')}"></footer>
-<footer th:replace="~{fragments/main::footer}"></footer>
 </body>
 </html>

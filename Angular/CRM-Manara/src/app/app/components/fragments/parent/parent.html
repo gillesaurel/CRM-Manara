@@ -1,1 +1,30 @@
-<p>parent works!</p>
+<nav class="bottom-nav" aria-label="Navigation bas">
+  <a routerLink="/parent/dashboard"
+     routerLinkActive="active"
+     [routerLinkActiveOptions]="{ exact: true }"
+     class="nav-item">
+    <i class="fa-solid fa-house"></i>
+    <span>Accueil</span>
+  </a>
+
+  <a routerLink="/parent/activites"
+     routerLinkActive="active"
+     class="nav-item">
+    <i class="fa-solid fa-calendar-days"></i>
+    <span>Activités</span>
+  </a>
+
+  <a routerLink="/parent/enfants"
+     routerLinkActive="active"
+     class="nav-item">
+    <i class="fa-solid fa-child"></i>
+    <span>Enfants</span>
+  </a>
+
+  <a routerLink="/parent/planning"
+     routerLinkActive="active"
+     class="nav-item">
+    <i class="fa-solid fa-clipboard-list"></i>
+    <span>Planning</span>
+  </a>
+</nav>

@@ -4,46 +4,66 @@ import { Administrateur } from './app/components/administrateur/administrateur';
 import { Activites } from './app/components/adminOnly/activites/activites';
 import { Utilisateurs } from './app/components/adminOnly/utilisateurs/utilisateurs';
 import { AdminAddUser } from './app/components/adminOnly/admin-add-user/admin-add-user';
-import { AjouterActivite } from './app/components/adminOnly/ajouter-activite/ajouter-activite';
-
-import { AnimateurDashboard } from './app/components/animateur/animateur-dashboard/animateur-dashboard';
-import { AnimateurInscription } from './app/components/animateur/animateur-inscription/animateur-inscription';
-
-import { AnimateurHoraire } from './app/components/animateur/animateur-horaire/animateur-horaire';
-import { AnimateurPresences } from './app/components/animateur/animateur-presences/animateur-presences';
-import { AnimateurIncidents } from './app/components/animateur/animateur-incidents/animateur-incidents';
-
-
 import { Email } from './app/components/adminOnly/email/email';
 import { Auth } from './app/components/auth/auth';
 import { UserAuth } from './app/verifier/user-auth';
 import { Accueil } from './app/components/accueil/accueil';
 import { Header } from './app/components/header/header';
 import { Footer } from './app/components/footer/footer';
-import { ListeAttente } from './app/components/adminOnly/liste-attente/liste-attente';
+import { AnimateurDashboard } from './app/components/animateur/animateur-dashboard/animateur-dashboard';
+import { DashboardComponent } from './app/components/parent/dashboard/dashboard';
+import { EnfantsListComponent } from './app/components/parent/enfants-list/enfants-list';
+import { ModifierEnfantComponent } from './app/components/parent/modifier-enfant/modifier-enfant';
+import { NotificationsComponent } from './app/components/parent/notifications/notifications';
+import { PlanningComponent } from './app/components/parent/planning/planning';
+import { ProfilComponent } from './app/components/parent/profil/profil';
+import { SessionsListComponent } from './app/components/parent/sessions-list/sessions-list';
+import { ActivitesListComponent } from './app/components/parent/activites-list/activites-list';
+import { DetailsEnfantComponent } from './app/components/parent/details-enfant/details-enfant';
+import { AjouterEnfantComponent } from './app/components/parent/ajouter-enfant/ajouter-enfant';
 
 const routes: Routes = [
+  // Routes publiques
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: Accueil },
   { path: 'header', component: Header },
   { path: 'footer', component: Footer },
   { path: 'login', component: Auth },
-  { path: 'admin', canActivate:[UserAuth], component: Administrateur },
-  { path: 'adminOnly/activites', canActivate:[UserAuth], component: Activites },
-  { path: 'adminOnly/listeAttente', canActivate:[UserAuth], component: ListeAttente },
-  { path: 'adminOnly/utilisateurs', canActivate:[UserAuth], component: Utilisateurs },
-  { path: 'adminOnly/adminAddUser', canActivate:[UserAuth], component: AdminAddUser },
-  { path: 'adminOnly/email', canActivate:[UserAuth], component: Email },
-  { path: 'adminOnly/ajouter-activite', canActivate:[UserAuth], component: AjouterActivite },
-  { path: 'adminOnly/ajouter-activite/:id', canActivate:[UserAuth], component: AjouterActivite },
-  { path: 'animateur/dashboard',  component: AnimateurDashboard },
-  { path: 'animateur/inscription',  component: AnimateurInscription },
-  { path: 'animateur/horaire',  component: AnimateurHoraire },
-  { path: 'animateur/presences',  component: AnimateurPresences },
-  { path: 'animateur/incidents',  component: AnimateurIncidents },
-
-
-
+  
+  // Routes Admin
+  { path: 'admin', canActivate: [UserAuth], component: Administrateur },
+  { path: 'adminOnly/activites', canActivate: [UserAuth], component: Activites },
+  { path: 'adminOnly/utilisateurs', canActivate: [UserAuth], component: Utilisateurs },
+  { path: 'adminOnly/adminAddUser', canActivate: [UserAuth], component: AdminAddUser },
+  { path: 'adminOnly/email', canActivate: [UserAuth], component: Email },
+  
+  // Routes Animateur
+  { path: 'animateur/dashboard', canActivate: [UserAuth], component: AnimateurDashboard },
+  
+  // ============================================
+  // ROUTES PARENT
+  // ============================================
+  
+  // Dashboard Parent
+  { path: 'parent/dashboard', canActivate: [UserAuth], component: DashboardComponent },
+  
+  // Gestion des enfants
+  { path: 'parent/enfants', canActivate: [UserAuth], component: EnfantsListComponent },
+  { path: 'parent/enfants/ajouter', canActivate: [UserAuth], component: AjouterEnfantComponent },
+  { path: 'parent/enfants/modifier/:id', canActivate: [UserAuth], component: ModifierEnfantComponent },
+  { path: 'parent/enfants/:id', canActivate: [UserAuth], component: DetailsEnfantComponent },
+  
+  // Activités
+  { path: 'parent/activites', canActivate: [UserAuth], component: ActivitesListComponent },
+  { path: 'parent/activites/:id/sessions', canActivate: [UserAuth], component: SessionsListComponent },
+  
+  // Profil et planning
+  { path: 'parent/profil', canActivate: [UserAuth], component: ProfilComponent },
+  { path: 'parent/planning', canActivate: [UserAuth], component: PlanningComponent },
+  { path: 'parent/notifications', canActivate: [UserAuth], component: NotificationsComponent },
+  
+  // Redirection par défaut si route non trouvée
+  { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({
