@@ -25,18 +25,16 @@
           <div class="quick-grid">
             <table>
               <thead>
-                <tr>
-                  <th>Nom</th>
-                  <th>Prénom</th>
-                  <th>En attente</th>
-                </tr>
+              <tr>
+                <th>Nom</th>
+                <th>En attente</th>
+              </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let insc of group.inscriptions">
-                  <td>{{ insc.enfant ? insc.enfant.nom : insc.nom_enfant }}</td>
-                  <td>{{ insc.enfant ? insc.enfant.prenom : '' }}</td>
-                  <td>{{ insc.en_attente ? 'Oui' : 'Non' }}</td>
-                </tr>
+              <tr *ngFor="let insc of group.inscriptions">
+                <td>{{ insc.nomEnfant }}</td>
+                <td>{{ insc.enAttente ? 'Oui' : 'Non' }}</td>
+              </tr>
               </tbody>
             </table>
           </div>

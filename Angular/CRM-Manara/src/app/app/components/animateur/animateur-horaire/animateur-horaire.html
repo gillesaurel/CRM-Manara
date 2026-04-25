@@ -1,61 +1,58 @@
 <div class="page-animateurs">
 
-  
-    <main class="dash">
-  
-      <section class="dash-top">
-        <div>
-          <h1>Portail Manara</h1>
-          <p class="subtitle">Tableau de bord</p>
-        </div>
-        <div class="profile-pill">
-          <i class="fa-solid fa-user-tie"></i>
-          <span>Profil : Animateur</span>
-        </div>
-      </section>
-  
-      <h2>Sessions à venir</h2>
-      <p>Consulter vos prochaines sessions.</p>
-  
-      <ng-container *ngIf="sessions && sessions.length > 0; else empty">
-        <div *ngFor="let sess of sessions">
-          <section class="card welcome">
-            <h3>{{ sess.activiteNom }}</h3>
-            <div class="quick-grid">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Heure début</th>
-                    <th>Heure fin</th>
-                    <th>Lieu</th>
-                    <th>Statut</th>
-                    <th>Inscrits</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{ sess.date }}</td>
-                    <td>{{ sess.heure_debut }}</td>
-                    <td>{{ sess.heure_fin }}</td>
-                    <td>{{ sess.lieu }}</td>
-                    <td>{{ sess.statut }}</td>
-                    <td>{{ sess.nbInscrits }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-        </div>
-      </ng-container>
-  
-      <ng-template #empty>
+  <main class="dash">
+
+    <section class="dash-top">
+      <div>
+        <h1>Portail Manara</h1>
+        <p class="subtitle">Tableau de bord</p>
+      </div>
+      <div class="profile-pill">
+        <i class="fa-solid fa-user-tie"></i>
+        <span>Profil : Animateur</span>
+      </div>
+    </section>
+
+    <h2>Sessions à venir</h2>
+    <p>Consulter vos prochaines sessions.</p>
+
+    <ng-container *ngIf="sessions && sessions.length > 0; else empty">
+      <div *ngFor="let sess of sessions">
         <section class="card welcome">
-          <p>Aucune session à venir.</p>
+          <h3>{{ sess.activiteNom }}</h3>
+          <div class="quick-grid">
+            <table>
+              <thead>
+              <tr>
+                <th>Date</th>
+                <th>Heure début</th>
+                <th>Heure fin</th>
+                <th>Lieu</th>
+                <th>Statut</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>{{ sess.date }}</td>
+                <td>{{ sess.heure_debut }}</td>
+                <td>{{ sess.heure_fin }}</td>
+                <td>{{ sess.lieu }}</td>
+                <td>{{ sess.statut }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </section>
-      </ng-template>
-  
-      <div class="bottom-spacer"></div>
-    </main>
-  
-  </div>
+      </div>
+    </ng-container>
+
+    <ng-template #empty>
+      <section class="card welcome">
+        <p>Aucune session à venir.</p>
+      </section>
+    </ng-template>
+
+    <div class="bottom-spacer"></div>
+  </main>
+
+</div>

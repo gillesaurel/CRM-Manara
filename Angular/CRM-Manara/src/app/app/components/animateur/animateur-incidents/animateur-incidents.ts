@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IncidentService, Incident, Enfant } from '../../../services/incident-service';
+import { AnimateurService } from '../../../services/animateur-service';
 
 @Component({
   selector: 'app-animateur-incidents',
@@ -8,8 +8,8 @@ import { IncidentService, Incident, Enfant } from '../../../services/incident-se
   styleUrl: './animateur-incidents.css',
 })
 export class AnimateurIncidents implements OnInit {
-  enfants: Enfant[] = [];
-  incidents: Incident[] = [];
+  enfants: any[] = [];
+  incidents: any[] = [];
 
   // Form fields
   enfantId: number | null = null;
@@ -21,11 +21,22 @@ export class AnimateurIncidents implements OnInit {
   message: string = '';
   messageType: 'success' | 'error' = 'success';
 
-  constructor(private incidentService: IncidentService) {}
+  constructor(private animateurService: AnimateurService) {}
 
   ngOnInit(): void {
-    this.enfants  = this.incidentService.getEnfants();
-    this.incidents = this.incidentService.getIncidents();
+    this.loadIncidents();
+  }
+
+  loadIncidents() {
+    this.animateurService.getIncidentData().subscribe({
+      next: (data: any) => {
+        this.incidents = data.incidents;
+        this.enfants = data.enfants;
+      },
+      error: (error: unknown) => {
+        console.error('Erreur lors de la récupération des incidents :', error);
+      }
+    });
   }
 
   soumettre(): void {
@@ -35,24 +46,30 @@ export class AnimateurIncidents implements OnInit {
       return;
     }
 
-    this.incidentService.ajouterIncident({
-      enfantId:     this.enfantId,
-      type:         this.type,
-      gravite:      this.gravite,
-      description:  this.description,
+    this.animateurService.saveIncident({
+      enfantId: this.enfantId,
+      type: this.type,
+      gravite: this.gravite,
+      description: this.description,
       actionsPrises: this.actionsPrises,
+    }).subscribe({
+      next: () => {
+        this.message = 'Incident signalé avec succès.';
+        this.messageType = 'success';
+        this.loadIncidents(); // refresh list from backend
+        // Reset form
+        this.enfantId = null;
+        this.type = '';
+        this.gravite = null;
+        this.description = '';
+        this.actionsPrises = '';
+      },
+      error: (error: unknown) => {
+        this.message = 'Erreur lors du signalement.';
+        this.messageType = 'error';
+        console.error(error);
+      }
     });
-
-    this.message     = 'Incident signalé avec succès.';
-    this.messageType = 'success';
-    this.incidents   = this.incidentService.getIncidents();
-
-    // Reset form
-    this.enfantId     = null;
-    this.type         = '';
-    this.gravite      = null;
-    this.description  = '';
-    this.actionsPrises = '';
   }
 
   graviteLabel(g: number): string {

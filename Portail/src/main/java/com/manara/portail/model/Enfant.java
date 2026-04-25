@@ -1,5 +1,6 @@
 package com.manara.portail.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -32,13 +33,16 @@ public class Enfant {
     @Column(name = "notes_medicales", length = 1000)
     private String notesMedicales;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "parent_id", nullable = false)
     private Parent parent;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "enfant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Presence> presences = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "enfant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<InscriptionEnfant> inscriptions = new ArrayList<>();
 

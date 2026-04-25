@@ -1,6 +1,7 @@
 package com.manara.portail.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -19,18 +20,25 @@ public class InscriptionEnfant {
     private boolean enAttente;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "activite_id", nullable = false)
     private ActiviteAdmin activite;
 
     @ManyToOne
+    @JsonIgnore
+
     @JoinColumn(name = "utilisateur_id", nullable = false)
     private Utilisateur utilisateur;
 
     @ManyToOne
+    @JsonIgnore
+
     @JoinColumn(name = "enfant_id")
     private Enfant enfant;
 
     @ManyToOne
+    @JsonIgnore
+
     @JoinColumn(name = "session_id")
     private SessionParent session;
 

@@ -1,18 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import sessions   from '../../../mock-data/sessions-parent.json';
-import activites  from '../../../mock-data/activites-parent.json';
-import inscriptions from '../../../mock-data/inscriptions.json';
-
-interface Session {
-  id: number;
-  date: string;
-  heure_debut: string;
-  heure_fin: string;
-  lieu: string;
-  statut: string;
-  activiteNom: string;
-  nbInscrits: number;
-}
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AnimateurService } from '../../../services/animateur-service';
 
 @Component({
   selector: 'app-animateur-horaire',
@@ -21,22 +8,35 @@ interface Session {
   styleUrl: './animateur-horaire.css',
 })
 export class AnimateurHoraire implements OnInit {
-  sessions: Session[] = [];
+  sessions: any[] = [];
+
+  constructor(
+    private animateurService: AnimateurService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.sessions = (sessions as any[]).map(sess => {
-      const activite = (activites as any[]).find(a => a.id === sess.activite_id);
-      const nbInscrits = (inscriptions as any[]).filter(i => i.session_id === sess.id && !i.en_attente).length;
-      return {
-        id:          sess.id,
-        date:        sess.date,
-        heure_debut: sess.heure_debut.slice(0, 5),
-        heure_fin:   sess.heure_fin.slice(0, 5),
-        lieu:        sess.lieu,
-        statut:      sess.statut,
-        activiteNom: activite?.nom ?? `Activité ${sess.activite_id}`,
-        nbInscrits,
-      };
+    this.loadSessions();
+  }
+
+  loadSessions() {
+    this.animateurService.getHoraireData().subscribe({
+      next: (data: any) => {
+        console.log('Raw data:', JSON.stringify(data.sessions[0]));
+        this.sessions = data.sessions.map((sess: any) => ({
+          id: sess.id,
+          date: sess.date,
+          heure_debut: sess.heureDebut?.slice(0, 5),
+          heure_fin: sess.heureFin?.slice(0, 5),
+          lieu: sess.lieu,
+          statut: sess.statut,
+          activiteNom: sess.activite?.nom ?? 'Activité inconnue',
+        }));
+        this.cdr.detectChanges();
+      },
+      error: (error: unknown) => {
+        console.error('Erreur lors du chargement des sessions :', error);
+      }
     });
   }
 }

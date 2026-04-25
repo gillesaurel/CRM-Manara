@@ -10,21 +10,23 @@ import com.manara.portail.service.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
+@CrossOrigin(
+        origins = {"http://localhost:4200", "http://127.0.0.1:4200", "http://manara.histoiredurock.com", "https://manara.histoiredurock.com"},
+        allowCredentials = "true"
+)
 public class AnimateurController {
 
     @Autowired
@@ -55,13 +57,13 @@ public class AnimateurController {
     }
 
     @GetMapping("/animateur/inscriptions")
-    public String pageInscription(HttpServletRequest request, Model model) {
+    public ResponseEntity<?> pageInscription() {
+        System.out.println("Requested enter!");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null || !auth.isAuthenticated()) return "redirect:/login";
-
+        System.out.println(auth.getName());
         String email = auth.getName();
         Integer animateurId = utilisateurService.getIdByEmail(email);
-        if (animateurId == null) return "redirect:/login";
+
         List<SessionParent> sessions = sessionParentService
                 .getSessionsAvecEnfantsByAnimateur(animateurId);
 
@@ -82,100 +84,94 @@ public class AnimateurController {
                 }
             }
         }
+        Map<String, Object> data = new HashMap<>();
+        data.put("inscriptions", inscriptionsParActivite);
+        System.out.println("Response Data: " + data.toString());
+        return ResponseEntity.ok(data);
 
-        model.addAttribute("inscriptionsParActivite", inscriptionsParActivite);
-        return "animateur_inscription";
+
     }
 
     @GetMapping("/animateur/presences")
-    public String pagePresences(HttpServletRequest request, Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null || !auth.isAuthenticated()) return "redirect:/login";
-
-        String email = auth.getName();
+    public ResponseEntity<?> pagePresences() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Integer animateurId = utilisateurService.getIdByEmail(email);
-        if (animateurId == null) return "redirect:/login";
+
         List<SessionParent> sessions = sessionParentService
                 .getSessionsAvecEnfantsByAnimateur(animateurId);
 
-        // Map: activite name → (session label → list of confirmed enfants)
-        Map<String, Map<String, List<Enfant>>> presencesParActivite = new LinkedHashMap<>();
+        Map<String, List<Map<String, Object>>> presencesParActivite = new LinkedHashMap<>();
 
         for (SessionParent sess : sessions) {
             String nomActivite = sess.getActivite() != null ? sess.getActivite().getNom() : "Activité inconnue";
             String sessionLabel = sess.getDate() + " | " + sess.getHeureDebut() + " – " + sess.getHeureFin()
                     + " | " + sess.getLieu();
 
-            presencesParActivite.computeIfAbsent(nomActivite, k -> new LinkedHashMap<>());
+            presencesParActivite.computeIfAbsent(nomActivite, k -> new ArrayList<>());
 
             List<Enfant> enfants = inscriptionEnfantService.getEnfantsConfirmesBySession(sess.getId());
-            presencesParActivite.get(nomActivite).put(sessionLabel, enfants);
+
+            Map<String, Object> sessionData = new LinkedHashMap<>();
+            sessionData.put("sessionLabel", sessionLabel);
+            sessionData.put("enfants", enfants);
+
+            presencesParActivite.get(nomActivite).add(sessionData);
         }
 
-        model.addAttribute("presencesParActivite", presencesParActivite);
-        return "animateur_presences";
+        Map<String, Object> data = new HashMap<>();
+        data.put("presences", presencesParActivite);
+        return ResponseEntity.ok(data);
     }
 
     @GetMapping("/animateur/horaire")
-    public String pageHoraire(HttpServletRequest request, Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null || !auth.isAuthenticated()) return "redirect:/login";
-
-        String email = auth.getName();
+    public ResponseEntity<?> pageHoraire() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Integer animateurId = utilisateurService.getIdByEmail(email);
-        if (animateurId == null) return "redirect:/login";
+
         List<SessionParent> sessions = sessionParentService
                 .getSessionsAvecEnfantsByAnimateur(animateurId);
 
-        model.addAttribute("sessions", sessions);
-        return "animateur_horaire";
+        Map<String, Object> data = new HashMap<>();
+        data.put("sessions", sessions);
+        return ResponseEntity.ok(data);
     }
 
-
     @GetMapping("/animateur/incidents")
-    public String pageIncidents(HttpServletRequest request, Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null || !auth.isAuthenticated()) return "redirect:/login";
-
-        String email = auth.getName();
+    public ResponseEntity<?> pageIncidents() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Integer animateurId = utilisateurService.getIdByEmail(email);
-        if (animateurId == null) return "redirect:/login";
 
         List<Incident> incidents = incidentService.getIncidentsByAnimateur(animateurId);
         List<Enfant> enfants = enfantService.getAllEnfants();
 
-        model.addAttribute("incidents", incidents);
-        model.addAttribute("enfants", enfants);
-        return "animateur_incidents";
+        Map<String, Object> data = new HashMap<>();
+        data.put("incidents", incidents);
+        data.put("enfants", enfants);
+        return ResponseEntity.ok(data);
     }
 
     @PostMapping("/animateur/incidents/save")
-    public String signalerIncident(
-            HttpServletRequest request,
+    public ResponseEntity<?> signalerIncident(
             @RequestParam("enfantId") Integer enfantId,
             @RequestParam("type") String type,
             @RequestParam("description") String description,
             @RequestParam("gravite") Integer gravite,
-            @RequestParam(value = "actionsPrises", required = false) String actionsPrises,
-            RedirectAttributes redirectAttributes
+            @RequestParam(value = "actionsPrises", required = false) String actionsPrises
     ) {
-        String animateurIdStr = getCookieValue(request, "id");
-        if (animateurIdStr == null) return "redirect:/login";
-
-        Integer animateurId = Integer.parseInt(animateurIdStr);
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Integer animateurId = utilisateurService.getIdByEmail(email);
 
         try {
             incidentService.signalerIncident(enfantId, animateurId, type, description, gravite, actionsPrises);
-            redirectAttributes.addFlashAttribute("message", "Incident signalé avec succès.");
-            redirectAttributes.addFlashAttribute("messageType", "success");
+            Map<String, Object> data = new HashMap<>();
+            data.put("message", "Incident signalé avec succès.");
+            return ResponseEntity.ok(data);
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", "Erreur lors du signalement : " + e.getMessage());
-            redirectAttributes.addFlashAttribute("messageType", "error");
+            Map<String, Object> data = new HashMap<>();
+            data.put("message", "Erreur lors du signalement : " + e.getMessage());
+            return ResponseEntity.status(500).body(data);
         }
-
-        return "redirect:/animateur/incidents";
     }
-
 
     private String getCookieValue(HttpServletRequest request, String cookieName) {
         Cookie[] cookies = request.getCookies();

@@ -16,13 +16,12 @@
     <h2>Présences</h2>
     <p>Liste des enfants attendus par session et activité.</p>
 
-    <!-- Groups -->
     <ng-container *ngIf="groups && groups.length > 0; else empty">
-      <div *ngFor="let group of groups">
+      <div *ngFor="let act of groups">
         <section class="card welcome">
-          <h3>{{ group.activiteNom }}</h3>
+          <h3>{{ act.activiteNom }}</h3>
 
-          <div *ngFor="let session of group.sessions">
+          <div *ngFor="let session of act.sessions">
             <p style="margin: 12px 0 6px; font-weight: 600;">
               <i class="fa-solid fa-calendar-day"></i>
               {{ session.sessionLabel }}
@@ -31,27 +30,27 @@
             <div class="quick-grid">
               <table>
                 <thead>
-                  <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Allergies</th>
-                    <th>Statut</th>
-                  </tr>
+                <tr>
+                  <th>Nom</th>
+                  <th>Prénom</th>
+                  <th>Allergies</th>
+                  <th>Statut</th>
+                </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let enfant of session.enfants">
-                    <td>{{ enfant.nom }}</td>
-                    <td>{{ enfant.prenom }}</td>
-                    <td>{{ enfant.allergies ? enfant.allergies : '—' }}</td>
-                    <td>
+                <tr *ngFor="let enfant of session.enfants">
+                  <td>{{ enfant.nom }}</td>
+                  <td>{{ enfant.prenom }}</td>
+                  <td>{{ enfant.allergies ? enfant.allergies : '—' }}</td>
+                  <td>
                       <span style="color: #2e7d32; font-weight: 600;">
                         <i class="fa-solid fa-circle-check"></i> Attendu
                       </span>
-                    </td>
-                  </tr>
-                  <tr *ngIf="session.enfants.length === 0">
-                    <td colspan="4">Aucun enfant inscrit pour cette session.</td>
-                  </tr>
+                  </td>
+                </tr>
+                <tr *ngIf="session.enfants.length === 0">
+                  <td colspan="4">Aucun enfant inscrit pour cette session.</td>
+                </tr>
                 </tbody>
               </table>
             </div>
@@ -61,7 +60,6 @@
       </div>
     </ng-container>
 
-    <!-- Empty state -->
     <ng-template #empty>
       <section class="card welcome">
         <p>Aucune session à venir avec des enfants inscrits.</p>
