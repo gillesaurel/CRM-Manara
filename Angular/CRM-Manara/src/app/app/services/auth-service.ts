@@ -1,54 +1,106 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap, switchMap, map, of } from 'rxjs';
 
-export interface Utilisateur{
+export interface Utilisateur {
   email: string;
   prenom: string;
   nom: string;
   role: {
     nom: string;
-  }
+  };
 }
 
 @Injectable({
   providedIn: 'root',
 })
-
-
 export class AuthService {
+
   private apiUrl = 'http://localhost:8080';
+  private userSubject = new BehaviorSubject<Utilisateur | null>(null);
+  user$ = this.userSubject.asObservable();
 
+  constructor(private http: HttpClient) {
+    this.loadUser();
+  }
 
-  constructor(private http: HttpClient) {}
+  private loadUser(): void {
+    // 1. D'abord, lire depuis localStorage
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        this.userSubject.next(user);
+      } catch (e) {
+        console.error('Erreur parsing user:', e);
+      }
+    }
+    
+    // 2. Ensuite, vérifier avec le serveur
+    this.getMe().subscribe({
+      next: (user) => {
+        if (user) {
+          this.userSubject.next(user);
+          localStorage.setItem('user', JSON.stringify(user));
+        }
+      },
+      error: () => {
+        // Ne rien faire
+      }
+    });
+  }
 
-  getMe() {
-  return this.http.get<any>(`${this.apiUrl}/userConnecte`, {
+  getMe(): Observable<Utilisateur | null> {
+    return this.http.get<Utilisateur | null>(`${this.apiUrl}/userConnecte`, {
+      withCredentials: true
+    }).pipe(
+      map(user => user ?? null)
+    );
+  }
+
+  login(data: any): Observable<Utilisateur | null> {
+    const body = new URLSearchParams();
+    body.set('username', data.email);
+    body.set('password', data.password);
+
+    return this.http.post(`${this.apiUrl}/login`, body.toString(), {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      withCredentials: true
+    }).pipe(
+      switchMap(() => this.getMe()),
+      tap(user => {
+        this.userSubject.next(user);
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+        } else {
+          localStorage.removeItem('user');
+        }
+      })
+    );
+  }
+
+  logout(): Observable<any> {
+  return this.http.get(`${this.apiUrl}/logout`, {
     withCredentials: true
-  });
+  }).pipe(
+    tap(() => {
+      this.userSubject.next(null);
+      localStorage.removeItem('user');
+    })
+  );
 }
 
   isLoggedIn(): Observable<boolean> {
-    return this.getMe().pipe(
+    return this.user$.pipe(
       map(user => !!user)
     );
   }
 
-  login(data: any): Observable<any> {
-  const body = new URLSearchParams();
-  body.set('username', data.email);
-  body.set('password', data.password);
-
-  return this.http.post(`${this.apiUrl}/login`, body.toString(), {
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    withCredentials: true
-  });
-}
-
-  logout(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/deconnexion`, {
-      withCredentials: true
-    });
+  updateUser(user: Utilisateur | null): void {
+    this.userSubject.next(user);
   }
 
+  get currentUser(): Utilisateur | null {
+    return this.userSubject.value;
+  }
 }

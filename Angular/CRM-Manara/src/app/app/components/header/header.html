@@ -1,13 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
   <div class="container">
+    
+ <!-- Logo & Nom -->
+  <a class="navbar-brand d-flex align-items-center" routerLink="/">
+    <img src="manara_logo.png" alt="Logo" width="40" class="me-2">
+    <span class="fw-bold">MANARA</span>
+  </a>
 
-    <!-- Logo & Nom -->
-    <a class="navbar-brand d-flex align-items-center" routerLink="/">
-      <img src="/public/manara_logo.png" alt="Logo" width="40" class="me-2">
-      <span class="fw-bold">MANARA</span>
-    </a>
-
-    <!-- Bouton pour mobile (Hamburger) -->
+    <!-- Bouton pour mobile -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -16,30 +16,50 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            <i>Accueil</i>
-          </a>
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Accueil</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/a-propos" routerLinkActive="active">À propos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/animateur/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Animateur</a>
+          <a class="nav-link" routerLink="/animateur" routerLinkActive="active">Animateur</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/admin" routerLinkActive="active">Administrateur</a>
-        </li>
+
+        <!-- ============================================ -->
+        <!--  Liens visibles seulement si l'utilisateur est un parent -->
+        <!-- ============================================ -->
+        <ng-container *ngIf="isParent()">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/parent/dashboard" routerLinkActive="active">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/parent/profil" routerLinkActive="active">Mon profil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/parent/enfants" routerLinkActive="active">Mes enfants</a>
+          </li>
+        </ng-container>
+
       </ul>
 
-      <!-- Actions à droite -->
-      <div class="d-flex">
+      <!-- ============================================ -->
+      <!-- Condition sur les boutons login/register (uniquement si NON connecté) -->
+      <!-- ============================================ -->
+      <div class="d-flex" *ngIf="!isLoggedIn()">
         <a routerLink="/login" class="btn btn-outline-light me-2 btn-sm">Se connecter</a>
         <a routerLink="/register" class="btn btn-warning btn-sm">S'inscrire</a>
       </div>
+     
+
+      <!-- ============================================ -->
+      <!-- Actions pour utilisateur connecté -->
+      <!-- ============================================ -->
+      <div class="d-flex" *ngIf="isLoggedIn()">
+        <span class="navbar-text me-2">Bonjour, {{ getUserName() }}</span>
+        <button (click)="logout()" class="btn btn-outline-danger btn-sm">Déconnexion</button>
+      </div>
+     
     </div>
 
   </div>
 </nav>
-
-
-

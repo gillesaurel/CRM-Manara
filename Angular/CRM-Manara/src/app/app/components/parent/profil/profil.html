@@ -4,33 +4,58 @@
     <a routerLink="/parent/dashboard" class="btn-back">← Retour au tableau de bord</a>
   </div>
 
-  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
-  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  <!-- ============================================ -->
+  <!-- LOADING -->
+  <!-- ============================================ -->
+  <div *ngIf="isLoading" class="empty-state">
+    <p>Chargement du profil...</p>
+  </div>
 
-  <div class="profile-container">
+  <!-- ============================================ -->
+  <!-- ERREUR -->
+  <!-- ============================================ -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- ============================================ -->
+  <!-- AFFICHAGE UNIQUEMENT SI parent EST CHARGÉ -->
+  <!-- ============================================ -->
+  <div *ngIf="parent && !isLoading" class="profile-container">
+
     <div class="profile-sidebar">
       <div class="profile-avatar">
-        <span>{{ (parent?.prenom?.charAt(0) || '') + (parent?.nom?.charAt(0) || '') }}</span>
+        <span>{{ (parent.prenom?.charAt(0) || '') + (parent.nom?.charAt(0) || '') }}</span>
       </div>
-      <h3>{{ parent?.prenom }} {{ parent?.nom }}</h3>
-      <p class="profile-email">{{ parent?.email }}</p>
+      <h3>{{ parent.prenom }} {{ parent.nom }}</h3>
+      <p class="profile-email">{{ parent.email }}</p>
     </div>
 
     <div class="profile-form">
       <form (ngSubmit)="onSubmit()" #profilForm="ngForm">
+
         <div class="form-row">
           <div class="form-group">
             <label for="prenom">Prénom *</label>
-            <input type="text" id="prenom" name="prenom" [(ngModel)]="parent.prenom" 
-                   class="form-control" required #prenom="ngModel" />
+            <input type="text" id="prenom" name="prenom"
+                   [(ngModel)]="parent.prenom"
+                   class="form-control"
+                   required
+                   #prenom="ngModel" />
+
             <div *ngIf="prenom.invalid && prenom.touched" class="error-message">
               Le prénom est requis
             </div>
           </div>
+
           <div class="form-group">
             <label for="nom">Nom *</label>
-            <input type="text" id="nom" name="nom" [(ngModel)]="parent.nom" 
-                   class="form-control" required #nom="ngModel" />
+            <input type="text" id="nom" name="nom"
+                   [(ngModel)]="parent.nom"
+                   class="form-control"
+                   required
+                   #nom="ngModel" />
+
             <div *ngIf="nom.invalid && nom.touched" class="error-message">
               Le nom est requis
             </div>
@@ -39,26 +64,43 @@
 
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" [(ngModel)]="parent.email" 
-                 class="form-control" readonly disabled />
+          <input type="email" id="email" name="email"
+                 [(ngModel)]="parent.email"
+                 class="form-control"
+                 readonly
+                 disabled />
+
           <small class="form-text">L'email ne peut pas être modifié</small>
         </div>
 
         <div class="form-group">
           <label for="telephone">Téléphone</label>
-          <input type="tel" id="telephone" name="telephone" [(ngModel)]="parent.telephone" 
-                 class="form-control" placeholder="0612345678" pattern="[0-9]{10}" />
+          <input type="tel" id="telephone" name="telephone"
+                 [(ngModel)]="parent.telephone"
+                 class="form-control"
+                 placeholder="0612345678" />
         </div>
 
         <div class="form-actions">
-          <button type="submit" class="btn-submit" [disabled]="profilForm.invalid">
+          <button type="submit"
+                  class="btn-submit"
+                  [disabled]="profilForm.invalid">
             Enregistrer les modifications
           </button>
+
           <a routerLink="/parent/dashboard" class="btn-cancel">Annuler</a>
         </div>
-      </form>
 
+      </form>
     </div>
+
+  </div>
+
+  <!-- ============================================ -->
+  <!-- CAS VIDE -->
+  <!-- ============================================ -->
+  <div *ngIf="!parent && !isLoading && !errorMessage" class="empty-state">
+    <p>Aucune donnée de profil disponible</p>
   </div>
 </main>
 

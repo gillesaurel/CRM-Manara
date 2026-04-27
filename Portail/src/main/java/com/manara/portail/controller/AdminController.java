@@ -136,10 +136,10 @@ public class AdminController {
         data.put("inscriptions", inscriptions);
         data.put("stats", stats);
 
-        Map<String, Object> data = new HashMap<>();
+        //Map<String, Object> data = new HashMap<>();
         data.put("inscriptions", inscriptions);
         data.put("stats", stats);
-        data.put("groupedInscriptions", groupedInscriptions);
+        //data.put("groupedInscriptions", groupedInscriptions);
         data.put("activites", activiteService.getAllActivites());
 
         return ResponseEntity.ok(data);

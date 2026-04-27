@@ -1,36 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService, Utilisateur } from '../../services/auth-service';
 import { Router } from '@angular/router';
 
 @Component({
+   standalone: false,
   selector: 'app-auth',
-  standalone: false,
   templateUrl: './auth.html',
   styleUrl: './auth.css',
 })
-export class Auth implements OnInit {
+export class Auth {
+
   email: string = '';
   password: string = '';
   error: boolean = false;
   message: string = '';
-
-
-  user: Utilisateur | null = null;
+  user$;
 
   constructor(
     private authService: AuthService,
-    private rout: Router
-  ) { }
-
-  ngOnInit(): void {
-    this.authService.getMe().subscribe({
-      next: (data: Utilisateur | null) => {
-        this.user = data;
-      },
-      error: () => {
-        this.user = null;
-      }
-    });
+    private router: Router
+  ) {
+    
+    this.user$ = this.authService.user$;
   }
 
   login() {
@@ -40,32 +31,27 @@ export class Auth implements OnInit {
   };
 
   this.authService.login(data).subscribe({
-    next: () => {
-      
-      setTimeout(() => {
-        this.authService.getMe().subscribe({
-          next: (user: Utilisateur | null) => {
+    next: (user: Utilisateur | null) => {
+      if (!user) {
+        this.error = true;
+        return;
+      }
 
-            if (!user) {
-              this.error = true;
-              return;
-            }
+      this.error = false;
 
-            const role = user.role.nom;
+      this.authService.updateUser(user);
 
-            if (role === 'ADMINISTRATEUR') {
-              this.rout.navigate(['/admin']);
-            } else if (role === 'PARENT') {
-              this.rout.navigate(['/parent']);
-            } else if (role === 'ANIMATEUR') {
-              this.rout.navigate(['/animateur']);
-            }
-          },
-          error: () => {
-            this.error = true;
-          }
-        });
-      }, 200);
+      const routes: any = {
+        ADMINISTRATEUR: '/admin',
+        PARENT: '/parent/dashboard',
+        ANIMATEUR: '/animateur/dashboard'
+      };
+
+      if (user.role.nom === 'PARENT') {
+        window.location.href = '/parent/dashboard';
+      } else {
+        this.router.navigate([routes[user.role.nom]]);
+      }
     },
     error: () => {
       this.error = true;
@@ -74,9 +60,10 @@ export class Auth implements OnInit {
 }
 
   logout(): void {
-    this.authService.logout().subscribe(() => {
-      this.user = null;
-      this.rout.navigate(['/login']);
+    this.authService.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      }
     });
   }
 }
