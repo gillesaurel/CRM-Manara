@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -6,4 +8,70 @@ import { Component } from '@angular/core';
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
-export class Header {}
+export class Header implements OnInit {
+  
+  user: any = null;
+
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.authService.getMe().subscribe({
+      next: (data) => {
+        this.user = data;
+      },
+      error: () => {
+        this.user = null;
+      }
+    });
+  }
+
+  // Vérifie si l'utilisateur est connecté
+  isLoggedIn(): boolean {
+    return !!this.user;
+  }
+
+  // Retourne le nom affiché
+  getUserName(): string {
+    return this.user?.name || '';
+  }
+
+logout(): void {
+  const clearAndRedirect = () => {
+    this.user = null;
+    localStorage.removeItem('user');
+    this.router.navigate(['/login']);
+  };
+
+  this.authService.logout().subscribe({
+    next: clearAndRedirect,
+    error: (err) => {
+      console.error('Erreur lors de la déconnexion:', err);
+      clearAndRedirect();  
+    }
+  });
+}
+
+  // Vérifie si l'utilisateur est un parent
+ 
+
+  isParent(): boolean {
+  const user = localStorage.getItem('user');
+
+  if (!user) return false;
+
+  try {
+    const parsed = JSON.parse(user);
+
+    if (!parsed?.role?.nom) return false;
+
+    return parsed.role.nom === 'PARENT';
+    } catch {
+    return false;
+  }
+
+  }
+
+}
