@@ -37,10 +37,9 @@ public class SecurityConfig {
                         .requestMatchers("/css/**", "/images/**", "/register/**").permitAll()
                         .requestMatchers("/admin/**").hasAnyRole("ADMINISTRATEUR")
                         .requestMatchers("/animateur/**").hasAnyRole("ANIMATEUR", "ADMINISTRATEUR")
-                        // ---------------------
-                        .requestMatchers("/parent/**").permitAll()  // ← permitAll() pour tester
+                        .requestMatchers("/parent/**").permitAll()
                         .requestMatchers("/userConnecte").permitAll()
-
+                        .anyRequest().permitAll()
                 )
 
                 .formLogin(form -> form

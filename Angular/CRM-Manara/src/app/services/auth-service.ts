@@ -17,13 +17,11 @@ export interface Utilisateur {
 export class AuthService {
   private apiUrl = 'http://localhost:8080';
   
-  // Subject pour partager l'état de l'utilisateur
   private userSubject = new BehaviorSubject<Utilisateur | null>(null);
   user$ = this.userSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  // Récupère l'utilisateur connecté
   getMe(): Observable<Utilisateur | null> {
     return this.http.get<Utilisateur | null>(`${this.apiUrl}/userConnecte`, {
       withCredentials: true
@@ -39,14 +37,12 @@ export class AuthService {
     );
   }
 
-  // Vérifie si l'utilisateur est connecté
   isLoggedIn(): Observable<boolean> {
     return this.getMe().pipe(
       map(user => !!user)
     );
   }
 
-  // Connexion
   login(data: any): Observable<any> {
     const body = new URLSearchParams();
     body.set('username', data.email);
@@ -58,7 +54,12 @@ export class AuthService {
     });
   }
 
-  // Déconnexion
+  // Inscription Parent
+  register(userData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register/save`, userData);
+  }
+  
+
   logout(): Observable<any> {
     return this.http.get(`${this.apiUrl}/deconnexion`, {
       withCredentials: true
@@ -70,9 +71,6 @@ export class AuthService {
     );
   }
 
-  
-  // ============================================
-  
   updateUser(user: Utilisateur | null): void {
     this.userSubject.next(user);
     if (user) {

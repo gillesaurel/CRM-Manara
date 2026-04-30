@@ -1,0 +1,47 @@
+<main class="formulaire-section">
+  <div class="form-container">
+    <h1>Inscrivez-vous</h1>
+
+    <div *ngIf="message" class="alert alert-warning">{{ message }}</div>
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+    <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+      <div class="form-group">
+        <label for="prenom">Prénom *</label>
+        <input type="text" id="prenom" name="prenom" [(ngModel)]="utilisateur.prenom" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="nom">Nom *</label>
+        <input type="text" id="nom" name="nom" [(ngModel)]="utilisateur.nom" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="telephone">Téléphone</label>
+        <input type="tel" id="telephone" name="telephone" [(ngModel)]="utilisateur.telephone" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Courriel *</label>
+        <input type="email" id="email" name="email" [(ngModel)]="utilisateur.email" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="motdepasse">Mot de passe *</label>
+        <input type="password" id="motdepasse" name="motdepasse" [(ngModel)]="utilisateur.motdepasse" class="form-control" required minlength="8" />
+      </div>
+
+      <div class="form-group">
+        <label for="confirmMotdepasse">Confirmer votre mot de passe *</label>
+        <input type="password" id="confirmMotdepasse" name="confirmMotdepasse" [(ngModel)]="utilisateur.confirmMotdepasse" class="form-control" required minlength="8" />
+        <div *ngIf="passwordMismatch" class="error-message">Les mots de passe ne correspondent pas</div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">S'inscrire</button>
+        <a routerLink="/login" class="btn-cancel">Déjà un compte ?</a>
+      </div>
+    </form>
+  </div>
+</main>

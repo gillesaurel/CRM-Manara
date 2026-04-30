@@ -36,6 +36,7 @@ import { ModifierEnfantComponent } from './app/components/parent/modifier-enfant
 import { DetailsEnfantComponent } from './app/components/parent/details-enfant/details-enfant';
 import { ActivitesListComponent } from './app/components/parent/activites-list/activites-list';
 import { SessionsListComponent } from './app/components/parent/sessions-list/sessions-list';
+import { Register } from './app/components/parent/register/register';
 
 
 @NgModule({
@@ -71,12 +72,13 @@ import { SessionsListComponent } from './app/components/parent/sessions-list/ses
     ProfilComponent,
     PlanningComponent,
     NotificationsComponent,
+    Register,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
+    FormsModule,   
     CommonModule,
     RouterModule
   ],

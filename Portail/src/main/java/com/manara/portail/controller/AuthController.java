@@ -7,6 +7,7 @@ import com.manara.portail.model.Utilisateur;
 import com.manara.portail.service.RoleService;
 import com.manara.portail.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,8 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @CrossOrigin(
@@ -47,19 +49,58 @@ public class AuthController {
         return "inscription";
     }
 
-    // REDIRECTION INSCRIPTION UTILISATEUR
+    // API INSCRIPTION UTILISATEUR (pour Angular)
     @PostMapping("/register/save")
-    public String enregistrerUtilisateur(
-            @ModelAttribute("utilisateur") Utilisateur utilisateur,
-            @RequestParam(value = "fileImage", required = false) MultipartFile fileImage,
-            RedirectAttributes redirectAttributes
-    ) {
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> enregistrerUtilisateur(@RequestBody Map<String, String> userData) {
+        Map<String, String> response = new HashMap<>();
         try {
+            String email = userData.get("email");
+            String password = userData.get("motdepasse");
+
+            String confirmPassword = userData.get("confirmMotdepasse");
+
+            if (password == null || !password.equals(confirmPassword)) {
+                response.put("message", "Les mots de passe ne correspondent pas !");
+                return ResponseEntity.badRequest().body(response);
+            }
+
+            System.out.println("=== TENTATIVE D'INSCRIPTION ===");
+            System.out.println("Email: " + email);
+            System.out.println("Données reçues: " + userData);
+
+            // Vérifier si l'email existe déjà
+            if (utilisateurService.findByEmail(email) != null) {
+                response.put("message", "Cet email est déjà utilisé");
+                return ResponseEntity.badRequest().body(response);
+            }
+
+            // Créer l'utilisateur
+            Utilisateur utilisateur = new Utilisateur();
+            utilisateur.setPrenom(userData.get("prenom"));
+            utilisateur.setNom(userData.get("nom"));
+            utilisateur.setTelephone(userData.get("telephone"));
+            utilisateur.setEmail(email);
+            utilisateur.setMotdepasse(passwordEncoder.encode(password));
+
+            // Assigner le rôle PARENT par défaut
+            Role roleParent = RoleService.findByName("PARENT");
+            if (roleParent == null) {
+                roleParent = new Role();
+                roleParent.setNom("PARENT");
+                RoleService.save(roleParent);
+            }
+            utilisateur.setRole(roleParent);
+
             utilisateurService.enregistrer(utilisateur);
-            return "redirect:/";
+
+            response.put("message", "Inscription réussie");
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return "redirect:/register";
+            System.out.println("=== ERREUR INSCRIPTION ===");
+            e.printStackTrace();
+            response.put("message", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
         }
     }
 
@@ -69,44 +110,6 @@ public class AuthController {
         model.addAttribute("utilisateur", new Utilisateur());
         return "connexion";
     }
-
-/*
-    @PostMapping("/login/save")
-    public String connecterUtilisateur(
-            @ModelAttribute("utilisateur") Utilisateur utilisateur,
-            RedirectAttributes redirectAttributes,
-            HttpServletResponse response
-    ) throws IOException {
-
-        Utilisateur tempUtilisateur = UtilService.getUtilisateurByEmailAndMotDePasse(
-                utilisateur.getEmail(),
-                utilisateur.getMotdepasse()
-        );
-        System.out.println("email : " + utilisateur.getEmail());
-        System.out.println("mdp : " + utilisateur.getMotdepasse());
-
-        try {
-
-
-            System.out.println("tempUtilisateur : " + tempUtilisateur.getEmail());
-
-
-            if (tempUtilisateur != null) {
-
-                response.addCookie(createCookie("email",tempUtilisateur.getEmail()));
-                response.addCookie(createCookie("role", tempUtilisateur.getRole().getNom()));
-                response.addCookie(createCookie("prenom", tempUtilisateur.getPrenom()));
-                response.addCookie(createCookie("nom", tempUtilisateur.getNom()));
-
-                return "redirect:/";
-            }
-
-            return "redirect:/login";
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return "redirect:/login";
-        }
-    }*/
 
     @GetMapping("/deconnexion")
     public String pageConnexion(Model model, HttpServletResponse response) {
@@ -147,5 +150,4 @@ public class AuthController {
         String email = authentication.getName();
         return utilisateurService.findByEmail(email);
     }
-
 }

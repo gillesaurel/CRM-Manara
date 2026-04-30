@@ -25,6 +25,7 @@ import { AnimateurHoraire } from './app/components/animateur/animateur-horaire/a
 import { AnimateurInscription } from './app/components/animateur/animateur-inscription/animateur-inscription';  // ← add this
 import { AnimateurPresences } from './app/components/animateur/animateur-presences/animateur-presences';
 import { AnimateurIncidents } from './app/components/animateur/animateur-incidents/animateur-incidents';
+import { Register } from './app/components/parent/register/register';
 
 const routes: Routes = [
   // Routes publiques
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'header', component: Header },
   { path: 'footer', component: Footer },
   { path: 'login', component: Auth },
+  { path: 'register', component: Register }, 
 
   // Routes Admin
   { path: 'admin', canActivate: [UserAuth], component: Administrateur },
