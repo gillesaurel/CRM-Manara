@@ -43,7 +43,9 @@ export class AjouterEnfantComponent {
       next: () => {
         this.successMessage = 'Enfant ajouté avec succès !';
         setTimeout(() => {
-          this.router.navigate(['/parent/enfants']);
+          //this.router.navigate(['/parent/enfants']);
+           // Force le rechargement complet de la page
+          window.location.href = '/parent/enfants';
         }, 2000);
       },
       error: (err) => {

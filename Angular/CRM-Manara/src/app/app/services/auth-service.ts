@@ -103,4 +103,8 @@ export class AuthService {
   get currentUser(): Utilisateur | null {
     return this.userSubject.value;
   }
+
+  register(userData: any): Observable<any> {
+  return this.http.post(`${this.apiUrl}/register/save`, userData);
+}
 }
