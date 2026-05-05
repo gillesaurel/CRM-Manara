@@ -1,58 +1,79 @@
-<div class="page-animateurs">
-
-  <main class="dash">
-
-    <section class="dash-top">
-      <div>
-        <h1>Portail Manara</h1>
-        <p class="subtitle">Tableau de bord</p>
-      </div>
-      <div class="profile-pill">
-        <i class="fa-solid fa-user-tie"></i>
-        <span>Profil : Animateur</span>
-      </div>
-    </section>
-
-    <h2>Sessions à venir</h2>
-    <p>Consulter vos prochaines sessions.</p>
-
-    <ng-container *ngIf="sessions && sessions.length > 0; else empty">
-      <div *ngFor="let sess of sessions">
-        <section class="card welcome">
-          <h3>{{ sess.activiteNom }}</h3>
-          <div class="quick-grid">
-            <table>
-              <thead>
-              <tr>
-                <th>Date</th>
-                <th>Heure début</th>
-                <th>Heure fin</th>
-                <th>Lieu</th>
-                <th>Statut</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>{{ sess.date }}</td>
-                <td>{{ sess.heure_debut }}</td>
-                <td>{{ sess.heure_fin }}</td>
-                <td>{{ sess.lieu }}</td>
-                <td>{{ sess.statut }}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-    </ng-container>
-
-    <ng-template #empty>
-      <section class="card welcome">
-        <p>Aucune session à venir.</p>
-      </section>
-    </ng-template>
-
-    <div class="bottom-spacer"></div>
-  </main>
-
+<div class="bienvenue-section">
+  <h1>Tableau de Bord Animateur</h1>
 </div>
+
+<main style="max-width:1200px; margin:0 auto; padding:40px 20px;">
+
+  <!-- ================= STATS ================= -->
+  <div class="animateur-stats">
+
+    <div class="animateur-stat-card">
+      <span class="stat-number">{{ sessions?.length || 0 }}</span>
+      <span class="stat-label">Sessions à venir</span>
+    </div>
+
+    <div class="animateur-stat-card accent">
+      <span class="stat-number"><i class="fa-solid fa-user-tie" style="font-size:28px; color:#043d5b;"></i></span>
+      <span class="stat-label">Profil Animateur</span>
+    </div>
+
+  </div>
+
+  <!-- ================= SECTION TITLE ================= -->
+  <div class="animateur-section-header">
+    <h2>Sessions à venir</h2>
+  </div>
+
+  <!-- ================= TABLE ================= -->
+  <ng-container *ngIf="sessions && sessions.length > 0; else empty">
+
+    <div class="animateur-table-wrapper">
+      <table class="animateur-table">
+
+        <thead>
+          <tr>
+            <th>Activité</th>
+            <th>Date</th>
+            <th>Heure début</th>
+            <th>Heure fin</th>
+            <th>Lieu</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let sess of sessions">
+            <td class="nom" data-label="Activité">{{ sess.activiteNom }}</td>
+            <td data-label="Date">{{ sess.date }}</td>
+            <td data-label="Heure début">{{ sess.heure_debut }}</td>
+            <td data-label="Heure fin">{{ sess.heure_fin }}</td>
+            <td data-label="Lieu">{{ sess.lieu }}</td>
+            <td data-label="Statut">
+              <span class="statut-badge"
+                [class.actif]="sess.statut === 'Actif'"
+                [class.annule]="sess.statut === 'Annulé'"
+                [class.en-attente]="sess.statut === 'En attente'">
+                {{ sess.statut }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </ng-container>
+
+  <ng-template #empty>
+    <div class="animateur-empty">
+      <div class="empty-icon">📅</div>
+      <h2>Aucune session à venir</h2>
+      <p>Vous n'avez pas de sessions planifiées pour le moment.</p>
+    </div>
+  </ng-template>
+  
+  <button class="back-btn" (click)="goBack()">Retour</button>
+</main>
+
+<app-footer></app-footer>
+<div class="bottom-espace"></div>

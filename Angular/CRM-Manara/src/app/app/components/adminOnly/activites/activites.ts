@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../services/admin-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-activites',
@@ -13,7 +14,9 @@ export class Activites implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private cdr: ChangeDetectorRef) { }
+    private cdr: ChangeDetectorRef,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadActivites();
@@ -23,7 +26,6 @@ export class Activites implements OnInit {
     this.adminService.showActivites().subscribe({
       next: (data: any) => {
         this.activites = data.activites;
-        console.log('Activités trouvées :', this.activites);
         this.cdr.detectChanges();
       },
       error: (error: unknown) => {
@@ -32,47 +34,36 @@ export class Activites implements OnInit {
     });
   }
 
+  editActivite(id: number) {
+    this.router.navigate(['/adminOnly/ajouter-activite', id]);
+  }
+
   deleteActivite(id: number) {
-    if (!confirm('Êtes-vous sûr de vouloir supprimer cette activité ?')) {
-      return;
-    }
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette activité ?')) return;
     this.adminService.removeActivite(id).subscribe({
       next: () => {
         alert('Activité supprimée avec succès !');
         this.loadActivites();
-      },
-      error: (error: unknown) => {
-        console.error('Erreur lors de la suppression de l\'activité :', error);
       }
     });
   }
 
   validerInscription(id: number) {
-    if (!confirm('Êtes-vous sûr de vouloir valider cette inscription ?')) {
-      return;
-    }
+    if (!confirm('Êtes-vous sûr de vouloir valider cette inscription ?')) return;
     this.adminService.validerInscription(id).subscribe({
       next: () => {
         alert('Inscription validée avec succès !');
         this.loadActivites();
-      },
-      error: (error: unknown) => {
-        console.error('Erreur lors de la validation de l\'inscription :', error);
       }
     });
   }
 
   deleteInscription(id: number) {
-    if (!confirm('Êtes-vous sûr de vouloir supprimer cette inscription ?')) {
-      return;
-    }
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette inscription ?')) return;
     this.adminService.deleteInscription(id).subscribe({
       next: () => {
         alert('Inscription supprimée avec succès !');
         this.loadActivites();
-      },
-      error: (error: unknown) => {
-        console.error('Erreur lors de la suppression de l\'inscription :', error);
       }
     });
   }

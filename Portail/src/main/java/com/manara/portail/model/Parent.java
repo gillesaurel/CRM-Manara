@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "parents")
+@Table(name = "parent")
 public class Parent {
 
     @Id

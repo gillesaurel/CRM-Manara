@@ -1,7 +1,6 @@
-import { ChangeDetectorRef, Component, OnInit  } from '@angular/core';
-import { AnimateurService } from    '../../../services/animateur-service';
-import { InscriptionService } from  '../../../services/inscription-service';
-import { AuthService } from         '../../../../services/auth-service';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; // 1. Import it
+import { AnimateurService } from '../../../services/animateur-service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-animateur-dashboard',
@@ -9,21 +8,39 @@ import { AuthService } from         '../../../../services/auth-service';
   templateUrl: './animateur-dashboard.html',
   styleUrl: './animateur-dashboard.css',
 })
-export class AnimateurDashboard {
+export class AnimateurDashboard implements OnInit {
+  sessions: any[] = [];
+  totalInscriptions: number = 0;
+  sessionsAujourdHui: number = 0;
+  incidents7j: number = 0;
+
+  // 1. Inject ChangeDetectorRef
   constructor(
     private animateurService: AnimateurService,
-    private inscriptionService: InscriptionService,
-    private authService: AuthService,
+    private cdr: ChangeDetectorRef ,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
-    this.getInscriptionCount();
+    
+    this.animateurService.getDashboardData().subscribe({
+      next: (data: any) => {
+        console.log("FULL DATA:", data.sessionsAujourdHui);
+        this.sessions           = data.sessions           ?? [];
+        this.totalInscriptions  = data.totalInscriptions  ?? 0;
+        this.sessionsAujourdHui = data.sessionsAujourdHui ?? 0;
+        this.incidents7j        = data.incidents7j        ?? 0;
+
+        // 2. Add it here to notify Angular the state has changed
+        this.cdr.markForCheck(); 
+        console.log(this.sessions);
+
+      },
+      error: (err: any) => console.error('[Dashboard] load error', err),
+    });
   }
 
-  getInscriptionCount() {
-    console.log(this.authService.getMe());
-    //this.inscriptionService.getInscriptionsByAnimateur();
+  goBack(): void {
+    this.location.back();
   }
 }
-
-

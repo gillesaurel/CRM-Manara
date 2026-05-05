@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -44,54 +46,78 @@ public class AnimateurController {
     @Autowired
     EnfantService enfantService;
 
+    // ── Thymeleaf page (kept for backwards compat) ──
     @GetMapping("/animateur")
-    public String pageAccueil(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null || !auth.isAuthenticated()) {
-            return "redirect:/login";
-        }
-        String email = auth.getName();
-        model.addAttribute("email", email);
+    public ResponseEntity<?> pageAccueil(Model model) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Integer animateurId = utilisateurService.getIdByEmail(email);
+        System.out.println("animateurId: " + animateurId);
+        // Sessions
+        List<SessionParent> sessions = sessionParentService
+                .getSessionsAvecEnfantsByAnimateur(animateurId);
+        System.out.println("sessions: " + sessions);
 
-        return "animateur";
+        // KPI — total inscriptions across all sessions
+        int totalInscriptions = 0;
+        for (SessionParent sess : sessions) {
+            totalInscriptions += inscriptionEnfantService
+                    .getNombreConfirmationsBySession(sess.getId());
+        }
+
+        // KPI — sessions happening today
+        LocalDate today = LocalDate.now();
+        long sessionsAujourdHui = sessions.stream()
+                .filter(s -> today.equals(s.getDate()))
+                .count();
+
+        // KPI — incidents in the last 7 days
+        LocalDateTime sevenDaysAgo = LocalDateTime.now().minusDays(7);
+        List<Incident> incidents = incidentService.getIncidentsByAnimateur(animateurId);
+        long incidents7j = incidents.stream()
+                .filter(i -> i.getDateHeure() != null && i.getDateHeure().isAfter(sevenDaysAgo))
+                .count();
+            System.out.println(sessions + " , "+ totalInscriptions);
+        Map<String, Object> data = new HashMap<>();
+        data.put("sessions",           sessions);
+        data.put("totalInscriptions",  totalInscriptions);
+        data.put("sessionsAujourdHui", sessionsAujourdHui);
+        data.put("incidents7j",        incidents7j);
+
+        return ResponseEntity.ok(data);
     }
 
+    // ── Inscriptions ─────────────────────────────────
     @GetMapping("/animateur/inscriptions")
     public ResponseEntity<?> pageInscription() {
-        System.out.println("Requested enter!");
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(auth.getName());
-        String email = auth.getName();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Integer animateurId = utilisateurService.getIdByEmail(email);
 
         List<SessionParent> sessions = sessionParentService
                 .getSessionsAvecEnfantsByAnimateur(animateurId);
 
-        // Group inscriptions by activite name
         Map<String, List<InscriptionEnfant>> inscriptionsParActivite = new LinkedHashMap<>();
         for (SessionParent sess : sessions) {
-            String nomActivite = sess.getActivite() != null ? sess.getActivite().getNom() : "Activité inconnue";
+            String nomActivite = sess.getActivite() != null
+                    ? sess.getActivite().getNom() : "Activité inconnue";
             inscriptionsParActivite.computeIfAbsent(nomActivite, k -> new ArrayList<>());
 
             List<InscriptionEnfant> inscriptions = inscriptionEnfantService
                     .getInscriptionsBySession(sess.getId());
 
             for (InscriptionEnfant inscription : inscriptions) {
-                // Avoid duplicates
                 if (inscriptionsParActivite.get(nomActivite).stream()
                         .noneMatch(i -> i.getId().equals(inscription.getId()))) {
                     inscriptionsParActivite.get(nomActivite).add(inscription);
                 }
             }
         }
+
         Map<String, Object> data = new HashMap<>();
         data.put("inscriptions", inscriptionsParActivite);
-        System.out.println("Response Data: " + data.toString());
         return ResponseEntity.ok(data);
-
-
     }
 
+    // ── Presences ────────────────────────────────────
     @GetMapping("/animateur/presences")
     public ResponseEntity<?> pagePresences() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -101,20 +127,20 @@ public class AnimateurController {
                 .getSessionsAvecEnfantsByAnimateur(animateurId);
 
         Map<String, List<Map<String, Object>>> presencesParActivite = new LinkedHashMap<>();
-
         for (SessionParent sess : sessions) {
-            String nomActivite = sess.getActivite() != null ? sess.getActivite().getNom() : "Activité inconnue";
-            String sessionLabel = sess.getDate() + " | " + sess.getHeureDebut() + " – " + sess.getHeureFin()
-                    + " | " + sess.getLieu();
+            String nomActivite = sess.getActivite() != null
+                    ? sess.getActivite().getNom() : "Activité inconnue";
+            String sessionLabel = sess.getDate() + " | " + sess.getHeureDebut()
+                    + " – " + sess.getHeureFin() + " | " + sess.getLieu();
 
             presencesParActivite.computeIfAbsent(nomActivite, k -> new ArrayList<>());
 
-            List<Enfant> enfants = inscriptionEnfantService.getEnfantsConfirmesBySession(sess.getId());
+            List<Enfant> enfants = inscriptionEnfantService
+                    .getEnfantsConfirmesBySession(sess.getId());
 
             Map<String, Object> sessionData = new LinkedHashMap<>();
             sessionData.put("sessionLabel", sessionLabel);
             sessionData.put("enfants", enfants);
-
             presencesParActivite.get(nomActivite).add(sessionData);
         }
 
@@ -123,6 +149,7 @@ public class AnimateurController {
         return ResponseEntity.ok(data);
     }
 
+    // ── Horaire ──────────────────────────────────────
     @GetMapping("/animateur/horaire")
     public ResponseEntity<?> pageHoraire() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -136,6 +163,7 @@ public class AnimateurController {
         return ResponseEntity.ok(data);
     }
 
+    // ── Incidents ────────────────────────────────────
     @GetMapping("/animateur/incidents")
     public ResponseEntity<?> pageIncidents() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();

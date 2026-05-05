@@ -1,52 +1,148 @@
-
-<div class="admin-main">
-  <h2>
-    {{ activiteForm.id ? 'Modifier une activité' : 'Créer une nouvelle activité' }}
-  </h2>
-
-  <div class="alert alert-success text-center" *ngIf="message">
-    {{message}}
+<!-- HEADER -->
+<div class="aa-header">
+  <div class="aa-header__icon">
+    <i class="fas fa-calendar-plus"></i>
   </div>
-
-  <div class="form-container">
-    <form #f="ngForm" (ngSubmit)="onSubmit()">
-
-      <div class="form-group" style="margin-bottom: 15px;">
-        <label style="display: block; margin-bottom: 5px;">Nom de l'activité</label>
-        <input type="text" [(ngModel)]="activiteForm.nom" name="nom" required
-          style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
-      </div>
-
-      <div class="form-group" style="margin-bottom: 15px;">
-        <label style="display: block; margin-bottom: 5px;">Date et Heure</label>
-        <input type="datetime-local" [(ngModel)]="activiteForm.dateDebut" name="dateDebut" required
-          style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
-      </div>
-
-      <div class="form-group" style="margin-bottom: 15px;">
-        <label style="display: block; margin-bottom: 5px;">Capacité</label>
-        <input type="number" [(ngModel)]="activiteForm.capacite" name="capacite" min="1" required
-          style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
-      </div>
-
-      <div class="form-group" style="margin-bottom: 20px;">
-        <label style="display: block; margin-bottom: 5px;">Description</label>
-        <textarea [(ngModel)]="activiteForm.description" name="description"
-          style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; height: 100px;"></textarea>
-      </div>
-
-      <div class="actions">
-        <button type="submit" class="btn-explorer" [disabled]="!f.valid">
-          {{ activiteForm.id ? 'Modifier' : 'Enregistrer' }}
-        </button>
-        <button type="button" class="btn-annuler" (click)="goBack()">
-          Annuler
-        </button>
-      </div>
-    </form>
-  </div>
+  <h1>{{ activiteForm.id ? 'Modifier une activité' : 'Nouvelle activité' }}</h1>
+  <p class="aa-subtitle">{{ activiteForm.id ? 'Modifiez les informations de cette activité' : 'Créez une nouvelle activité pour vos participants' }}</p>
 </div>
+
+<div class="aa-main">
+
+  <!-- SUCCÈS -->
+  <div *ngIf="message" class="aa-success">
+    <div class="aa-success__icon"><i class="fas fa-check"></i></div>
+    <p class="aa-success__title">{{ message }}</p>
+  </div>
+
+  <form #f="ngForm" (ngSubmit)="onSubmit()" class="aa-form-wrap">
+
+    <!-- SECTION 1 — INFOS DE BASE -->
+    <div class="aa-card">
+      <div class="aa-card__section-title">
+        <i class="fas fa-info-circle"></i>
+        Informations générales
+      </div>
+
+      <div class="aa-field">
+        <label class="aa-label"><i class="fas fa-tag"></i> Nom de l'activité</label>
+        <input type="text" [(ngModel)]="activiteForm.nom" name="nom" required
+          placeholder="Ex: Soccer jeunesse, Natation..." class="aa-input">
+      </div>
+
+      <div class="aa-row">
+        <div class="aa-field">
+          <label class="aa-label"><i class="fas fa-users"></i> Capacité max</label>
+          <input type="number" [(ngModel)]="activiteForm.capacite" name="capacite"
+            min="1" required placeholder="Ex: 20" class="aa-input">
+        </div>
+        <div class="aa-field">
+          <label class="aa-label"><i class="fas fa-dollar-sign"></i> Prix ($)</label>
+          <input type="number" [(ngModel)]="activiteForm.prix" name="prix"
+            min="0" step="0.01" required placeholder="Ex: 25.00" class="aa-input">
+        </div>
+      </div>
+
+      <div class="aa-field">
+        <label class="aa-label"><i class="fas fa-align-left"></i> Description</label>
+        <textarea [(ngModel)]="activiteForm.description" name="description"
+          placeholder="Décrivez l'activité, les objectifs, le matériel requis..."
+          class="aa-textarea"></textarea>
+      </div>
+    </div>
+
+    <!-- SECTION 2 — ANIMATEUR -->
+    <div class="aa-card">
+      <div class="aa-card__section-title">
+        <i class="fas fa-user-tie"></i>
+        Animateur responsable
+      </div>
+
+      <div class="aa-field">
+        <label class="aa-label"><i class="fas fa-running"></i> Choisir un animateur</label>
+        <div class="aa-select-wrap">
+          <select [(ngModel)]="activiteForm.animateurId" name="animateurId" class="aa-select">
+            <option [ngValue]="null">Aucun animateur assigné</option>
+            <option *ngFor="let a of animateurs" [ngValue]="a.id">
+              {{ a.prenom }} {{ a.nom }}
+            </option>
+          </select>
+          <i class="fas fa-chevron-down aa-select__arrow"></i>
+        </div>
+      </div>
+
+      <!-- Preview animateur sélectionné -->
+      <div *ngIf="getSelectedAnimateur()" class="aa-animateur-preview">
+        <div class="aa-animateur-preview__avatar">
+          {{ getSelectedAnimateur()?.prenom?.charAt(0) }}{{ getSelectedAnimateur()?.nom?.charAt(0) }}
+        </div>
+        <div>
+          <p class="aa-animateur-preview__name">{{ getSelectedAnimateur()?.prenom }} {{ getSelectedAnimateur()?.nom }}</p>
+          <p class="aa-animateur-preview__email">{{ getSelectedAnimateur()?.email }}</p>
+        </div>
+        <span class="aa-animateur-preview__badge">
+          <i class="fas fa-check"></i> Assigné
+        </span>
+      </div>
+    </div>
+
+    <!-- SECTION 3 — SÉANCES -->
+    <div class="aa-card">
+      <div class="aa-card__section-title">
+        <i class="fas fa-calendar-alt"></i>
+        Séances
+        <span class="aa-seances-count">{{ activiteForm.seances.length }} séance(s)</span>
+      </div>
+
+      <!-- LISTE DES SÉANCES -->
+      <div class="aa-seances">
+        <div *ngFor="let seance of activiteForm.seances; let i = index" class="aa-seance">
+          <div class="aa-seance__num">{{ i + 1 }}</div>
+          <div class="aa-seance__body">
+            <label class="aa-label">
+              <i class="fas fa-calendar"></i> Séance {{ i + 1 }}
+              <span *ngIf="i > 0 && isDateInvalide(i)" class="aa-seance__error">
+                <i class="fas fa-exclamation-triangle"></i> Doit être après la séance {{ i }}
+              </span>
+            </label>
+            <input
+              type="datetime-local"
+              [(ngModel)]="seance.dateHeure"
+              [name]="'seance_' + i"
+              [min]="i > 0 ? activiteForm.seances[i-1].dateHeure : ''"
+              required
+              class="aa-input"
+              [class.aa-input--error]="i > 0 && isDateInvalide(i)">
+          </div>
+          <button type="button" (click)="removeSeance(i)" class="aa-seance__remove"
+            [disabled]="activiteForm.seances.length === 1">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- BOUTON AJOUTER SÉANCE -->
+      <button type="button" (click)="addSeance()" class="aa-btn-add-seance">
+        <i class="fas fa-plus"></i> Ajouter une séance
+      </button>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="aa-actions">
+      <button type="button" class="aa-btn aa-btn--outline" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i> Annuler
+      </button>
+      <button type="submit" class="aa-btn aa-btn--primary" [disabled]="!f.valid || hasDateErrors()">
+        <span class="aa-btn__icon">
+          <i class="fas" [class.fa-save]="!activiteForm.id" [class.fa-edit]="activiteForm.id"></i>
+        </span>
+        {{ activiteForm.id ? 'Enregistrer les modifications' : 'Créer l\'activité' }}
+      </button>
+    </div>
+
+  </form>
+</div>
+
 <app-footer></app-footer>
 <div class="bottom-espace"></div>
-
 <app-fragment-administrateur></app-fragment-administrateur>

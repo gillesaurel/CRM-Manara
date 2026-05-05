@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';  // ← add this
+import { CommonModule } from '@angular/common'; // ← add this
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Administrateur } from './app/components/administrateur/administrateur';
@@ -21,11 +21,11 @@ import { ListeAttente } from './app/components/adminOnly/liste-attente/liste-att
 import { AjouterActivite } from './app/components/adminOnly/ajouter-activite/ajouter-activite';
 import { AnimateurDashboard } from './app/components/animateur/animateur-dashboard/animateur-dashboard';
 import { AnimateurHoraire } from './app/components/animateur/animateur-horaire/animateur-horaire';
-import { AnimateurInscription } from './app/components/animateur/animateur-inscription/animateur-inscription';  // ← add this
+import { AnimateurInscription } from './app/components/animateur/animateur-inscription/animateur-inscription'; // ← add this
 import { AnimateurPresences } from './app/components/animateur/animateur-presences/animateur-presences';
 import { AnimateurIncidents } from './app/components/animateur/animateur-incidents/animateur-incidents';
 
-import { ParentNav } from './app/components/fragments/parent/parent';  
+import { ParentNav } from './app/components/fragments/parent/parent';
 import { DashboardComponent } from './app/components/parent/dashboard/dashboard';
 import { EnfantsListComponent } from './app/components/parent/enfants-list/enfants-list';
 import { AjouterEnfantComponent } from './app/components/parent/ajouter-enfant/ajouter-enfant';
@@ -37,7 +37,10 @@ import { DetailsEnfantComponent } from './app/components/parent/details-enfant/d
 import { ActivitesListComponent } from './app/components/parent/activites-list/activites-list';
 import { SessionsListComponent } from './app/components/parent/sessions-list/sessions-list';
 import { Register } from './app/components/parent/register/register';
+import { ForgotPassword } from './app/components/resetPWD/forgot-password/forgot-password';
+import { ResetPassword } from './app/components/resetPWD/reset-password/reset-password';
 
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -73,15 +76,18 @@ import { Register } from './app/components/parent/register/register';
     PlanningComponent,
     NotificationsComponent,
     Register,
+    ForgotPassword,
+    ResetPassword,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,   
+    FormsModule,
     CommonModule,
-    RouterModule
+    RouterModule,
   ],
+  providers: [DatePipe],
   bootstrap: [App],
 })
 export class AppModule {}

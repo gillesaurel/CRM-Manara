@@ -1,0 +1,221 @@
+/* =============================================
+   ANIMATEUR PRESENCES - Component Styles
+   ============================================= */
+
+/* ── Section Header ─────────────────────────── */
+.animateur-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.animateur-section-header h2 {
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* ── Activity Group ─────────────────────────── */
+.presence-group {
+  margin-bottom: 40px;
+}
+
+.presence-activity-header {
+  background: #fccd2c;
+  border-radius: 12px 12px 0 0;
+  padding: 14px 20px;
+}
+
+.presence-activity-header h3 {
+  color: #043d5b;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.presence-activity-header h3 i {
+  margin-right: 8px;
+}
+
+/* ── Session Label ──────────────────────────── */
+.presence-session-label {
+  background: #065a82;
+  padding: 10px 20px;
+}
+
+.presence-session-label p {
+  color: #ffffff;
+  font-weight: 600;
+  margin: 0;
+  font-size: 14px;
+}
+
+.presence-session-label p i {
+  margin-right: 8px;
+  color: #fccd2c;
+}
+
+/* ── Table Wrapper ──────────────────────────── */
+.animateur-table-wrapper {
+  background: #ffffff;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+/* ── Table ──────────────────────────────────── */
+.animateur-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+
+.animateur-table thead tr {
+  background: #043d5b;
+}
+
+.animateur-table thead th {
+  padding: 14px 16px;
+  color: #fccd2c;
+  font-weight: 700;
+  text-align: left;
+  border: none;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+
+.animateur-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.animateur-table tbody tr:nth-child(even) {
+  background: #f8f9fa;
+}
+
+.animateur-table tbody tr:hover {
+  background: #fff8e1;
+}
+
+.animateur-table tbody td {
+  padding: 14px 16px;
+  color: #333;
+  border: none;
+  border-bottom: 1px solid #e1e5e9;
+  font-size: 14px;
+}
+
+.animateur-table tbody td.nom {
+  color: #043d5b;
+  font-weight: 600;
+}
+
+.animateur-table tbody td.empty {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+}
+
+/* ── Statut & Allergie Badges ───────────────── */
+.statut-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.statut-badge i {
+  margin-right: 4px;
+}
+
+.statut-badge.actif {
+  background: #d4edda;
+  color: #155724;
+}
+
+.statut-badge.annule {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.statut-badge.en-attente {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.allergie-none {
+  color: #999;
+}
+
+/* ── Empty State ────────────────────────────── */
+.animateur-empty {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.animateur-empty .empty-icon {
+  font-size: 56px;
+  margin-bottom: 16px;
+}
+
+.animateur-empty h2 {
+  color: #043d5b;
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+.animateur-empty p {
+  color: #999;
+  font-size: 14px;
+}
+
+/* ── Responsive ─────────────────────────────── */
+@media (max-width: 768px) {
+  .animateur-table thead {
+    display: none;
+  }
+
+  .animateur-table tbody tr {
+    display: block;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    background: #ffffff;
+  }
+
+  .animateur-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 13px;
+  }
+
+  .animateur-table tbody td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: #043d5b;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+
+  .presence-activity-header h3 {
+    font-size: 15px;
+  }
+}
+
+.back-btn{
+  width: 100%;
+  text-align: center;
+  display: block;
+  border: none;
+  cursor: pointer;
+  margin: 0 24px 24px;
+  width: calc(100% - 48px);
+}

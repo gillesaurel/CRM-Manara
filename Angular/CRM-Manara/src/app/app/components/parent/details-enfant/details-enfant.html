@@ -1,10 +1,10 @@
 <main class="dashboard-container">
   <div class="page-header">
-    <h1 style="color: yellow">Détails de l'enfant</h1>
+    <h1>Détails de l'enfant</h1>
     <a routerLink="/parent/enfants" class="btn-back">← Retour à la liste</a>
   </div>
 
-  <div style="color: white" class="enfant-detail-container" *ngIf="enfant">
+  <div class="enfant-detail-container" *ngIf="enfant">
     <div class="enfant-detail-header">
       <div class="enfant-avatar-geant">
         <span>{{ enfant.prenom?.charAt(0) }}{{ enfant.nom?.charAt(0) }}</span>
@@ -16,7 +16,7 @@
     </div>
 
     <!-- Informations médicales -->
-    <div style="color: white" class="detail-section">
+    <div class="detail-section">
       <h3>Informations médicales</h3>
       <div class="detail-grid">
         <div class="detail-item">
@@ -25,7 +25,7 @@
           <p *ngIf="!enfant.allergies" class="text-muted">Aucune allergie signalée</p>
         </div>
         <div class="detail-item">
-          <strong >Notes médicales :</strong>
+          <strong>Notes médicales :</strong>
           <p *ngIf="enfant.notesMedicales">{{ enfant.notesMedicales }}</p>
           <p *ngIf="!enfant.notesMedicales" class="text-muted">Aucune note médicale</p>
         </div>

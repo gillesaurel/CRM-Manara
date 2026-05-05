@@ -1,0 +1,91 @@
+body.dark-mode {
+  background-color: #0d1117 !important;
+  color: #e6edf3 !important;
+}
+
+body.dark-mode .form,
+body.dark-mode .auth-left,
+body.dark-mode .u-card,
+body.dark-mode .a-section,
+body.dark-mode .ac-card,
+body.dark-mode .la-card,
+body.dark-mode .aa-card,
+body.dark-mode .admin-table,
+body.dark-mode .a-table {
+  background: #161b22 !important;
+  color: #e6edf3 !important;
+  border-color: rgba(255,255,255,0.1) !important;
+}
+
+body.dark-mode .u-stat-card,
+body.dark-mode .a-stat,
+body.dark-mode .la-stat {
+  background: #161b22 !important;
+  color: #e6edf3 !important;
+}
+
+body.dark-mode .a-table td,
+body.dark-mode .ac-table td,
+body.dark-mode .la-table td,
+body.dark-mode .admin-table td {
+  color: #e6edf3 !important;
+  border-color: rgba(255,255,255,0.07) !important;
+  background: #161b22 !important;
+}
+
+body.dark-mode .a-table tbody tr:hover td,
+body.dark-mode .ac-table tbody tr:hover td {
+  background: #1f2937 !important;
+}
+
+body.dark-mode .auth-left {
+  background: #0d1117 !important;
+}
+
+body.dark-mode .auth-input {
+  background: #1f2937 !important;
+  color: #e6edf3 !important;
+  border-color: rgba(255,255,255,0.15) !important;
+}
+
+body.dark-mode .auth-title,
+body.dark-mode .u-card__name,
+body.dark-mode .a-table__name,
+body.dark-mode .ac-card__title {
+  color: #e6edf3 !important;
+}
+
+body.dark-mode .aa-input,
+body.dark-mode .aa-textarea,
+body.dark-mode .aa-select,
+body.dark-mode .em-input,
+body.dark-mode .em-textarea,
+body.dark-mode .em-select,
+body.dark-mode .u-search__input,
+body.dark-mode .u-card__pwd,
+body.dark-mode .a-comm__input {
+  background: #1f2937 !important;
+  color: #e6edf3 !important;
+  border-color: rgba(255,255,255,0.15) !important;
+}
+
+/* Bouton toggle */
+.dark-toggle {
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  color: #ffffff;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.dark-toggle:hover {
+  background: rgba(252, 205, 44, 0.15);
+  border-color: #fccd2c;
+  color: #fccd2c;
+}

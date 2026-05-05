@@ -41,12 +41,12 @@ export class EnfantsListComponent implements OnInit {
       this.parentService.supprimerEnfant(enfantId).subscribe({
         next: () => {
           this.successMessage = 'Enfant supprimé avec succès !';
-          this.chargerEnfants();
+          this.chargerEnfants(); // Recharge la liste
           setTimeout(() => this.successMessage = '', 3000);
         },
         error: (err) => {
-          console.error('Erreur suppression:', err);
           this.errorMessage = err.error?.message || 'Erreur lors de la suppression';
+          console.error('Erreur:', err);
           setTimeout(() => this.errorMessage = '', 3000);
         }
       });

@@ -58,7 +58,7 @@ export class Utilisateurs implements OnInit {
       alert('Mot de passe trop court (min 8 caractères).');
       return;
     } else {
-      (!confirm('Le mot de passe sera réinitialisé.'))
+      (!confirm('Mot de passe réinitialisé avec succès.'))
     }
 
     console.log('Appel resetPassword envoyé');

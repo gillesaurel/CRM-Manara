@@ -1,198 +1,234 @@
-/* Variables */
-:root {
-    --global-color1: #043d5b;
-    --global-accent: #fccd2c;
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap');
+
+/* ===== HEADER ===== */
+.au-header {
+  text-align: center;
+  padding: 40px 24px 28px;
 }
 
-/* Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.au-header h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 6px;
 }
 
-/* Body */
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    line-height: 1.6;
-    background-color: #043d5b;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+.au-subtitle {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  margin: 0;
 }
 
-/* Header */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    background-color: #f8f9fa;
+/* ===== MAIN ===== */
+.au-main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px 100px;
+  font-family: 'Outfit', sans-serif;
 }
 
-header img {
-    height: 70px;
+/* ===== CARD ===== */
+.au-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 36px 40px;
+  box-shadow: 0 8px 40px rgba(4, 61, 91, 0.18);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Navigation */
-nav {
-    display: flex;
-    gap: 15px;
+.au-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #043d5b 0%, #fccd2c 100%);
 }
 
-nav a {
-    text-decoration: none;
-    color: #043d5b;
-    font-weight: bold;
-    padding: 8px 16px;
-    border-radius: 20px;
+/* ===== ALERTE ===== */
+.au-alert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  background: #d4edda;
+  color: #155724;
 }
 
-nav a:hover {
-    background-color: #fccd2c;
+/* ===== FORM ===== */
+.au-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-/* Main */
-main {
-    flex: 1;
+/* ===== ROW ===== */
+.au-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
-/* Section formulaire */
-.formulaire-section {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    padding-bottom: 100px;
+/* ===== FIELD ===== */
+.au-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-/* Carte formulaire */
-.form {
-    max-width: 500px;
-    width: 100%;
-    background: #ffffff;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+.au-field--full {
+  grid-column: 1 / -1;
 }
 
-/* Titre formulaire */
-.form h1 {
-    text-align: center;
-    color: #043d5b;
-    margin-bottom: 30px;
+/* ===== LABEL ===== */
+.au-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #043d5b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-/* Espacement champs */
-.form form>div {
-    margin-bottom: 18px;
+.au-label i {
+  font-size: 12px;
+  color: #fccd2c;
+  width: 14px;
 }
 
-/* Labels */
-.form label {
-
-    display: block;
-    color: #043d5b;
-    margin-bottom: 8px;
-    font-weight: 600;
+/* ===== INPUT ===== */
+.au-input {
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(4, 61, 91, 0.15);
+  background: #f5f8fb;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  color: #1a2332;
+  outline: none;
+  transition: all 0.2s ease;
+  width: 100%;
 }
 
-/* Inputs et select */
-.form input,
-.form select {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #e1e5e9;
-    border-radius: 8px;
-    font-size: 15px;
+.au-input:focus {
+  border-color: #043d5b;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(4, 61, 91, 0.07);
 }
 
-/* Focus inputs */
-.form input:focus,
-.form select:focus {
-    outline: none;
-    border-color: #043d5b;
+.au-input::placeholder {
+  color: #b0bec5;
 }
 
-/* Groupe bouton */
-.btn-group-inscription {
-    margin-top: 25px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+/* ===== SELECT ===== */
+.au-select-wrap {
+  position: relative;
 }
 
-/* Bouton */
-.btn-group-inscription button {
-    background-color: #fccd2c;
-    padding: 12px 24px;
-    border-radius: 25px;
-    border: 2px solid #043d5b;
-    font-weight: bold;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    display: inline-block;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+.au-select {
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(4, 61, 91, 0.15);
+  background: #f5f8fb;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  color: #1a2332;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-/* Hover bouton */
-.btn-group-inscription button:hover {
-    background-color: #fccd2c;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(252, 205, 44, 0.3);
+.au-select:focus {
+  border-color: #043d5b;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(4, 61, 91, 0.07);
 }
 
-/* Messages erreur */
-.error {
-    color: #d9534f;
-    background: #fdf7f7;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    text-align: center;
+.au-select__arrow {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8a9bb0;
+  font-size: 12px;
+  pointer-events: none;
 }
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 15px;
-    background-color: #f8f9fa;
+/* ===== DIVIDER ===== */
+.au-divider {
+  height: 1.5px;
+  background: rgba(4, 61, 91, 0.07);
+  border-radius: 2px;
 }
 
-/* Bottom nav */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: #fff;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px;
+/* ===== ACTIONS ===== */
+.au-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .form {
-        padding: 25px;
-    }
-
-    header {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    nav {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
+/* ===== BOUTONS ===== */
+.au-btn {
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: all 0.25s ease;
 }
 
-app-footer {
-    margin-top: auto;
-    width: 100%;
+.au-btn--primary {
+  background: #043d5b;
+  color: #fccd2c;
+  box-shadow: 0 4px 16px rgba(4, 61, 91, 0.25);
 }
 
-.bottom-espace {
-    height: 70px;
+.au-btn--primary:hover {
+  background: #fccd2c;
+  color: #043d5b;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(252, 205, 44, 0.35);
+}
+
+.au-btn--outline {
+  background: transparent;
+  color: #8a9bb0;
+  border: 1.5px solid rgba(4, 61, 91, 0.15);
+}
+
+.au-btn--outline:hover {
+  background: #f5f8fb;
+  color: #043d5b;
+  border-color: #043d5b;
+  text-decoration: none;
+}
+
+/* ===== FOOTER ===== */
+app-footer { margin-top: auto; width: 100%; }
+.bottom-espace { height: 70px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .au-main { padding: 0 14px 90px; }
+  .au-card { padding: 24px 18px; }
+  .au-row { grid-template-columns: 1fr; }
+  .au-actions { flex-direction: column; }
+  .au-btn { width: 100%; justify-content: center; }
 }

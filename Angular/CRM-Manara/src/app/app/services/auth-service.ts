@@ -35,7 +35,7 @@ export class AuthService {
         console.error('Erreur parsing user:', e);
       }
     }
-    
+
     // 2. Ensuite, vérifier avec le serveur
     this.getMe().subscribe({
       next: (user) => {
@@ -80,15 +80,15 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-  return this.http.get(`${this.apiUrl}/logout`, {
-    withCredentials: true
-  }).pipe(
-    tap(() => {
-      this.userSubject.next(null);
-      localStorage.removeItem('user');
-    })
-  );
-}
+    return this.http.get(`${this.apiUrl}/logout`, {
+      withCredentials: true
+    }).pipe(
+      tap(() => {
+        this.userSubject.next(null);
+        localStorage.removeItem('user');
+      })
+    );
+  }
 
   isLoggedIn(): Observable<boolean> {
     return this.user$.pipe(
@@ -105,6 +105,15 @@ export class AuthService {
   }
 
   register(userData: any): Observable<any> {
-  return this.http.post(`${this.apiUrl}/register/save`, userData);
-}
+    return this.http.post(`${this.apiUrl}/register/save`, userData);
+  }
+
+  forgotPassword(email: string) {
+    return this.http.post(`${this.apiUrl}/auth/forgot-password`, { email },
+      { withCredentials: true, responseType: 'json' });
+  }
+
+  resetPassword(token: string, nouveauMotDePasse: string) {
+    return this.http.post(`${this.apiUrl}/auth/reset-password`, { token, nouveauMotDePasse });
+  }
 }

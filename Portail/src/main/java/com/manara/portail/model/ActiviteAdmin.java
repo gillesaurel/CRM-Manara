@@ -33,6 +33,16 @@ public class ActiviteAdmin {
     @NotNull
     private LocalDateTime dateDebut;
 
+    @NotNull
+    private Double prix;
+
+    @ManyToOne
+    @JoinColumn(name = "animateur_id")
+    private Utilisateur animateur;
+
+    @OneToMany(mappedBy = "activite", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ActiviteSeance> seances = new ArrayList<>();
+
     @Column(name = "date_creation")
     private LocalDateTime dateCreation = LocalDateTime.now();
 
@@ -103,6 +113,30 @@ public class ActiviteAdmin {
 
     public void setInscriptions(List<InscriptionEnfant> inscriptions) {
         this.inscriptions = inscriptions;
+    }
+
+    public List<ActiviteSeance> getSeances() {
+        return seances;
+    }
+
+    public void setSeances(List<ActiviteSeance> seances) {
+        this.seances = seances;
+    }
+
+    public Double getPrix() {
+        return prix;
+    }
+
+    public void setPrix(Double prix) {
+        this.prix = prix;
+    }
+
+    public Utilisateur getAnimateur() {
+        return animateur;
+    }
+
+    public void setAnimateur(Utilisateur animateur) {
+        this.animateur = animateur;
     }
 
     public int getTauxRemplissage() {

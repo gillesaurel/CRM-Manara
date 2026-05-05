@@ -76,6 +76,10 @@ public interface InscriptionEnfantRepository extends JpaRepository<InscriptionEn
     @Query("DELETE FROM InscriptionEnfant i WHERE i.session.date < :date")
     void deleteAnciennesInscriptions(@Param("date") LocalDate date);
 
+    @Modifying
+    @Query("DELETE FROM InscriptionEnfant i WHERE i.utilisateur.id = :utilisateurId")
+    void deleteByUtilisateurId(@Param("utilisateurId") Long utilisateurId);
+
     List<InscriptionEnfant> findByActiviteId(Long activiteId);
 
     long countByActiviteIdAndEnAttenteFalse(Long activiteId);

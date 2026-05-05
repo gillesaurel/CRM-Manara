@@ -1,10 +1,10 @@
 package com.manara.portail.service;
 
 import com.manara.portail.model.Enfant;
+import com.manara.portail.model.InscriptionEnfant;
+import com.manara.portail.model.Parent;
 import com.manara.portail.model.Utilisateur;
-import com.manara.portail.repository.AdminRepository;
-import com.manara.portail.repository.ParentRepository;
-import com.manara.portail.repository.UtilisateurRepository;
+import com.manara.portail.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,6 +23,11 @@ public class AdminService {
     private ParentRepository parentRepository;
     @Autowired
     private UtilisateurRepository utilisateurRepository;
+    @Autowired
+    private InscriptionEnfantRepository inscriptionEnfantRepository;
+
+    @Autowired
+    private EnfantRepository enfantRepository;
     @Autowired
     private AdminRepository adminRepository;
     @Autowired
@@ -48,7 +54,30 @@ public class AdminService {
         if (user.getRole().getNom().equals("ADMIN")) {
             throw new Exception("Impossible de supprimer un admin");
         }
-        parentRepository.deleteByUtilisateurId(id);
+
+        // Supprimer toutes les inscriptions liées à cet utilisateur
+        inscriptionEnfantRepository.deleteByUtilisateurId(id);
+
+        // Trouver le parent lié s'il existe
+        Optional<Parent> parentOpt = parentRepository.findByUtilisateurId(id);
+        if (parentOpt.isPresent()) {
+            Parent parent = parentOpt.get();
+
+            // Supprimer les inscriptions de chaque enfant
+            List<Enfant> enfants = enfantRepository.findByParentId(parent.getId());
+            for (Enfant enfant : enfants) {
+                List<InscriptionEnfant> inscriptions = inscriptionEnfantRepository.findByEnfantId(enfant.getId());
+                inscriptionEnfantRepository.deleteAll(inscriptions);
+            }
+
+            // Supprimer les enfants
+            enfantRepository.deleteAll(enfants);
+
+            // Supprimer le parent
+            parentRepository.deleteByUtilisateurId(id);
+        }
+
+        // Supprimer l'utilisateur
         utilisateurRepository.deleteById(id);
     }
 

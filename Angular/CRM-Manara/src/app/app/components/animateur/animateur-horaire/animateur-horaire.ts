@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AnimateurService } from '../../../services/animateur-service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-animateur-horaire',
@@ -12,7 +13,8 @@ export class AnimateurHoraire implements OnInit {
 
   constructor(
     private animateurService: AnimateurService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -38,5 +40,9 @@ export class AnimateurHoraire implements OnInit {
         console.error('Erreur lors du chargement des sessions :', error);
       }
     });
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

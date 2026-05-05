@@ -1,158 +1,107 @@
+<div class="bienvenue-section">
+  <h1>Tableau de Bord Animateur</h1>
+</div>
 
-<!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Portail Manara — Animateur</title>
+<main style="max-width:1200px; margin:0 auto; padding:40px 20px;">
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
+  <!-- ================= KPIs ================= 
+  <div class="animateur-stats" style="margin-bottom:40px;">
 
-<body class="page-animateurs">
+    <div class="animateur-stat-card">
+      <span class="stat-number">{{ totalInscriptions }}</span>
+      <span class="stat-label">Inscriptions</span>
+    </div>
 
-<header th:replace="fragments/main::header"></header>
+    <div class="animateur-stat-card accent">
+      <span class="stat-number">{{ sessionsAujourdHui }}</span>
+      <span class="stat-label">Sessions aujourd'hui</span>
+    </div>
 
-<main class="dash">
-    <!-- Titre + petit badge profil -->
-    <section class="dash-top">
-        <div>
-            <h1>Portail Manara</h1>
-            <p class="subtitle">Tableau de bord</p>
-        </div>
+    <div class="animateur-stat-card" style="border-left-color:#dc3545;">
+      <span class="stat-number">{{ incidents7j }}</span>
+      <span class="stat-label">Incidents (7 jours)</span>
+    </div>
 
-        <div class="profile-pill">
-            <i class="fa-solid fa-user-tie"></i>
-            <span>Profil : Animateur</span>
-        </div>
-    </section>
+  </div>
+  -->
+  <!-- ================= QUICK ACTIONS ================= -->
+  <div class="animateur-section-header">
+    <h2>Actions rapides</h2>
+  </div>
 
-    <!-- Carte bienvenue -->
-    <section class="card welcome">
-        <h2>Bienvenue</h2>
-        <p>
-            Accès rapide aux fonctions animateur. Conçu pour être clair sur cellulaire
-            et efficace sur ordinateur.
-        </p>
-    </section>
+  <div class="actions-grid" style="margin-bottom:40px;">
 
-    <!-- Actions rapides -->
-    <section class="card">
-        <div class="card-head">
-            <h3>Actions rapides</h3>
-            <p class="hint">Les tâches les plus fréquentes, en 1 tap.</p>
-        </div>
+    <a class="action-card" href="/animateur/inscriptions">
+      <span class="action-icon"><i class="fa-solid fa-users"></i></span>
+      <span class="action-text">Inscriptions</span> 
+    </a>
 
-        <div class="quick-grid">
-            <a class="quick-btn" href="/animateur/inscription">
-        <span class="icon">
-          <i class="fa-solid fa-users"></i>
-        </span>
-                <span class="text">
-          <strong>Inscriptions</strong>
-          <small>Consulter / filtrer</small>
-        </span>
-            </a>
+    <a class="action-card" href="/animateur/presences">
+      <span class="action-icon"><i class="fa-solid fa-clipboard-check"></i></span>
+      <span class="action-text">Présences</span>
+    </a>
 
-            <a class="quick-btn" href="/animateur/presences">
-        <span class="icon">
-          <i class="fa-solid fa-clipboard-check"></i>
-        </span>
-                <span class="text">
-          <strong>Présences</strong>
-          <small>Consigner sur place</small>
-        </span>
-            </a>
+    <a class="action-card" href="/animateur/horaire">
+      <span class="action-icon"><i class="fa-solid fa-calendar-days"></i></span>
+      <span class="action-text">Horaire</span>
+    </a>
 
-            <a class="quick-btn" href="/animateur/horaire">
-        <span class="icon">
-          <i class="fa-solid fa-calendar-days"></i>
-        </span>
-                <span class="text">
-          <strong>Horaire</strong>
-          <small>Sessions à venir</small>
-        </span>
-            </a>
+    <a class="action-card" href="/animateur/incidents" style="border-left:4px solid #dc3545;">
+      <span class="action-icon"><i class="fa-solid fa-triangle-exclamation" style="color:#dc3545;"></i></span>
+      <span class="action-text">Incidents</span>
+    </a>
 
-            <a class="quick-btn warn" href="/animateur/incidents">
-        <span class="icon">
-          <i class="fa-solid fa-triangle-exclamation"></i>
-        </span>
-                <span class="text">
-          <strong>Incidents</strong>
-          <small>Signaler / suivi</small>
-        </span>
-            </a>
-        </div>
-    </section>
+  </div>
 
-    <!-- Liste sessions à venir (style comme ta capture) -->
-    <section class="card">
-        <div class="card-head">
-            <h3>Sessions à venir</h3>
-            <p class="hint">Prochaines sessions (exemples).</p>
-        </div>
+  <!-- ================= SESSIONS À VENIR ================= -->
+  <div class="animateur-section-header">
+    <h2>Sessions à venir</h2>
+  </div>
 
-        <div class="session-list">
-            <article class="session-item" th:each="s : ${sessions}">
-                <div class="session-main">
-                    <strong th:text="${s.nomActivite}">Session : Arts plastiques (6–8 ans)</strong>
-                    <small>
-                        <span th:text="${s.dateTexte}">Mar 18:00</span>
-                        — <span th:text="${s.lieu}">Salle 2</span>
-                    </small>
-                </div>
+  <ng-container *ngIf="sessions && sessions.length > 0; else noSessions">
+    <div class="animateur-table-wrapper" style="margin-bottom:40px;">
+      <table class="animateur-table">
 
-                <div class="session-side">
-                    <span class="chip" th:text="'Places : ' + ${s.placesRestantes}">Places : 3</span>
-                    <span class="status open" th:if="${s.ouverte}">État : Ouverte</span>
-                    <span class="status full" th:if="${!s.ouverte}">État : Complète</span>
-                </div>
-            </article>
+        <thead>
+          <tr>
+            <th>Activité</th>
+            <th>Date</th>
+            <th>Heure début</th>
+            <th>Heure fin</th>
+            <th>Lieu</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
 
-            <div class="empty" th:if="${sessions == null or sessions.isEmpty()}">
-                Aucune session à venir.
-            </div>
-        </div>
-    </section>
+        <tbody>
+          <tr *ngFor="let sess of sessions">
+            <td class="nom" data-label="Activité">{{ sess.activite?.nom ?? sess.nomActivite ?? '—' }}</td>
+            <td data-label="Date">{{ sess.date }}</td>
+            <td data-label="Heure début">{{ sess.heureDebut }}</td>
+            <td data-label="Heure fin">{{ sess.heureFin }}</td>
+            <td data-label="Lieu">{{ sess.lieu }}</td>
+            <td data-label="Statut">
+              <span class="statut-badge actif">
+                <i class="fa-solid fa-circle-check"></i> Ouverte
+              </span>
+            </td>
+          </tr>
+        </tbody>
 
-    <!-- Aperçu (KPIs) -->
-    <section class="card">
-        <div class="card-head">
-            <h3>Aperçu</h3>
-            <p class="hint">Indicateurs rapides.</p>
-        </div>
+      </table>
+    </div>
+  </ng-container>
 
-        <div class="kpi-grid">
-            <div class="kpi">
-                <small>Inscriptions</small>
-                <strong th:text="${totalInscriptions}">0</strong>
-            </div>
+  <ng-template #noSessions>
+    <div class="animateur-empty" style="margin-bottom:40px;">
+      <div class="empty-icon">📅</div>
+      <h2>Aucune session à venir</h2>
+      <p>Vous n'avez pas de sessions planifiées pour le moment.</p>
+    </div>
+  </ng-template>
 
-            <div class="kpi">
-                <small>Sessions aujourd’hui</small>
-                <strong th:text="${sessionsAujourdHui}">0</strong>
-            </div>
-
-            <div class="kpi">
-                <small>Incidents (7 jours)</small>
-                <strong th:text="${incidents7j}">0</strong>
-            </div>
-
-            <div class="kpi">
-                <small>Présences saisies</small>
-                <strong th:text="${presencesSaisies}">0</strong>
-            </div>
-        </div>
-    </section>
-
-    <!-- espace pour que la nav bottom ne cache pas le contenu -->
-    <div class="bottom-spacer"></div>
+  <button class="back-btn" (click)="goBack()">Retour</button>
 </main>
 
-<div th:replace="~{fragments/animateur :: bottomNav('dashboard')}"></div>
-
-</body>
-</html>
+<app-footer></app-footer>
+<div class="bottom-espace"></div>

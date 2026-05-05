@@ -1,75 +1,128 @@
+<!-- HEADER -->
+<div class="ac-header">
+  <h1>Gestion des Activités</h1>
+  <p class="ac-subtitle">Gérez vos activités et les inscriptions</p>
+</div>
 
-<div class="admin-main">
+<div class="ac-main">
 
-  <h1>Gestion des Activités et Inscriptions</h1>
-
-  <!-- Boutons -->
-  <div class="admin-actions">
-    <a routerLink="/admin" class="btn btn-primary">Créer une activité</a>
-    <a routerLink="/adminOnly/listeAttente" class="btn btn-primary">Liste d'attente</a>
+  <!-- ACTIONS -->
+  <div class="ac-actions">
+    <a routerLink="/adminOnly/ajouter-activite" class="ac-btn ac-btn--primary">
+      <i class="fas fa-plus"></i> Créer une activité
+    </a>
+    <a routerLink="/adminOnly/liste-attente" class="ac-btn ac-btn--outline">
+      <i class="fas fa-list"></i> Liste d'attente
+    </a>
   </div>
 
-  <hr>
+  <!-- EMPTY STATE -->
+  <div *ngIf="activites.length === 0" class="ac-empty">
+    <i class="fas fa-calendar-times"></i>
+    <p>Aucune activité pour le moment</p>
+    <a routerLink="/adminOnly/ajouter-activite" class="ac-btn ac-btn--primary">Créer une activité</a>
+  </div>
 
-  <!-- LISTE ACTIVITÉS -->
-  <div *ngFor="let act of activites" class="activite-card">
+  <!-- ACTIVITÉS -->
+  <div *ngFor="let act of activites" class="ac-card">
 
-    <div class="activite-header">
-      <h2>{{ act.nom }}</h2>
-
-      <div class="activite-actions">
-        <button class="edit-btn">Modifier</button>
-
-        <button (click)="deleteActivite(act.id)" class="delete-btn">
-          Supprimer
+    <!-- CARD HEADER -->
+    <div class="ac-card__header">
+      <div class="ac-card__title-wrap">
+        <div class="ac-card__icon">
+          <i class="fas fa-running"></i>
+        </div>
+        <div>
+          <h2 class="ac-card__title">{{ act.nom }}</h2>
+          <span class="ac-card__date">
+            <i class="fas fa-calendar"></i>
+            {{ act.dateDebut | date:'dd/MM/yyyy à HH:mm' }}
+          </span>
+        </div>
+      </div>
+      <div class="ac-card__actions">
+        <button (click)="editActivite(act.id)" class="ac-icon-btn ac-icon-btn--edit">
+          <i class="fas fa-edit"></i> Modifier
+        </button>
+        <button (click)="deleteActivite(act.id)" class="ac-icon-btn ac-icon-btn--delete">
+          <i class="fas fa-trash"></i>
         </button>
       </div>
     </div>
 
-    <div class="activite-infos">
-      <span><strong>Date :</strong> {{ act.dateDebut | date:'dd/MM/yyyy HH:mm' }}</span>
-      <span><strong>Capacité :</strong> {{ act.capacite }}</span>
-      <span><strong>Inscrits :</strong> {{ act.nbInscrits }}</span>
-      <span><strong>Attente :</strong> {{ act.nbEnAttente }}</span>
-      <span><strong>Taux :</strong> {{ act.tauxRemplissage }}%</span>
+    <!-- STATS -->
+    <div class="ac-card__stats">
+      <div class="ac-pill">
+        <i class="fas fa-users"></i>
+        <span>{{ act.capacite }} places</span>
+      </div>
+      <div class="ac-pill ac-pill--green">
+        <i class="fas fa-user-check"></i>
+        <span>{{ act.nbInscrits }} inscrits</span>
+      </div>
+      <div class="ac-pill ac-pill--gold">
+        <i class="fas fa-clock"></i>
+        <span>{{ act.nbEnAttente }} en attente</span>
+      </div>
+      <div class="ac-pill ac-pill--blue">
+        <i class="fas fa-calendar-alt"></i>
+        <span>{{ act.seances?.length || 0 }} séance(s)</span>
+      </div>
+      <div class="ac-pill" style="background: rgba(39,174,96,0.1); color: #1e8449;">
+        <i class="fas fa-dollar-sign"></i>
+        <span>{{ act.prix || 0 }}$</span>
+      </div>
+      <div *ngIf="act.animateur" class="ac-pill" style="background: rgba(252,205,44,0.15); color: #b8960a;">
+        <i class="fas fa-user-tie"></i>
+        <span>{{ act.animateur.prenom }} {{ act.animateur.nom }}</span>
+      </div>
     </div>
 
     <!-- TABLE INSCRIPTIONS -->
-    <table class="inscriptions-table">
-      <thead>
-        <tr>
-          <th>Nom de l'enfant</th>
-          <th>Parent</th>
-          <th>Statut</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
+    <div class="ac-table-wrap" *ngIf="act.inscriptions && act.inscriptions.length > 0">
+      <table class="ac-table">
+        <thead>
+          <tr>
+            <th>Enfant</th>
+            <th>Parent</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ins of act.inscriptions">
+            <td>
+              <div class="ac-table__name">{{ ins.nomEnfant }}</div>
+            </td>
+            <td>{{ ins.utilisateur?.nom }}</td>
+            <td>
+              <span class="ac-status" [class.ac-status--wait]="ins.enAttente" [class.ac-status--ok]="!ins.enAttente">
+                <i class="fas" [class.fa-clock]="ins.enAttente" [class.fa-check]="!ins.enAttente"></i>
+                {{ ins.enAttente ? 'En attente' : 'Inscrit' }}
+              </span>
+            </td>
+            <td>
+              <div class="ac-table__btns">
+                <button *ngIf="ins.enAttente" (click)="validerInscription(ins.id)"
+                  class="ac-btn-sm ac-btn-sm--validate">
+                  <i class="fas fa-check"></i> Valider
+                </button>
+                <button (click)="deleteInscription(ins.id)" class="ac-btn-sm ac-btn-sm--delete">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-      <tbody>
-        <tr *ngFor="let ins of act.inscriptions">
-
-          <td>{{ ins.nomEnfant }}</td>
-          <td>{{ ins.utilisateur?.nom }}</td>
-
-          <td>
-            {{ ins.enAttente ? 'Liste d’attente' : 'Inscrit' }}
-          </td>
-
-          <td>
-            <button *ngIf="ins.enAttente" (click)="validerInscription(ins.id)" class="btn-validate">
-              Valider
-            </button>
-
-            <button (click)="deleteInscription(ins.id)" class="btn-delete">
-              Supprimer
-            </button>
-          </td>
-
-        </tr>
-      </tbody>
-    </table>
+    <div *ngIf="!act.inscriptions || act.inscriptions.length === 0" class="ac-no-inscriptions">
+      <i class="fas fa-user-slash"></i> Aucune inscription pour cette activité
+    </div>
 
   </div>
+
   <app-footer></app-footer>
   <div class="bottom-espace"></div>
 </div>

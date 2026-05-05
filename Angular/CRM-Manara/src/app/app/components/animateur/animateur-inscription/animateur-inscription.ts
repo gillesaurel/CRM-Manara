@@ -1,5 +1,6 @@
 import {  ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AnimateurService } from '../../../services/animateur-service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-animateur-inscription',
@@ -11,6 +12,7 @@ export class AnimateurInscription implements OnInit {
   groups: any[] = [];
   constructor(private animateurService: AnimateurService,
     private cdr: ChangeDetectorRef,
+    private location: Location
 ) {}
 
   ngOnInit(): void {
@@ -32,5 +34,8 @@ export class AnimateurInscription implements OnInit {
       },
     });
   }
-
+  
+  goBack(): void {
+    this.location.back();
+  }
 }

@@ -1,67 +1,128 @@
+<!-- HEADER -->
+<div class="em-header">
+  <div class="em-header__icon">
+    <i class="fas fa-paper-plane"></i>
+  </div>
+  <h1>Envoyer un Email</h1>
+  <p class="em-subtitle">Communiquez directement avec vos parents et animateurs</p>
+</div>
 
-<div class="admin-main email-page">
+<div class="em-main">
 
-  <div class="email-card">
-    <h1>Envoyer un Email</h1>
-
-    <!-- Message succès -->
-    <div *ngIf="message" class="flash-message">
-      {{ message }}
+  <!-- SUCCÈS -->
+  <div *ngIf="message" class="em-success">
+    <div class="em-success__icon"><i class="fas fa-check"></i></div>
+    <div>
+      <p class="em-success__title">Email envoyé!</p>
+      <p class="em-success__text">{{ message }}</p>
     </div>
+  </div>
 
-    <form (ngSubmit)="sendEmail(frm)" #frm="ngForm" class="email-form">
+  <div class="em-card">
 
-      <!-- TYPE -->
-      <label>Envoyer à :</label>
-      <select [(ngModel)]="dataSend.type" name="type" (change)="onTypeChange()">
+    <form (ngSubmit)="sendEmail(frm)" #frm="ngForm" class="em-form">
 
-        <option value="ALL">Tout le monde</option>
-        <option value="PARENT_ALL">Tous les parents</option>
-        <option value="ANIMATEUR_ALL">Tous les animateurs</option>
-        <option value="PARENT_ONE">Choisir un parent</option>
-        <option value="ANIMATEUR_ONE">Choisir un animateur</option>
-      </select>
-
-      <!-- Parent -->
-      <div *ngIf="dataSend.type === 'PARENT_ONE'">
-        <label>Parent :</label>
-        <select [(ngModel)]="dataSend.parentId" name="parentId">
-          <option value="">Sélectionner un parent</option>
-          <option *ngFor="let p of parents" [ngValue]="p.id">
-            {{ p.nom }} {{ p.prenom }} ({{ p.email }})
-          </option>
-        </select>
+      <!-- DESTINATAIRE -->
+      <div class="em-section">
+        <p class="em-section__label">
+          <i class="fas fa-users"></i> Destinataires
+        </p>
+        <div class="em-type-grid">
+          <label class="em-type-option" [class.em-type-option--active]="dataSend.type === 'ALL'">
+            <input type="radio" [(ngModel)]="dataSend.type" name="type" value="ALL" (change)="onTypeChange()">
+            <i class="fas fa-globe"></i>
+            <span>Tout le monde</span>
+          </label>
+          <label class="em-type-option" [class.em-type-option--active]="dataSend.type === 'PARENT_ALL'">
+            <input type="radio" [(ngModel)]="dataSend.type" name="type" value="PARENT_ALL" (change)="onTypeChange()">
+            <i class="fas fa-user-friends"></i>
+            <span>Tous les parents</span>
+          </label>
+          <label class="em-type-option" [class.em-type-option--active]="dataSend.type === 'ANIMATEUR_ALL'">
+            <input type="radio" [(ngModel)]="dataSend.type" name="type" value="ANIMATEUR_ALL" (change)="onTypeChange()">
+            <i class="fas fa-running"></i>
+            <span>Tous les animateurs</span>
+          </label>
+          <label class="em-type-option" [class.em-type-option--active]="dataSend.type === 'PARENT_ONE'">
+            <input type="radio" [(ngModel)]="dataSend.type" name="type" value="PARENT_ONE" (change)="onTypeChange()">
+            <i class="fas fa-user"></i>
+            <span>Un parent</span>
+          </label>
+          <label class="em-type-option" [class.em-type-option--active]="dataSend.type === 'ANIMATEUR_ONE'">
+            <input type="radio" [(ngModel)]="dataSend.type" name="type" value="ANIMATEUR_ONE" (change)="onTypeChange()">
+            <i class="fas fa-user-tie"></i>
+            <span>Un animateur</span>
+          </label>
+        </div>
       </div>
 
-      <!-- Animateur -->
-      <div *ngIf="dataSend.type === 'ANIMATEUR_ONE'">
-        <label>Animateur :</label>
-        <select [(ngModel)]="dataSend.animateurId" name="animateurId">
-          <option value="">Sélectionner un animateur</option>
-          <option *ngFor="let a of animateurs" [ngValue]="a.id">
-            {{ a.nom }} {{ a.prenom }} ({{ a.email }})
-          </option>
-        </select>
+      <!-- SELECT PARENT -->
+      <div *ngIf="dataSend.type === 'PARENT_ONE'" class="em-field">
+        <label class="em-label">
+          <i class="fas fa-user"></i> Choisir un parent
+        </label>
+        <div class="em-select-wrap">
+          <select [(ngModel)]="dataSend.parentId" name="parentId" class="em-select">
+            <option value="">Sélectionner un parent...</option>
+            <option *ngFor="let p of parents" [ngValue]="p.id">
+              {{ p.nom }} {{ p.prenom }} — {{ p.email }}
+            </option>
+          </select>
+          <i class="fas fa-chevron-down em-select__arrow"></i>
+        </div>
       </div>
 
-      <!-- Sujet -->
-      <label>Sujet :</label>
-      <input type="text" [(ngModel)]="dataSend.subject" name="subject" required>
+      <!-- SELECT ANIMATEUR -->
+      <div *ngIf="dataSend.type === 'ANIMATEUR_ONE'" class="em-field">
+        <label class="em-label">
+          <i class="fas fa-user-tie"></i> Choisir un animateur
+        </label>
+        <div class="em-select-wrap">
+          <select [(ngModel)]="dataSend.animateurId" name="animateurId" class="em-select">
+            <option value="">Sélectionner un animateur...</option>
+            <option *ngFor="let a of animateurs" [ngValue]="a.id">
+              {{ a.nom }} {{ a.prenom }} — {{ a.email }}
+            </option>
+          </select>
+          <i class="fas fa-chevron-down em-select__arrow"></i>
+        </div>
+      </div>
 
-      <!-- Message -->
-      <label>Message :</label>
-      <textarea [(ngModel)]="dataSend.message" name="message" rows="6" required>
-      </textarea>
+      <div class="em-divider"></div>
 
-      <!-- Bouton -->
-      <button type="submit" class="btn-send" [disabled]="frm.invalid">
-        <i class="fas fa-paper-plane"></i> Envoyer
+      <!-- SUJET -->
+      <div class="em-field">
+        <label class="em-label">
+          <i class="fas fa-tag"></i> Sujet
+        </label>
+        <input type="text" [(ngModel)]="dataSend.subject" name="subject"
+          required placeholder="Objet de votre message..." class="em-input">
+      </div>
+
+      <!-- MESSAGE -->
+      <div class="em-field">
+        <label class="em-label">
+          <i class="fas fa-pen"></i> Message
+        </label>
+        <textarea [(ngModel)]="dataSend.message" name="message"
+          rows="7" required placeholder="Rédigez votre message ici..."
+          class="em-textarea"></textarea>
+        <p class="em-hint">
+          <i class="fas fa-info-circle"></i>
+          Votre message sera envoyé par email à tous les destinataires sélectionnés.
+        </p>
+      </div>
+
+      <!-- BOUTON -->
+      <button type="submit" class="em-send-btn" [disabled]="frm.invalid">
+        <span class="em-send-btn__icon"><i class="fas fa-paper-plane"></i></span>
+        <span>Envoyer le message</span>
       </button>
 
     </form>
   </div>
-  <app-footer></app-footer>
-  <div class="bottom-espace"></div>
 </div>
 
+<app-footer></app-footer>
+<div class="bottom-espace"></div>
 <app-fragment-administrateur></app-fragment-administrateur>

@@ -5,6 +5,11 @@ import { Activites } from './app/components/adminOnly/activites/activites';
 import { Utilisateurs } from './app/components/adminOnly/utilisateurs/utilisateurs';
 import { AdminAddUser } from './app/components/adminOnly/admin-add-user/admin-add-user';
 import { Email } from './app/components/adminOnly/email/email';
+import { ListeAttente } from './app/components/adminOnly/liste-attente/liste-attente';
+import { AjouterActivite } from './app/components/adminOnly/ajouter-activite/ajouter-activite';
+import { ForgotPassword } from './app/components/resetPWD/forgot-password/forgot-password';
+import { ResetPassword } from './app/components/resetPWD/reset-password/reset-password';
+
 import { Auth } from './app/components/auth/auth';
 import { UserAuth } from './app/verifier/user-auth';
 import { Accueil } from './app/components/accueil/accueil';
@@ -34,7 +39,7 @@ const routes: Routes = [
   { path: 'header', component: Header },
   { path: 'footer', component: Footer },
   { path: 'login', component: Auth },
-  { path: 'register', component: Register }, 
+  { path: 'register', component: Register },
 
   // Routes Admin
   { path: 'admin', canActivate: [UserAuth], component: Administrateur },
@@ -42,13 +47,17 @@ const routes: Routes = [
   { path: 'adminOnly/utilisateurs', canActivate: [UserAuth], component: Utilisateurs },
   { path: 'adminOnly/adminAddUser', canActivate: [UserAuth], component: AdminAddUser },
   { path: 'adminOnly/email', canActivate: [UserAuth], component: Email },
-
-// Routes Animateur
-{ path: 'animateur/dashboard', canActivate: [UserAuth], component: AnimateurDashboard },
-{ path: 'animateur/horaire', canActivate: [UserAuth], component: AnimateurHoraire },
-{ path: 'animateur/presences', canActivate: [UserAuth], component: AnimateurPresences },
-{ path: 'animateur/incidents', canActivate: [UserAuth], component: AnimateurIncidents },
-{ path: 'animateur/inscriptions', canActivate: [UserAuth], component: AnimateurInscription },
+  { path: 'adminOnly/liste-attente', canActivate: [UserAuth], component: ListeAttente },
+  { path: 'adminOnly/ajouter-activite', canActivate: [UserAuth], component: AjouterActivite },
+  { path: 'adminOnly/ajouter-activite/:id', canActivate: [UserAuth], component: AjouterActivite },
+  { path: 'forgot-password', component: ForgotPassword },
+  { path: 'reset-password', component: ResetPassword },
+  // Routes Animateur
+  { path: 'animateur', canActivate: [UserAuth], component: AnimateurDashboard },
+  { path: 'animateur/horaire', canActivate: [UserAuth], component: AnimateurHoraire },
+  { path: 'animateur/presences', canActivate: [UserAuth], component: AnimateurPresences },
+  { path: 'animateur/incidents', canActivate: [UserAuth], component: AnimateurIncidents },
+  { path: 'animateur/inscriptions', canActivate: [UserAuth], component: AnimateurInscription },
 
   // ============================================
   // ROUTES PARENT

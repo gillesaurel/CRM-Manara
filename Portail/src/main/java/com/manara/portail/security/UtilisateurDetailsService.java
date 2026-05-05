@@ -20,20 +20,6 @@ public class UtilisateurDetailsService implements UserDetailsService {
 
     @NonNull
     public UserDetails loadUserByUsername(@NonNull String email) throws UsernameNotFoundException{
-        //Code de test
-        System.out.println("=== TENTATIVE DE CHARGEMENT ===");
-        System.out.println("Email recherché: " + email);
-
-        Utilisateur utilisateur = utilisateurService.findByEmail(email);
-        System.out.println("Utilisateur trouvé: " + (utilisateur != null));
-
-        if (utilisateur == null) {
-            throw new UsernameNotFoundException("Utilisateur non trouvé avec email: " + email);
-        }
-
-        System.out.println("Rôle de l'utilisateur: " + utilisateur.getRole().getNom());
-
-        //Code de test
 
         Utilisateur user = utilisateurService.findByEmail(email);
 

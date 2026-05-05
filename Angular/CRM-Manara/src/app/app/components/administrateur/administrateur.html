@@ -1,112 +1,141 @@
-
 <!-- HEADER -->
-<div class="bienvenue-section">
-  <h1>Tableau de Bord Administrateur</h1>
+<div class="a-header">
+  <h1>Tableau de Bord</h1>
+  <p class="a-subtitle">Bienvenue sur votre espace administrateur</p>
 </div>
 
-<main class="admin-main">
+<main class="a-main">
 
-  <!-- ================= DASHBOARD ================= -->
-  <div class="dashboard-grid">
-
-    <div class="stat-card">
-      <h3>Activités Créées</h3>
-      <div class="value">{{ totalActivites || 0 }}</div>
+  <!-- STATS -->
+  <div class="a-stats">
+    <div class="a-stat">
+      <div class="a-stat__icon">
+        <i class="fas fa-calendar-check"></i>
+      </div>
+      <div class="a-stat__body">
+        <span class="a-stat__value">{{ totalActivites || 0 }}</span>
+        <span class="a-stat__label">Activités créées</span>
+      </div>
     </div>
 
-    <div class="stat-card" style="border-left-color: #fccd2c;">
-      <h3>Taux de Remplissage</h3>
-      <div class="value">{{ tauxRemplissage || 0 }}%</div>
+    <div class="a-stat a-stat--gold">
+      <div class="a-stat__icon">
+        <i class="fas fa-chart-pie"></i>
+      </div>
+      <div class="a-stat__body">
+        <span class="a-stat__value">{{ tauxRemplissage || 0 }}%</span>
+        <span class="a-stat__label">Taux de remplissage</span>
+      </div>
     </div>
 
-    <div class="stat-card">
-      <h3>En attente</h3>
-      <div class="value">{{listeAttentesData.length}}</div>
+    <div class="a-stat a-stat--green">
+      <div class="a-stat__icon">
+        <i class="fas fa-clock"></i>
+      </div>
+      <div class="a-stat__body">
+        <span class="a-stat__value">{{ listeAttentesData.length }}</span>
+        <span class="a-stat__label">En attente</span>
+      </div>
     </div>
-
   </div>
 
-  <!-- ================= SESSIONS ================= -->
-  <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom:20px;">
-
-    <h2 style="color:#ffffff;">Sessions Actives</h2>
-
-    <button class="btn-explorer" (click)="goToAddActivite()">
-      + Nouvelle Activité
-    </button>
-
-  </div>
-
-  <!-- ================= MODAL ================= -->
-
-
-  <!-- ================= TABLE ================= -->
-  <table class="admin-table">
-
-    <thead>
-      <tr>
-        <th>Activité</th>
-        <th>Session</th>
-        <th>Inscrits</th>
-        <th>Capacité</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-
-    <tbody>
-
-      <tr *ngFor="let act of activites" [id]="'numero-' + act.id">
-
-        <td>{{ act.nom }}</td>
-
-        <td>{{ act.dateDebut | date:'dd/MM/yyyy HH:mm' }}</td>
-
-        <td>0</td>
-
-        <td>{{ act.capacite }}</td>
-
-        <td>
-
-          <!-- EDIT -->
-          <button (click)="goToAddActivite(act.id)" style="color:#4169E1; margin-right:10px;">
-            <i class="fas fa-edit"></i>
-          </button>
-
-          <!-- DELETE -->
-          <button (click)="removeActivite(act.id)" style="color:#ff0808;">
-            <i class="fas fa-trash"></i>
-          </button>
-
-        </td>
-
-      </tr>
-
-    </tbody>
-
-  </table>
-
-  <!-- ================= COMMUNICATION ================= -->
-  <section class="comm-box">
-
-    <h3 style="color:#043d5b; margin-bottom:15px;">
-      Communiquer avec les parents
-    </h3>
-
-    <form (ngSubmit)="sendEmail(emailPayload)">
-
-      <input type="text" [(ngModel)]="emailPayload.message" name="message" class="input-comm"
-        placeholder="Envoyer un rappel...">
-
-      <button type="submit" class="btn-explorer">
-        Diffuser
+  <!-- SESSIONS -->
+  <div class="a-section">
+    <div class="a-section__header">
+      <div class="a-section__title">
+        <i class="fas fa-layer-group"></i>
+        <h2>Sessions Actives</h2>
+      </div>
+      <button class="a-btn a-btn--primary" (click)="goToAddActivite()">
+        <i class="fas fa-plus"></i> Nouvelle Activité
       </button>
+    </div>
 
-    </form>
+    <!-- TABLE -->
+    <div class="a-table-wrap">
+      <table class="a-table">
+        <thead>
+          <tr>
+            <th>Activité</th>
+            <th>Date</th>
+            <th>Séances</th>
+            <th>Prix</th>
+            <th>Inscrits</th>
+            <th>Capacité</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let act of activites" [id]="'numero-' + act.id">
+            <td>
+              <div class="a-table__name">{{ act.nom }}</div>
+              <div *ngIf="act.animateur" style="font-size:11px; color:#8a9bb0; margin-top:2px;">
+                <i class="fas fa-user-tie"></i> {{ act.animateur.prenom }} {{ act.animateur.nom }}
+              </div>
+            </td>
+            <td>
+              <span class="a-table__date">
+                <i class="fas fa-calendar"></i>
+                {{ act.dateDebut | date:'dd/MM/yyyy' }}
+              </span>
+            </td>
+            <td>
+              <span class="a-badge">{{ act.seances?.length || 0 }}</span>
+            </td>
+            <td>
+              <span style="font-weight:600; color:#1e8449;">{{ act.prix || 0 }}$</span>
+            </td>
+            <td>
+              <span class="a-badge">{{ act.nbInscrits || 0 }}</span>
+            </td>
+            <td>{{ act.capacite }}</td>
+            <td>
+              <div class="a-table__actions">
+                <button (click)="goToAddActivite(act.id)" class="a-icon-btn a-icon-btn--edit">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button (click)="removeActivite(act.id)" class="a-icon-btn a-icon-btn--delete">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="activites.length === 0">
+            <td colspan="7" class="a-table__empty">
+              <i class="fas fa-inbox"></i>
+              <span>Aucune activité pour le moment</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-  </section>
+  <!-- COMMUNICATION -->
+  <div class="a-section">
+    <div class="a-section__header">
+      <div class="a-section__title">
+        <i class="fas fa-envelope"></i>
+        <h2>Communiquer avec les parents</h2>
+      </div>
+    </div>
+
+    <div class="a-comm">
+      <form (ngSubmit)="sendEmail(emailPayload)" class="a-comm__form">
+        <div class="a-comm__input-wrap">
+          <i class="fas fa-pen a-comm__icon"></i>
+          <input type="text" [(ngModel)]="emailPayload.message" name="message" class="a-comm__input"
+            placeholder="Rédigez votre message pour les parents...">
+        </div>
+        <button type="submit" class="a-btn a-btn--primary">
+          <i class="fas fa-paper-plane"></i> Diffuser
+        </button>
+      </form>
+    </div>
+  </div>
 
 </main>
 
-  <app-footer></app-footer>
-  <div class="bottom-espace"></div>
+<app-footer></app-footer>
+<div class="bottom-espace"></div>
 <app-fragment-administrateur></app-fragment-administrateur>

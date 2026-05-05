@@ -1,11 +1,11 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
   <div class="container">
-    
- <!-- Logo & Nom -->
-  <a class="navbar-brand d-flex align-items-center" routerLink="/">
-    <img src="manara_logo.png" alt="Logo" width="40" class="me-2">
-    <span class="fw-bold">MANARA</span>
-  </a>
+
+    <!-- Logo & Nom -->
+    <a class="navbar-brand d-flex align-items-center" routerLink="/">
+      <img src="manara_logo.png" alt="Logo" width="70" class="me-2">
+      <span class="fw-bold">MANARA</span>
+    </a>
 
     <!-- Bouton pour mobile -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -16,7 +16,8 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Accueil</a>
+          <a class="nav-link" routerLink="/" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">Accueil</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/a-propos" routerLinkActive="active">À propos</a>
@@ -45,20 +46,26 @@
       <!-- ============================================ -->
       <!-- Condition sur les boutons login/register (uniquement si NON connecté) -->
       <!-- ============================================ -->
-      <div class="d-flex" *ngIf="!isLoggedIn()">
-        <a routerLink="/login" class="btn btn-outline-light me-2 btn-sm">Se connecter</a>
+      <div class="d-flex align-items-center gap-2" *ngIf="!isLoggedIn()">
+        <button (click)="toggleDarkMode()" class="btn btn-sm dark-toggle">
+          <i class="fas" [class.fa-moon]="!isDarkMode" [class.fa-sun]="isDarkMode"></i>
+        </button>
+        <a routerLink="/login" class="btn btn-outline-light btn-sm">Se connecter</a>
         <a routerLink="/register" class="btn btn-warning btn-sm">S'inscrire</a>
       </div>
-     
+
 
       <!-- ============================================ -->
       <!-- Actions pour utilisateur connecté -->
       <!-- ============================================ -->
-      <div class="d-flex" *ngIf="isLoggedIn()">
+      <div class="d-flex align-items-center gap-2" *ngIf="isLoggedIn()">
+        <button (click)="toggleDarkMode()" class="btn btn-sm dark-toggle">
+          <i class="fas" [class.fa-moon]="!isDarkMode" [class.fa-sun]="isDarkMode"></i>
+        </button>
         <span class="navbar-text me-2">Bonjour, {{ getUserName() }}</span>
         <button (click)="logout()" class="btn btn-outline-danger btn-sm">Déconnexion</button>
       </div>
-     
+
     </div>
 
   </div>

@@ -1,72 +1,93 @@
-<div class="page-animateurs">
-
-  <main class="dash">
-
-    <section class="dash-top">
-      <div>
-        <h1>Portail Manara</h1>
-        <p class="subtitle">Tableau de bord</p>
-      </div>
-      <div class="profile-pill">
-        <i class="fa-solid fa-user-tie"></i>
-        <span>Profil : Animateur</span>
-      </div>
-    </section>
-
-    <h2>Présences</h2>
-    <p>Liste des enfants attendus par session et activité.</p>
-
-    <ng-container *ngIf="groups && groups.length > 0; else empty">
-      <div *ngFor="let act of groups">
-        <section class="card welcome">
-          <h3>{{ act.activiteNom }}</h3>
-
-          <div *ngFor="let session of act.sessions">
-            <p style="margin: 12px 0 6px; font-weight: 600;">
-              <i class="fa-solid fa-calendar-day"></i>
-              {{ session.sessionLabel }}
-            </p>
-
-            <div class="quick-grid">
-              <table>
-                <thead>
-                <tr>
-                  <th>Nom</th>
-                  <th>Prénom</th>
-                  <th>Allergies</th>
-                  <th>Statut</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let enfant of session.enfants">
-                  <td>{{ enfant.nom }}</td>
-                  <td>{{ enfant.prenom }}</td>
-                  <td>{{ enfant.allergies ? enfant.allergies : '—' }}</td>
-                  <td>
-                      <span style="color: #2e7d32; font-weight: 600;">
-                        <i class="fa-solid fa-circle-check"></i> Attendu
-                      </span>
-                  </td>
-                </tr>
-                <tr *ngIf="session.enfants.length === 0">
-                  <td colspan="4">Aucun enfant inscrit pour cette session.</td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-        </section>
-      </div>
-    </ng-container>
-
-    <ng-template #empty>
-      <section class="card welcome">
-        <p>Aucune session à venir avec des enfants inscrits.</p>
-      </section>
-    </ng-template>
-
-    <div class="bottom-spacer"></div>
-  </main>
-
+<div class="bienvenue-section">
+  <h1>Présences</h1>
 </div>
+
+<main style="max-width:1200px; margin:0 auto; padding:40px 20px;">
+
+  <!-- ================= SECTION TITLE ================= -->
+  <div class="animateur-section-header">
+    <h2>Liste des enfants par session</h2>
+  </div>
+
+  <!-- ================= GROUPS ================= -->
+  <ng-container *ngIf="groups && groups.length > 0; else empty">
+
+    <div *ngFor="let act of groups" class="presence-group">
+
+      <!-- Activity Header -->
+      <div class="presence-activity-header">
+        <h3>
+          <i class="fa-solid fa-person-running"></i>
+          {{ act.activiteNom }}
+        </h3>
+      </div>
+
+      <div *ngFor="let session of act.sessions">
+
+        <!-- Session Label -->
+        <div class="presence-session-label">
+          <p>
+            <i class="fa-solid fa-calendar-day"></i>
+            {{ session.sessionLabel }}
+          </p>
+        </div>
+
+        <!-- Table -->
+        <div class="animateur-table-wrapper">
+          <table class="animateur-table">
+
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Allergies</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let enfant of session.enfants">
+                <td class="nom" data-label="Nom">{{ enfant.nom }}</td>
+                <td data-label="Prénom">{{ enfant.prenom }}</td>
+                <td data-label="Allergies">
+                  <span *ngIf="enfant.allergies" class="statut-badge annule">
+                    <i class="fa-solid fa-triangle-exclamation"></i> {{ enfant.allergies }}
+                  </span>
+                  <span *ngIf="!enfant.allergies" class="allergie-none">—</span>
+                </td>
+                <td data-label="Statut">
+                  <span class="statut-badge actif">
+                    <i class="fa-solid fa-circle-check"></i> Attendu
+                  </span>
+                </td>
+              </tr>
+
+              <tr *ngIf="session.enfants.length === 0">
+                <td colspan="4" class="empty">Aucun enfant inscrit pour cette session.</td>
+              </tr>
+
+            </tbody>
+
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+  <ng-template #empty>
+    <div class="animateur-empty">
+      <div class="empty-icon">👶</div>
+      <h2>Aucune présence à afficher</h2>
+      <p>Aucune session à venir avec des enfants inscrits.</p>
+    </div>
+  </ng-template>
+  
+  <button class="back-btn" (click)="goBack()">Retour</button>
+</main>
+
+<app-footer></app-footer>
+<div class="bottom-espace"></div>

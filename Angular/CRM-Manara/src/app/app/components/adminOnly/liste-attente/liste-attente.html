@@ -1,57 +1,97 @@
+<!-- HEADER -->
+<div class="la-header">
+  <h1>Liste d'attente</h1>
+  <p class="la-subtitle">Gérez les inscriptions en attente par activité</p>
+</div>
 
-<div class="container-large">
+<div class="la-main">
 
-  <h2>Liste d'attente par activité</h2>
-
-  <!-- CARDS STATS -->
-  <div class="cards">
-    <div class="card" *ngFor="let key of activites">
-      <h3>{{ key }}</h3>
-      <p>{{ stats[key] || 0 }} en attente</p>
+  <!-- STATS CARDS -->
+  <div class="la-stats">
+    <div class="la-stat" *ngFor="let key of activites">
+      <div class="la-stat__icon">
+        <i class="fas fa-clock"></i>
+      </div>
+      <div class="la-stat__body">
+        <span class="la-stat__value">{{ stats[key] || 0 }}</span>
+        <span class="la-stat__label">{{ key }}</span>
+      </div>
     </div>
   </div>
 
-  <!-- PAR ACTIVITÉ -->
-  <div *ngFor="let activite of activites" class="activite-block">
+  <!-- BLOCS PAR ACTIVITÉ -->
+  <div *ngFor="let activite of activites" class="la-card">
 
-    <h3>{{ activite }}</h3>
+    <!-- CARD HEADER -->
+    <div class="la-card__header">
+      <div class="la-card__title-wrap">
+        <div class="la-card__icon">
+          <i class="fas fa-running"></i>
+        </div>
+        <div>
+          <h2 class="la-card__title">{{ activite }}</h2>
+          <span class="la-card__count">
+            <i class="fas fa-clock"></i>
+            {{ stats[activite] || 0 }} en attente
+          </span>
+        </div>
+      </div>
+    </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Enfant</th>
-          <th>Parent</th>
-          <th>Session</th>
-          <th>Action</th>
-        </tr>
-      </thead>
+    <!-- TABLE -->
+    <div class="la-table-wrap">
+      <table class="la-table">
+        <thead>
+          <tr>
+            <th>Enfant</th>
+            <th>Parent</th>
+            <th>Session</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ins of groupedInscriptions[activite]">
+            <td>
+              <div class="la-table__name">{{ ins.enfant?.nom }}</div>
+            </td>
+            <td>{{ ins.enfant?.parent?.utilisateur?.nom }}</td>
+            <td>
+              <span class="la-table__date">
+                <i class="fas fa-calendar"></i>
+                {{ ins.session?.date | date:'dd/MM/yyyy' }}
+              </span>
+            </td>
+            <td>
+              <div class="la-table__btns">
+                <button (click)="validerInscription(ins.id)" class="la-btn-sm la-btn-sm--validate">
+                  <i class="fas fa-check"></i> Valider
+                </button>
+                <button (click)="deleteInscription(ins.id)" class="la-btn-sm la-btn-sm--delete">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
 
-      <tbody>
-
-        <!-- LIGNES -->
-        <tr *ngFor="let ins of groupedInscriptions[activite]">
-          <td>{{ ins.enfant?.nom }}</td>
-          <td>{{ ins.enfant?.parent?.utilisateur?.nom }}</td>
-          <td>{{ ins.session?.date | date:'dd/MM/yyyy' }}</td>
-
-          <td>
-            <button (click)="validerInscription(ins.id)">Valider</button>
-            <button (click)="deleteInscription(ins.id)">Supprimer</button>
-          </td>
-        </tr>
-
-        <!-- VIDE -->
-        <tr *ngIf="stats[activite] === 0">
-          <td colspan="4">Aucune inscription en attente</td>
-        </tr>
-
-      </tbody>
-    </table>
+          <tr *ngIf="stats[activite] === 0">
+            <td colspan="4" class="la-table__empty">
+              <i class="fas fa-check-circle"></i>
+              Aucune inscription en attente
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
   </div>
+
+  <!-- EMPTY GLOBAL -->
+  <div *ngIf="activites.length === 0" class="la-empty">
+    <i class="fas fa-clipboard-check"></i>
+    <p>Aucune activité avec des inscriptions en attente</p>
+  </div>
+
 </div>
 
-<app-footer></app-footer>
 <div class="bottom-espace"></div>
-
 <app-fragment-administrateur></app-fragment-administrateur>

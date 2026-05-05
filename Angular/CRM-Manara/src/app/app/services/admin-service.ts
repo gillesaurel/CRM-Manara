@@ -96,7 +96,7 @@ export class AdminService {
   resetPassword(userId: number, newPassword: string) {
     let params = new HttpParams()
       .set('userId', userId)
-      .set('password', newPassword);
+      .set('newPassword', newPassword);
 
     return this.http.post(`${this.apiUrl}/reset-password`, {}, {
       params,
@@ -128,5 +128,11 @@ export class AdminService {
       withCredentials: true
     });
   }
+
+  getAnimateurs() {
+  return this.http.get(`${this.apiUrl}/adminOnly/animateurs`, {
+    withCredentials: true
+  });
+}
 
 }

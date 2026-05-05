@@ -16,11 +16,11 @@ export interface Utilisateur {
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8080';
-  
+
   private userSubject = new BehaviorSubject<Utilisateur | null>(null);
   user$ = this.userSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getMe(): Observable<Utilisateur | null> {
     return this.http.get<Utilisateur | null>(`${this.apiUrl}/userConnecte`, {
@@ -58,7 +58,7 @@ export class AuthService {
   register(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/register/save`, userData);
   }
-  
+
 
   logout(): Observable<any> {
     return this.http.get(`${this.apiUrl}/deconnexion`, {
@@ -78,5 +78,13 @@ export class AuthService {
     } else {
       localStorage.removeItem('user');
     }
+  }
+
+  forgotPassword(email: string) {
+    return this.http.post(`${this.apiUrl}/auth/forgot-password`, { email });
+  }
+
+  resetPassword(token: string, nouveauMotDePasse: string) {
+    return this.http.post(`${this.apiUrl}/auth/reset-password`, { token, nouveauMotDePasse });
   }
 }

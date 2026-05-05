@@ -1,54 +1,72 @@
-<div class="page-animateurs">
-
-
-
-  <main class="dash">
-
-    <section class="dash-top">
-      <div>
-        <h1>Portail Manara</h1>
-        <p class="subtitle">Tableau de bord</p>
-      </div>
-      <div class="profile-pill">
-        <i class="fa-solid fa-user-tie"></i>
-        <span>Profil : Animateur</span>
-      </div>
-    </section>
-
-    <h2>Inscriptions</h2>
-    <p>Consulter les listes d'inscrits par activité.</p>
-
-    <ng-container *ngIf="groups && groups.length > 0; else empty">
-      <div *ngFor="let group of groups">
-        <section class="card welcome">
-          <h3>{{ group.activiteNom }}</h3>
-          <div class="quick-grid">
-            <table>
-              <thead>
-              <tr>
-                <th>Nom</th>
-                <th>En attente</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let insc of group.inscriptions">
-                <td>{{ insc.nomEnfant }}</td>
-                <td>{{ insc.enAttente ? 'Oui' : 'Non' }}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-    </ng-container>
-
-    <ng-template #empty>
-      <section class="card welcome">
-        <p>Aucune inscription trouvée.</p>
-      </section>
-    </ng-template>
-
-    <div class="bottom-spacer"></div>
-  </main>
-
+<div class="bienvenue-section">
+  <h1>Inscriptions</h1>
 </div>
+
+<main style="max-width:1200px; margin:0 auto; padding:40px 20px;">
+
+  <!-- ================= SECTION TITLE ================= -->
+  <div class="animateur-section-header">
+    <h2>Inscrits par activité</h2>
+  </div>
+  
+  <!-- ================= GROUPS ================= -->
+  <ng-container *ngIf="groups && groups.length > 0; else empty">
+
+    <div *ngFor="let group of groups" class="presence-group">
+
+      <!-- Activity Header -->
+      <div class="presence-activity-header">
+        <h3>
+          <i class="fa-solid fa-clipboard-list"></i>
+          {{ group.activiteNom }}
+        </h3>
+      </div>
+
+      <!-- Table -->
+      <div class="animateur-table-wrapper">
+        <table class="animateur-table">
+
+          <thead>
+            <tr>
+              <th>Nom de l'enfant</th>
+              <th>En attente</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr *ngFor="let insc of group.inscriptions">
+              <td class="nom" data-label="Nom">{{ insc.nomEnfant }}</td>
+              <td data-label="En attente">
+                <span class="statut-badge" [ngClass]="insc.enAttente ? 'en-attente' : 'actif'">
+                  <i class="fa-solid" [ngClass]="insc.enAttente ? 'fa-clock' : 'fa-circle-check'"></i>
+                  {{ insc.enAttente ? 'En attente' : 'Confirmé' }}
+                </span>
+              </td>
+            </tr>
+
+            <tr *ngIf="group.inscriptions.length === 0">
+              <td colspan="2" class="empty">Aucune inscription pour cette activité.</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+      </div>
+
+    </div>
+
+  </ng-container>
+
+  <ng-template #empty>
+    <div class="animateur-empty">
+      <div class="empty-icon">📋</div>
+      <h2>Aucune inscription trouvée</h2>
+      <p>Il n'y a pas encore d'inscrits pour vos activités.</p>
+    </div>
+  </ng-template>
+  <button class="back-btn" (click)="goBack()">Retour</button>
+</main>
+
+<app-footer></app-footer>
+<div class="bottom-espace"></div>

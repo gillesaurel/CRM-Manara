@@ -29,7 +29,7 @@ header {
     align-items: center;
     padding: 10px 30px;
     background-color: #f8f9fa;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     height: 100px;
     position: sticky;
     top: 0;
@@ -181,7 +181,7 @@ nav a[href*="/login"]:hover {
     height: 360px;
     margin: 40px auto 0;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .carrousel-images {
@@ -202,8 +202,13 @@ nav a[href*="/login"]:hover {
 }
 
 @keyframes scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
 }
 
 /* Section Statistiques */
@@ -348,7 +353,7 @@ nav a[href*="/login"]:hover {
     background: white;
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     width: 100%;
 }
 
@@ -383,7 +388,7 @@ nav a[href*="/login"]:hover {
 .form-control:focus {
     outline: none;
     border-color: var(--global-color1);
-    box-shadow: 0 0 0 3px rgba(4,61,91,0.1);
+    box-shadow: 0 0 0 3px rgba(4, 61, 91, 0.1);
 }
 
 .form-row {
@@ -495,7 +500,7 @@ nav a[href*="/login"]:hover {
     padding: 60px 20px;
     background: white;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .empty-state .empty-icon {
@@ -580,7 +585,7 @@ nav a[href*="/login"]:hover {
     right: 0;
     bottom: 0;
     background: #fff;
-    border-top: 1px solid rgba(4,61,91,0.12);
+    border-top: 1px solid rgba(4, 61, 91, 0.12);
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     padding: 8px 10px;
@@ -589,7 +594,7 @@ nav a[href*="/login"]:hover {
 
 .bottom-nav .nav-item {
     text-decoration: none;
-    color: rgba(4,61,91,0.75);
+    color: rgba(4, 61, 91, 0.75);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -606,8 +611,8 @@ nav a[href*="/login"]:hover {
 
 .bottom-nav .nav-item.active {
     color: var(--global-color1);
-    background: rgba(252,205,44,0.35);
-    border: 1px solid rgba(252,205,44,0.60);
+    background: rgba(252, 205, 44, 0.35);
+    border: 1px solid rgba(252, 205, 44, 0.60);
 }
 
 .bottom-spacer {
@@ -651,7 +656,7 @@ footer {
     background: white;
     padding: 50px;
     border-radius: 12px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     width: 100%;
 }
 
@@ -667,7 +672,7 @@ footer {
     text-align: center;
 }
 
-.apropos-content > p {
+.apropos-content>p {
     font-size: 18px;
     color: #555;
     margin-bottom: 40px;
@@ -774,7 +779,7 @@ footer {
     padding: 25px;
     border-radius: 12px;
     text-align: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .stat-number {
@@ -800,7 +805,7 @@ footer {
     background: white;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .section-header {
@@ -818,7 +823,8 @@ footer {
     margin: 0;
 }
 
-.btn-add, .btn-view-all {
+.btn-add,
+.btn-view-all {
     background-color: #043d5b;
     color: #fccd2c !important;
     padding: 5px 12px;
@@ -828,7 +834,8 @@ footer {
     transition: all 0.3s ease;
 }
 
-.btn-add:hover, .btn-view-all:hover {
+.btn-add:hover,
+.btn-view-all:hover {
     background-color: #065a82;
     transform: translateY(-1px);
 }
@@ -893,13 +900,15 @@ footer {
     font-size: 16px;
 }
 
-.activites-list, .messages-list {
+.activites-list,
+.messages-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.activite-item, .message-item {
+.activite-item,
+.message-item {
     display: flex;
     gap: 15px;
     padding: 12px;
@@ -933,17 +942,20 @@ footer {
     text-transform: uppercase;
 }
 
-.activite-details, .message-content {
+.activite-details,
+.message-content {
     flex: 1;
 }
 
-.activite-details h4, .message-content h4 {
+.activite-details h4,
+.message-content h4 {
     margin: 0 0 5px 0;
     font-size: 14px;
     color: #043d5b;
 }
 
-.activite-details p, .message-content p {
+.activite-details p,
+.message-content p {
     margin: 0;
     font-size: 12px;
     color: #666;
@@ -962,7 +974,7 @@ footer {
     background: white;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
 }
 
@@ -1030,7 +1042,9 @@ footer {
 }
 
 /* Tableaux */
-table, td, th {
+table,
+td,
+th {
     border: 1px solid var(--global-color1);
     text-align: left;
 }
@@ -1040,7 +1054,8 @@ table {
     width: 100%;
 }
 
-th, td {
+th,
+td {
     padding: 10px;
 }
 
@@ -1114,7 +1129,7 @@ th, td {
         font-size: 24px;
     }
 
-    .apropos-content > p {
+    .apropos-content>p {
         font-size: 16px;
     }
 
@@ -1153,4 +1168,196 @@ th, td {
         width: 300px;
         height: 200px;
     }
+}
+
+
+/* DARK MODE — GLOBAL */
+body.dark-mode {
+    background-color: #0d1117 !important;
+    color: #e6edf3 !important;
+}
+
+/* CARDS & SECTIONS GÉNÉRALES (formulaires, tables, cards admin) */
+body.dark-mode .form,
+body.dark-mode .auth-left,
+body.dark-mode .u-card,
+body.dark-mode .a-section,
+body.dark-mode .ac-card,
+body.dark-mode .la-card,
+body.dark-mode .aa-card,
+body.dark-mode .admin-table,
+body.dark-mode .a-table {
+    background: #161b22 !important;
+    color: #e6edf3 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* STAT CARDS (dashboard, liste attente) */
+body.dark-mode .u-stat-card,
+body.dark-mode .a-stat,
+body.dark-mode .la-stat {
+    background: #161b22 !important;
+    color: #e6edf3 !important;
+}
+
+/* TABLEAUX (cellules) */
+body.dark-mode .a-table td,
+body.dark-mode .ac-table td,
+body.dark-mode .la-table td,
+body.dark-mode .admin-table td {
+    color: #e6edf3 !important;
+    border-color: rgba(255, 255, 255, 0.07) !important;
+    background: #161b22 !important;
+}
+
+body.dark-mode .a-table tbody tr:hover td,
+body.dark-mode .ac-table tbody tr:hover td {
+    background: #1f2937 !important;
+}
+
+/* PAGE LOGIN (split screen) */
+body.dark-mode .auth-left {
+    background: #0d1117 !important;
+}
+
+body.dark-mode .auth-input {
+    background: #1f2937 !important;
+    color: #e6edf3 !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+body.dark-mode .auth-title {
+    color: #e6edf3 !important;
+}
+
+/* TEXTES & NOMS */
+body.dark-mode .u-card__name,
+body.dark-mode .a-table__name,
+body.dark-mode .ac-card__title {
+    color: #e6edf3 !important;
+}
+
+/* INPUTS GLOBAUX (ajouter activité, email, utilisateurs, comm) */
+body.dark-mode .aa-input,
+body.dark-mode .aa-textarea,
+body.dark-mode .aa-select,
+body.dark-mode .em-input,
+body.dark-mode .em-textarea,
+body.dark-mode .em-select,
+body.dark-mode .u-search__input,
+body.dark-mode .u-card__pwd,
+body.dark-mode .a-comm__input {
+    background: #1f2937 !important;
+    color: #e6edf3 !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* BOUTON TOGGLE (lune/soleil) */
+.dark-toggle {
+    background: transparent;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.dark-toggle:hover {
+    background: rgba(252, 205, 44, 0.15);
+    border-color: #fccd2c;
+    color: #fccd2c;
+}
+
+/* AJOUTER UTILISATEUR */
+body.dark-mode .au-card {
+    background: #161b22 !important;
+    color: #e6edf3 !important;
+}
+
+body.dark-mode .au-input,
+body.dark-mode .au-select,
+body.dark-mode .au-textarea {
+    background: #1f2937 !important;
+    color: #e6edf3 !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+body.dark-mode .au-label {
+    color: #e6edf3 !important;
+}
+
+body.dark-mode .au-divider {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* EMAIL */
+body.dark-mode .em-card {
+    background: #161b22 !important;
+    color: #e6edf3 !important;
+}
+
+body.dark-mode .em-type-option {
+    background: #1f2937 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #8a9bb0 !important;
+}
+
+body.dark-mode .em-type-option:hover {
+    background: #263244 !important;
+    color: #e6edf3 !important;
+}
+
+body.dark-mode .em-section__label,
+body.dark-mode .em-label {
+    color: #e6edf3 !important;
+}
+
+body.dark-mode .em-divider {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .em-hint {
+    color: #6b7280 !important;
+}
+
+body.dark-mode .em-send-btn:disabled {
+    background: #374151 !important;
+    color: #6b7280 !important;
+}
+
+/* BOTTOM NAV admin */
+body.dark-mode .bottom-nav {
+    background: #161b22 !important;
+    border-top-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .bottom-nav .nav-item {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+body.dark-mode .bottom-nav .nav-item.active {
+    color: #043d5b !important;
+    background: rgba(252, 205, 44, 0.25) !important;
+    border-color: rgba(252, 205, 44, 0.5) !important;
+}
+
+/* FOOTER */
+body.dark-mode footer,
+body.dark-mode .bg-light {
+    background: #161b22 !important;
+    border-top-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .text-muted,
+body.dark-mode .text-secondary {
+    color: #6b7280 !important;
+}
+
+body.dark-mode .text-dark {
+    color: #e6edf3 !important;
 }

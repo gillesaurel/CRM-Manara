@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link th:rel="stylesheet" th:href="@{/css/style.css}">
+    <title>À propos</title>
+</head>
+<body>
+
+<header th:replace="fragments/main::header"></header>
+
+<main class="apropos-section">
+    <div class="apropos-container">
+        <h1>À propos de nous</h1>
+
+        <div class="apropos-content">
+            <p>Notre plateforme vous accompagne dans votre développement professionnel.</p>
+
+            <div class="apropos-values">
+                <div class="value-card">
+                    <h3>🎯 Notre mission</h3>
+                    <p>Vous offrir les outils nécessaires pour atteindre vos objectifs.</p>
+                </div>
+
+                <div class="value-card">
+                    <h3>💡 Notre vision</h3>
+                    <p>Devenir la référence en matière d'accompagnement professionnel.</p>
+                </div>
+
+                <div class="value-card">
+                    <h3>🤝 Nos valeurs</h3>
+                    <p>Confiance, transparence et excellence.</p>
+                </div>
+            </div>
+
+            <div class="apropos-contact">
+                <p>Une question ? <a th:href="@{/contact}">Contactez-nous</a></p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="fragments/main::footer"></footer>
+
+</body>
+</html>

@@ -10,6 +10,11 @@ export class AnimateurService {
 
   constructor(private http: HttpClient) {}
 
+  // ── Dashboard (single call for all KPIs + sessions) ──
+  getDashboardData(): Observable<any> {
+    return this.http.get(`${this.apiUrl}`, { withCredentials: true });
+  }
+
   getInscriptionData(): Observable<any> {
     return this.http.get(`${this.apiUrl}/inscriptions`, { withCredentials: true });
   }
@@ -28,10 +33,10 @@ export class AnimateurService {
 
   saveIncident(payload: any): Observable<any> {
     const params = new HttpParams()
-      .set('enfantId', payload.enfantId)
-      .set('type', payload.type)
-      .set('gravite', payload.gravite)
-      .set('description', payload.description)
+      .set('enfantId',     payload.enfantId)
+      .set('type',         payload.type)
+      .set('gravite',      payload.gravite)
+      .set('description',  payload.description)
       .set('actionsPrises', payload.actionsPrises ?? '');
 
     return this.http.post(`${this.apiUrl}/incidents/save`, params, { withCredentials: true });

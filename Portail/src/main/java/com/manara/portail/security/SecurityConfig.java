@@ -2,7 +2,6 @@ package com.manara.portail.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,11 +36,11 @@ public class SecurityConfig {
                         .requestMatchers("/css/**", "/images/**", "/register/**").permitAll()
                         .requestMatchers("/admin/**").hasAnyRole("ADMINISTRATEUR")
                         .requestMatchers("/animateur/**").hasAnyRole("ANIMATEUR", "ADMINISTRATEUR")
-                        .requestMatchers("/parent/**").permitAll()
+                        .requestMatchers("/parent/**").hasAnyRole("PARENT", "ADMINISTRATEUR", "ANIMATEUR")
                         .requestMatchers("/userConnecte").permitAll()
+                        .requestMatchers("/auth/forgot-password", "/auth/reset-password").permitAll()
                         .anyRequest().permitAll()
                 )
-
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")

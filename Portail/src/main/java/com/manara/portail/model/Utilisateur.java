@@ -7,7 +7,7 @@ import com.manara.portail.model.Role;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
-@Table(name = "utilisateurs")
+@Table(name = "utilisateur")
 public class Utilisateur {
 
     @Id

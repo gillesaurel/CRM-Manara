@@ -5,7 +5,7 @@ package com.manara.portail.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "role")
 public class  Role {
 
     @Id

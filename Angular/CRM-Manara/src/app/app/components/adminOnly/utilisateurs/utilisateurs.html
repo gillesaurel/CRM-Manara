@@ -1,113 +1,164 @@
+<div class="u-page">
 
-<div class="admin-main">
+  <!-- HEADER -->
+  <div class="u-header">
+    <h1>Gestion des utilisateurs</h1>
+    <p class="u-subtitle">Gérez les comptes parents, animateurs et enfants</p>
+  </div>
 
-  <h1>Gestion des utilisateurs</h1>
+  <!-- ALERTES -->
+  <div *ngIf="message" class="u-alert u-alert--success">
+    <i class="fas fa-check-circle"></i> {{ message }}
+  </div>
+  <div *ngIf="error" class="u-alert u-alert--error">
+    <i class="fas fa-exclamation-circle"></i> {{ error }}
+  </div>
 
-  <!-- Messages -->
-  <div *ngIf="message" class="alert success">{{ message }}</div>
-  <div *ngIf="error" class="alert error">{{ error }}</div>
-
-  <!-- Recherche -->
-  <div class="search-form">
-    <input type="text" [(ngModel)]="keyword" placeholder="Rechercher...">
-
-    <button (click)="searchUsers()">
-      <i class="fas fa-search"></i> Rechercher
+  <!-- RECHERCHE -->
+  <div class="u-search">
+    <div class="u-search__input-wrap">
+      <i class="fas fa-search u-search__icon"></i>
+      <input type="text" [(ngModel)]="keyword" placeholder="Rechercher un utilisateur..." class="u-search__input">
+    </div>
+    <button (click)="searchUsers()" class="u-btn u-btn--primary">
+      Rechercher
     </button>
   </div>
 
+  <!-- STATS -->
+  <div class="u-stats">
+    <div class="u-stat-card">
+      <span class="u-stat-card__number">{{ parents.length }}</span>
+      <span class="u-stat-card__label">Parents</span>
+    </div>
+    <div class="u-stat-card">
+      <span class="u-stat-card__number">{{ animateurs.length }}</span>
+      <span class="u-stat-card__label">Animateurs</span>
+    </div>
+    <div class="u-stat-card">
+      <span class="u-stat-card__number">{{ enfants.length }}</span>
+      <span class="u-stat-card__label">Enfants</span>
+    </div>
+  </div>
 
   <!-- PARENTS -->
-  <h2>Parents</h2>
-  <table class="admin-table">
-    <thead>
-      <tr>
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Email</th>
-        <th>Téléphone</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
+  <section class="u-section">
+    <div class="u-section__header">
+      <div class="u-section__title">
+        <span class="u-section__badge">
+          <i class="fas fa-users"></i>
+        </span>
+        <h2>Parents</h2>
+      </div>
+      <span class="u-section__count">{{ parents.length }}</span>
+    </div>
 
-    <tbody>
-      <tr *ngFor="let user of parents">
-        <td>{{ user.nom }}</td>
-        <td>{{ user.prenom }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.telephone }}</td>
+    <div class="u-cards">
+      <div *ngFor="let user of parents" class="u-card">
+        <div class="u-card__avatar">
+          {{ user.prenom?.charAt(0) }}{{ user.nom?.charAt(0) }}
+        </div>
+        <div class="u-card__info">
+          <p class="u-card__name">{{ user.prenom }} {{ user.nom }}</p>
+          <p class="u-card__email"><i class="fas fa-envelope"></i> {{ user.email }}</p>
+          <p class="u-card__phone"><i class="fas fa-phone"></i> {{ user.telephone }}</p>
+        </div>
+        <div class="u-card__actions">
+          <input #pwd type="password" placeholder="Nouveau mot de passe" class="u-card__pwd">
+          <div class="u-card__btns">
+            <button (click)="resetPassword(user.id, pwd.value)" class="u-btn u-btn--reset">
+              <i class="fas fa-key"></i> Réinitialiser
+            </button>
+            <button (click)="deleteUser(user.id)" class="u-btn u-btn--delete">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
 
-        <td>
-          <input #pwd type="password" placeholder="Nouveau mot de passe">
-
-          <button (click)="resetPassword(user.id, pwd.value)" class="btn-reset">
-            <i class="fas fa-key"></i> Réinitialiser
-          </button>
-
-          <button (click)="deleteUser(user.id)" class="btn-delete">
-            <i class="fas fa-trash"></i> Supprimer
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+      <div *ngIf="parents.length === 0" class="u-empty">
+        <i class="fas fa-users"></i>
+        <p>Aucun parent trouvé</p>
+      </div>
+    </div>
+  </section>
 
   <!-- ANIMATEURS -->
-  <h2>Animateurs</h2>
-  <table class="admin-table">
-    <thead>
-      <tr>
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Email</th>
-        <th>Téléphone</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
+  <section class="u-section">
+    <div class="u-section__header">
+      <div class="u-section__title">
+        <span class="u-section__badge">
+          <i class="fas fa-running"></i>
+        </span>
+        <h2>Animateurs</h2>
+      </div>
+      <span class="u-section__count">{{ animateurs.length }}</span>
+    </div>
 
-    <tbody>
-      <tr *ngFor="let user of animateurs">
-        <td>{{ user.nom }}</td>
-        <td>{{ user.prenom }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.telephone }}</td>
+    <div class="u-cards">
+      <div *ngFor="let user of animateurs" class="u-card">
+        <div class="u-card__avatar u-card__avatar--anim">
+          {{ user.prenom?.charAt(0) }}{{ user.nom?.charAt(0) }}
+        </div>
+        <div class="u-card__info">
+          <p class="u-card__name">{{ user.prenom }} {{ user.nom }}</p>
+          <p class="u-card__email"><i class="fas fa-envelope"></i> {{ user.email }}</p>
+          <p class="u-card__phone"><i class="fas fa-phone"></i> {{ user.telephone }}</p>
+        </div>
+        <div class="u-card__actions">
+          <input #pwd2 type="password" placeholder="Nouveau mot de passe" class="u-card__pwd">
+          <div class="u-card__btns">
+            <button (click)="resetPassword(user.id, pwd2.value)" class="u-btn u-btn--reset">
+              <i class="fas fa-key"></i> Réinitialiser
+            </button>
+            <button (click)="deleteUser(user.id)" class="u-btn u-btn--delete">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
 
-        <td>
-          <input #pwd2 type="password" placeholder="Nouveau mot de passe">
-
-          <button (click)="resetPassword(user.id, pwd2.value)" class="btn-reset">
-            Réinitialiser
-          </button>
-
-          <button (click)="deleteUser(user.id)" class="btn-delete">
-            Supprimer
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+      <div *ngIf="animateurs.length === 0" class="u-empty">
+        <i class="fas fa-running"></i>
+        <p>Aucun animateur trouvé</p>
+      </div>
+    </div>
+  </section>
 
   <!-- ENFANTS -->
-  <h2>Enfants</h2>
-  <table class="admin-table">
-    <thead>
-      <tr>
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Date de naissance</th>
-        <th>Parent</th>
-      </tr>
-    </thead>
+  <section class="u-section">
+    <div class="u-section__header">
+      <div class="u-section__title">
+        <span class="u-section__badge">
+          <i class="fas fa-child"></i>
+        </span>
+        <h2>Enfants</h2>
+      </div>
+      <span class="u-section__count">{{ enfants.length }}</span>
+    </div>
 
-    <tbody>
-      <tr *ngFor="let child of enfants">
-        <td>{{ child.nom }}</td>
-        <td>{{ child.prenom }} </td>
-        <td>{{ child.dateNaissance | date:'dd/MM/yyyy' }}</td>
-        <td>{{ child.parent?.nom }} {{ child.parent?.prenom }}</td>
-      </tr>
-    </tbody>
-  </table>
+    <div class="u-enfants">
+      <div *ngFor="let child of enfants" class="u-enfant">
+        <div class="u-card__avatar u-card__avatar--enfant">
+          {{ child.prenom?.charAt(0) }}{{ child.nom?.charAt(0) }}
+        </div>
+        <div>
+          <p class="u-card__name">{{ child.prenom }} {{ child.nom }}</p>
+          <p class="u-card__email">{{ child.dateNaissance | date:'dd/MM/yyyy' }}</p>
+        </div>
+        <div class="u-enfant__parent">
+          <i class="fas fa-user"></i>
+          {{ child.parent?.nom }} {{ child.parent?.prenom }}
+        </div>
+      </div>
+
+      <div *ngIf="enfants.length === 0" class="u-empty">
+        <i class="fas fa-child"></i>
+        <p>Aucun enfant trouvé</p>
+      </div>
+    </div>
+  </section>
+
   <app-footer></app-footer>
   <div class="bottom-espace"></div>
 </div>

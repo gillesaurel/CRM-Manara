@@ -1,72 +1,106 @@
-<div class="formulaire-section">
+<!-- HEADER -->
+<div class="au-header">
+  <h1>Nouvel utilisateur</h1>
+  <p class="au-subtitle">Créez un compte pour un parent ou un animateur</p>
+</div>
 
-    <div class="form">
-        <h1>Inscrire un nouvel utilisateur</h1>
+<div class="au-main">
 
-        <div class="alert alert-success text-center" *ngIf="message">
-            {{message}}
-        </div>
+  <div class="au-card">
 
-        <form (ngSubmit)="submitForm()">
-
-            <!-- Prénom -->
-            <div>
-                <label>Prénom *</label>
-                <input type="text" [(ngModel)]="user.prenom" name="prenom" required>
-            </div>
-
-            <!-- Nom -->
-            <div>
-                <label>Nom *</label>
-                <input type="text" [(ngModel)]="user.nom" name="nom" required>
-            </div>
-
-            <!-- Téléphone -->
-            <div>
-                <label>Téléphone</label>
-                <input type="tel" [(ngModel)]="user.telephone" name="telephone">
-            </div>
-
-            <!-- Email -->
-            <div>
-                <label>Email *</label>
-                <input type="email" [(ngModel)]="user.email" name="email" required>
-            </div>
-
-            <!-- Mot de passe -->
-            <div>
-                <label>Mot de passe *</label>
-                <input type="password" [(ngModel)]="user.motdepasse" name="motdepasse" required minlength="8">
-            </div>
-
-            <!-- Confirmation -->
-            <div>
-                <label>Confirmer mot de passe *</label>
-                <input type="password" [(ngModel)]="user.confirmMotdepasse" name="confirmMotdepasse" required
-                    minlength="8">
-            </div>
-
-            <!-- Rôle -->
-            <div>
-                <label>Rôle *</label>
-                <select [(ngModel)]="user.role.id" name="role" required>
-                    <option value="">Choisir un rôle</option>
-                    <option *ngFor="let r of roles" [value]="r.id">
-                        {{ r.nom }}
-                    </option>
-                </select>
-            </div>
-
-            <!-- Bouton -->
-            <div class="btn-group-inscription">
-                <button type="submit">L'inscrire</button>
-            </div>
-
-        </form>
+    <!-- SUCCÈS -->
+    <div *ngIf="message" class="au-alert">
+      <i class="fas fa-check-circle"></i>
+      {{ message }}
     </div>
 
+    <form (ngSubmit)="submitForm()" class="au-form">
+
+      <!-- LIGNE PRÉNOM + NOM -->
+      <div class="au-row">
+        <div class="au-field">
+          <label class="au-label">
+            <i class="fas fa-user"></i> Prénom
+          </label>
+          <input type="text" [(ngModel)]="user.prenom" name="prenom" required
+            placeholder="Ex: Marie" class="au-input">
+        </div>
+        <div class="au-field">
+          <label class="au-label">
+            <i class="fas fa-user"></i> Nom
+          </label>
+          <input type="text" [(ngModel)]="user.nom" name="nom" required
+            placeholder="Ex: Tremblay" class="au-input">
+        </div>
+      </div>
+
+      <!-- LIGNE EMAIL + TÉLÉPHONE -->
+      <div class="au-row">
+        <div class="au-field">
+          <label class="au-label">
+            <i class="fas fa-envelope"></i> Email
+          </label>
+          <input type="email" [(ngModel)]="user.email" name="email" required
+            placeholder="exemple@email.com" class="au-input">
+        </div>
+        <div class="au-field">
+          <label class="au-label">
+            <i class="fas fa-phone"></i> Téléphone
+          </label>
+          <input type="tel" [(ngModel)]="user.telephone" name="telephone"
+            placeholder="514 000 0000" class="au-input">
+        </div>
+      </div>
+
+      <!-- LIGNE MOT DE PASSE + CONFIRMATION -->
+      <div class="au-row">
+        <div class="au-field">
+          <label class="au-label">
+            <i class="fas fa-lock"></i> Mot de passe
+          </label>
+          <input type="password" [(ngModel)]="user.motdepasse" name="motdepasse"
+            required minlength="8" placeholder="Min. 8 caractères" class="au-input">
+        </div>
+        <div class="au-field">
+          <label class="au-label">
+            <i class="fas fa-lock"></i> Confirmation
+          </label>
+          <input type="password" [(ngModel)]="user.confirmMotdepasse" name="confirmMotdepasse"
+            required minlength="8" placeholder="Répétez le mot de passe" class="au-input">
+        </div>
+      </div>
+
+      <!-- RÔLE -->
+      <div class="au-field au-field--full">
+        <label class="au-label">
+          <i class="fas fa-shield-alt"></i> Rôle
+        </label>
+        <div class="au-select-wrap">
+          <select [(ngModel)]="user.role.id" name="role" required class="au-select">
+            <option value="">Choisir un rôle...</option>
+            <option *ngFor="let r of roles" [value]="r.id">{{ r.nom }}</option>
+          </select>
+          <i class="fas fa-chevron-down au-select__arrow"></i>
+        </div>
+      </div>
+
+      <!-- DIVIDER -->
+      <div class="au-divider"></div>
+
+      <!-- BOUTONS -->
+      <div class="au-actions">
+        <a routerLink="/adminOnly/utilisateurs" class="au-btn au-btn--outline">
+          <i class="fas fa-arrow-left"></i> Annuler
+        </a>
+        <button type="submit" class="au-btn au-btn--primary">
+          <i class="fas fa-user-plus"></i> Inscrire l'utilisateur
+        </button>
+      </div>
+
+    </form>
+  </div>
 </div>
+
 <app-footer></app-footer>
 <div class="bottom-espace"></div>
-
 <app-fragment-administrateur></app-fragment-administrateur>
