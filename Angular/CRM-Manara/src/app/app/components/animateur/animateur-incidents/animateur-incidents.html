@@ -3,6 +3,7 @@
 </div>
 
 <main style="max-width:1200px; margin:0 auto; padding:40px 20px;">
+  <button class="btn btn-light m-2" (click)="goBack()">Retour</button>
 
   <!-- ================= MESSAGE ================= -->
   <div *ngIf="message" class="incident-message"
@@ -120,9 +121,7 @@
       <p>Vous n'avez pas encore soumis de rapport d'incident.</p>
     </div>
   </ng-template>
-  
-  <button class="back-btn" (click)="goBack()">Retour</button>
-</main>
+  </main>
 
 <app-footer></app-footer>
 <div class="bottom-espace"></div>

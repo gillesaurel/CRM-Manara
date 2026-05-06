@@ -48,6 +48,15 @@ export class Header implements OnInit {
     return this.user?.name || '';
   }
 
+  getRole(): string {
+    return this.user?.role?.nom || '';
+  }
+
+  isAnimateur(): boolean {
+    console.log('Role de l\'utilisateur:', this.getRole());
+    return this.getRole() === 'ANIMATEUR';
+  }
+
   logout(): void {
     const clearAndRedirect = () => {
       this.user = null;
