@@ -22,9 +22,14 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/a-propos" routerLinkActive="active">À propos</a>
         </li>
+        <div class="d-flex align-items-center gap-2" *ngIf="isLoggedIn()">
         <li class="nav-item">
           <a class="nav-link" routerLink="/animateur" routerLinkActive="active">Animateur</a>
         </li>
+        </div>
+          
+
+        
 
         <!-- ============================================ -->
         <!--  Liens visibles seulement si l'utilisateur est un parent -->
