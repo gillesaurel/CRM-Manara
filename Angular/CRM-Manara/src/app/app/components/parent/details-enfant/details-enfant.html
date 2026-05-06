@@ -21,12 +21,12 @@
       <div class="detail-grid">
         <div class="detail-item">
           <strong>Allergies :</strong>
-          <p *ngIf="enfant.allergies">{{ enfant.allergies }}</p>
+          <p *ngIf="enfant.allergies" class="allergies-message">{{ enfant.allergies }}</p>
           <p *ngIf="!enfant.allergies" class="text-muted">Aucune allergie signalée</p>
         </div>
         <div class="detail-item">
           <strong>Notes médicales :</strong>
-          <p *ngIf="enfant.notesMedicales">{{ enfant.notesMedicales }}</p>
+          <p *ngIf="enfant.notesMedicales" class="notes-medicales-message">{{ enfant.notesMedicales }}</p>
           <p *ngIf="!enfant.notesMedicales" class="text-muted">Aucune note médicale</p>
         </div>
       </div>
@@ -50,7 +50,7 @@
           </span>
         </div>
       </div>
-    </div>  <!-- ← Cette balise était manquante -->
+    </div>
 
     <!-- Historique des présences -->
     <div class="detail-section">

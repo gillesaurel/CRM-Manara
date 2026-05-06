@@ -30,32 +30,30 @@ public class UtilisateurService {
         return utilisateurRepository.findAll();
     }
 
-    public Utilisateur enregistrer(Utilisateur utilisateur)throws Exception {
+    public Utilisateur enregistrer(Utilisateur utilisateur) throws Exception {
         if (utilisateurRepository.findByEmail(utilisateur.getEmail()) != null) {
             throw new Exception("Email déjà utilisé !");
-        }
-
-        if (!utilisateur.getMotdepasse().equals(utilisateur.getConfirmMotdepasse())) {
-            throw new Exception("Les mots de passe ne correspondent pas !");
         }
 
         // Encode le mot de passe avant de sauvegarder
         utilisateur.setMotdepasse(passwordEncoder.encode(utilisateur.getMotdepasse()));
 
         Role roleParDefaut = roleRepository.findByNom("PARENT");
-
         if (roleParDefaut == null) {
             throw new Exception("Erreur : Le rôle PARENT n'existe pas.");
         }
-
         utilisateur.setRole(roleParDefaut);
 
-        if (utilisateur.getRole().getNom().equals("PARENT")) {
-            Parent parent = new Parent(utilisateur);
+        // 1. D'abord sauvegarder l'utilisateur
+        Utilisateur savedUtilisateur = utilisateurRepository.save(utilisateur);
+
+        // 2. Ensuite sauvegarder le parent
+        if (savedUtilisateur.getRole().getNom().equals("PARENT")) {
+            Parent parent = new Parent(savedUtilisateur);
             parentRepository.save(parent);
         }
 
-        return utilisateurRepository.save(utilisateur);
+        return savedUtilisateur;
     }
 
     /*public Utilisateur getUtilisateurByEmailAndMotDePasse(String email, String password){

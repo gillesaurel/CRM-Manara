@@ -8,6 +8,9 @@
     <div *ngIf="errorMessage" class="alert alert-danger">
       {{ errorMessage }}
     </div>
+    <div *ngIf="ageError" class="alert alert-danger">
+      {{ ageError }}
+    </div>
 
     <form (ngSubmit)="onSubmit()" #enfantForm="ngForm">
       <div class="form-row">
@@ -37,6 +40,12 @@
         <div *ngIf="dateNaissance.invalid && dateNaissance.touched" class="error-message">
           La date de naissance est requise
         </div>
+        <!-- ============================================ -->
+        <!-- AFFICHAGE DE L'ERREUR D'ÂGE SOUS LE CHAMP DATE -->
+        <!-- ============================================ -->
+        <div *ngIf="ageError" class="error-message" style="margin-top: 5px;">
+          {{ ageError }}
+        </div>
       </div>
 
       <div class="form-group">
@@ -61,4 +70,4 @@
   </div>
 </main>
 
-<a routerLink="/parent/enfants" routerLinkActive="active" class="nav-item">
+<app-parent-nav></app-parent-nav>

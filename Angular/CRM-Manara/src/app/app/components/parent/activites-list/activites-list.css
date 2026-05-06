@@ -1,0 +1,58 @@
+/* activites-list.css */
+
+/* Titre principal en jaune */
+.page-header h1 {
+    color: #fccd2c !important;
+}
+
+/* Sous-titre en blanc */
+.page-header p {
+    color: white !important;
+}
+
+/* Textes des cartes en blanc */
+.activite-card-large h3,
+.activite-description,
+.activite-meta span {
+    color: white !important;
+}
+
+/* Filtres */
+.filter-select,
+.filter-search {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.filter-select option {
+    background-color: #043d5b;
+    color: white;
+}
+
+.filter-search::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Message info */
+.info-message p {
+    color: white !important;
+}
+
+/* Carte activité */
+.activite-card-large {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+}
+
+/* Bouton */
+.btn-primary {
+    background-color: #fccd2c;
+    color: #043d5b !important;
+}
+
+.btn-primary:hover {
+    background-color: #ffdd44;
+    color: #043d5b !important;
+}
