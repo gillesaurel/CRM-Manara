@@ -22,4 +22,12 @@ public class RoleService {
 
     public Role findByName(String nom) { return roleRepository.findByNom(nom);}
 
+    public Role findByNom(String nom) {
+        return roleRepository.findByNom(nom);
+    }
+
+    public Role save(Role role) {
+        return roleRepository.save(role);
+    }
+
 }

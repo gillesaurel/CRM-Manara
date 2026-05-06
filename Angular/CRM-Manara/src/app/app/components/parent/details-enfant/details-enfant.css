@@ -1,0 +1,89 @@
+/* Couleurs pour la page détails enfant */
+.page-header h1 {
+    color: #fccd2c !important;  /* Jaune */
+}
+
+.detail-section h3 {
+    color: #fccd2c !important;  /* Jaune */
+}
+
+.detail-item strong {
+    color: white !important;
+}
+
+.detail-item p {
+    color: white !important;
+}
+
+.text-muted {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Allergies et notes médicales */
+.allergies-message {
+    color: #fccd2c !important;
+    font-weight: bold;
+}
+
+.notes-medicales-message {
+    color: #fccd2c !important;
+}
+
+/* Informations de l'enfant */
+.enfant-detail-titre h2 {
+    color: white !important;
+}
+
+.enfant-detail-titre p {
+    color: white !important;
+}
+
+/* Badges */
+.badge-success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.badge-warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.badge-danger {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.badge-info {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+/* Boutons */
+.btn-edit {
+    background: #fccd2c;
+    color: #043d5b;
+}
+
+.btn-edit:hover {
+    background: #ffdd44;
+    color: #043d5b;
+}
+
+.btn-primary {
+    background: #043d5b;
+    color: #fccd2c;
+}
+
+.btn-primary:hover {
+    background: #065a82;
+    color: #fccd2c;
+}
+
+.empty-state p {
+    color: white;
+}
+
+.loading-spinner {
+    color: white;
+}

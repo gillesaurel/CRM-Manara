@@ -2,8 +2,10 @@
 
 package com.manara.portail.controller;
 
+import com.manara.portail.model.Parent;
 import com.manara.portail.model.Role;
 import com.manara.portail.model.Utilisateur;
+import com.manara.portail.repository.ParentRepository;
 import com.manara.portail.service.PasswordResetService;
 import com.manara.portail.service.RoleService;
 import com.manara.portail.service.UtilisateurService;
@@ -32,6 +34,9 @@ public class AuthController {
     @Autowired
     private UtilisateurService utilisateurService;
 
+    @Autowired
+    private ParentRepository parentRepository;  // ← AJOUTER CETTE LIGNE
+
     public AuthController(UtilisateurService utilisateurService) {
         this.utilisateurService = utilisateurService;
     }
@@ -56,6 +61,32 @@ public class AuthController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/register";
+        }
+    }
+
+    //Pour enregistrer un Parent via un formulaire
+    @PostMapping("/api/register")
+    @ResponseBody
+    public ResponseEntity<?> enregistrerUtilisateurApi(@RequestBody Utilisateur utilisateur) {
+        try {
+            Role roleParent = RoleService.findByName("PARENT");
+            if (roleParent == null) {
+                roleParent = new Role();
+                roleParent.setNom("PARENT");
+                RoleService.save(roleParent);
+            }
+            utilisateur.setRole(roleParent);
+
+            // Sauvegarder l'utilisateur
+            Utilisateur savedUtilisateur = utilisateurService.enregistrer(utilisateur);
+
+            // Créer le parent manuellement
+            Parent parent = new Parent(savedUtilisateur);
+            parentRepository.save(parent);
+
+            return ResponseEntity.ok(Map.of("message", "Inscription réussie"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
 

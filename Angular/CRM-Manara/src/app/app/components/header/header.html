@@ -22,12 +22,18 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/a-propos" routerLinkActive="active">À propos</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/animateur" routerLinkActive="active">Animateur</a>
-        </li>
 
         <!-- ============================================ -->
-        <!--  Liens visibles seulement si l'utilisateur est un parent -->
+        <!-- Lien Animateur - visible uniquement pour les animateurs -->
+        <!-- ============================================ -->
+        <ng-container *ngIf="isAnimateur()">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/animateur" routerLinkActive="active">Animateur</a>
+          </li>
+        </ng-container>
+
+        <!-- ============================================ -->
+        <!-- Liens visibles seulement si l'utilisateur est un parent -->
         <!-- ============================================ -->
         <ng-container *ngIf="isParent()">
           <li class="nav-item">
@@ -44,7 +50,7 @@
       </ul>
 
       <!-- ============================================ -->
-      <!-- Condition sur les boutons login/register (uniquement si NON connecté) -->
+      <!-- Boutons pour utilisateur NON connecté -->
       <!-- ============================================ -->
       <div class="d-flex align-items-center gap-2" *ngIf="!isLoggedIn()">
         <button (click)="toggleDarkMode()" class="btn btn-sm dark-toggle">
@@ -53,7 +59,6 @@
         <a routerLink="/login" class="btn btn-outline-light btn-sm">Se connecter</a>
         <a routerLink="/register" class="btn btn-warning btn-sm">S'inscrire</a>
       </div>
-
 
       <!-- ============================================ -->
       <!-- Actions pour utilisateur connecté -->

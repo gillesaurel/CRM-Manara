@@ -2,9 +2,11 @@ package com.manara.portail.service;
 
 import com.manara.portail.dto.ActiviteDTO;
 import com.manara.portail.dto.SessionDTO;
+import com.manara.portail.model.ActiviteAdmin;
 import com.manara.portail.model.ActiviteParent;
 import com.manara.portail.model.SessionParent;
 import com.manara.portail.repository.ActiviteParentRepository;
+import com.manara.portail.repository.ActiviteRepository;
 import com.manara.portail.repository.SessionParentRepository;
 import com.manara.portail.repository.InscriptionEnfantRepository;
 import com.manara.portail.exception.ResourceNotFoundException;
@@ -12,34 +14,39 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class ActiviteParentService {
 
-    private final ActiviteParentRepository activiteRepository;
+    private final ActiviteParentRepository activiteParentRepository;
+    private final ActiviteRepository activiteRepository;
     private final SessionParentRepository sessionRepository;
     private final InscriptionEnfantRepository inscriptionRepository;
 
-    public ActiviteParentService(ActiviteParentRepository activiteRepository,
+    public ActiviteParentService(ActiviteParentRepository activiteParentRepository,
+                                 ActiviteRepository activiteRepository,
                                  SessionParentRepository sessionRepository,
                                  InscriptionEnfantRepository inscriptionRepository) {
+        this.activiteParentRepository = activiteParentRepository;
         this.activiteRepository = activiteRepository;
         this.sessionRepository = sessionRepository;
         this.inscriptionRepository = inscriptionRepository;
     }
 
     public List<ActiviteParent> getAllActivites() {
-        return activiteRepository.findAll();
+        return activiteParentRepository.findAll();
     }
 
     public List<ActiviteParent> getAllActivitesActives() {
-        return activiteRepository.findAllActive();
+        // Retourne directement les activités depuis activites_parent
+        return activiteParentRepository.findAllActive();
     }
 
     public ActiviteParent getActiviteById(Integer id) {
-        return activiteRepository.findById(id)
+        return activiteParentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Activite non trouvee avec id: " + id));
     }
 
@@ -52,7 +59,7 @@ public class ActiviteParentService {
         activite.setAgeMax(activiteDTO.getAgeMax());
         activite.setPrix(activiteDTO.getPrix());
         activite.setActive(activiteDTO.isActive());
-        return activiteRepository.save(activite);
+        return activiteParentRepository.save(activite);
     }
 
     @Transactional
@@ -64,7 +71,7 @@ public class ActiviteParentService {
         activite.setAgeMax(activiteDTO.getAgeMax());
         activite.setPrix(activiteDTO.getPrix());
         activite.setActive(activiteDTO.isActive());
-        return activiteRepository.save(activite);
+        return activiteParentRepository.save(activite);
     }
 
     @Transactional
@@ -73,7 +80,7 @@ public class ActiviteParentService {
         if (!activite.getSessions().isEmpty()) {
             throw new RuntimeException("Impossible de supprimer une activite qui a des sessions");
         }
-        activiteRepository.delete(activite);
+        activiteParentRepository.delete(activite);
     }
 
     public List<SessionParent> getAllSessions() {
@@ -157,11 +164,11 @@ public class ActiviteParentService {
     }
 
     public List<ActiviteParent> getActivitesAdapteesPourAge(int age) {
-        return activiteRepository.findAdapteesPourAge(age);
+        return activiteParentRepository.findAdapteesPourAge(age);
     }
 
     public List<ActiviteParent> rechercherActivitesParNom(String nom) {
-        return activiteRepository.rechercherParNom(nom);
+        return activiteParentRepository.rechercherParNom(nom);
     }
 
     public List<SessionParent> getAllSessionsFutures() {

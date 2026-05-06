@@ -7,11 +7,13 @@ import com.manara.portail.model.Enfant;
 import com.manara.portail.model.InscriptionEnfant;
 import com.manara.portail.model.Communication;
 import com.manara.portail.model.SessionParent;
+import com.manara.portail.model.ActiviteParent;
 import com.manara.portail.service.ParentService;
 import com.manara.portail.service.InscriptionEnfantService;
 import com.manara.portail.service.ActiviteParentService;
 import com.manara.portail.service.CommunicationService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +22,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/parent")
@@ -57,13 +61,11 @@ public class ParentController {
             return "redirect:/login";
         }
 
-        // Récupérer toutes les données
         List<Enfant> enfants = parentService.getEnfantsDuParent(parent.getId());
         List<InscriptionEnfant> inscriptionsFutures = inscriptionService.getInscriptionsFuturesParent(parent.getId());
         long messagesNonLus = communicationService.getNombreMessagesNonLusParent(parent.getId());
         List<Communication> communications = communicationService.getCommunicationsParent(parent.getId());
 
-        // Récupérer les prochaines activités
         List<SessionParent> prochainesActivites = new ArrayList<>();
         try {
             prochainesActivites = activiteService.getProchainesSessions(5);
@@ -71,7 +73,6 @@ public class ParentController {
             prochainesActivites = new ArrayList<>();
         }
 
-        // Ajouter toutes les variables au modèle
         model.addAttribute("parent", parent);
         model.addAttribute("enfants", enfants != null ? enfants : new ArrayList<>());
         model.addAttribute("inscriptions", inscriptionsFutures != null ? inscriptionsFutures : new ArrayList<>());
@@ -325,5 +326,122 @@ public class ParentController {
         communicationService.marquerToutesCommeLues(parent.getId());
 
         return "parent/notifications";
+    }
+
+    // ============================================
+    // METHODES REST (Angular)
+    // ============================================
+
+    @GetMapping("/api/dashboard/{email}")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getDashboard(@PathVariable String email) {
+        Parent parent = parentService.getParentParEmail(email);
+
+        List<Enfant> enfants = parentService.getEnfantsDuParent(parent.getId());
+        List<InscriptionEnfant> inscriptions = inscriptionService.getInscriptionsFuturesParent(parent.getId());
+        long messagesNonLus = communicationService.getNombreMessagesNonLusParent(parent.getId());
+        List<Communication> communications = communicationService.getCommunicationsParent(parent.getId());
+        List<SessionParent> prochainesActivites = activiteService.getProchainesSessions(5);
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("parent", parent);
+        data.put("enfants", enfants);
+        data.put("inscriptions", inscriptions);
+        data.put("messagesNonLus", messagesNonLus);
+        data.put("communications", communications);
+        data.put("prochainesActivites", prochainesActivites);
+
+        return ResponseEntity.ok(data);
+    }
+
+    @GetMapping("/api/{parentId}/enfants")
+    @ResponseBody
+    public ResponseEntity<List<Enfant>> getEnfants(@PathVariable Integer parentId) {
+        return ResponseEntity.ok(parentService.getEnfantsDuParent(parentId));
+    }
+
+    @GetMapping("/api/enfants/{enfantId}")
+    @ResponseBody
+    public ResponseEntity<Enfant> getEnfantById(@PathVariable Integer enfantId) {
+        return ResponseEntity.ok(parentService.getEnfantParId(enfantId));
+    }
+
+    @PostMapping("/api/{parentId}/enfants")
+    @ResponseBody
+    public ResponseEntity<Enfant> ajouterEnfant(@PathVariable Integer parentId,
+                                                @RequestBody EnfantDTO enfantDTO) {
+        return ResponseEntity.ok(parentService.ajouterEnfant(parentId, enfantDTO));
+    }
+
+    @PutMapping("/api/enfants/{enfantId}")
+    @ResponseBody
+    public ResponseEntity<Enfant> modifierEnfant(@PathVariable Integer enfantId,
+                                                 @RequestBody EnfantDTO enfantDTO) {
+        return ResponseEntity.ok(parentService.modifierEnfant(enfantId, enfantDTO));
+    }
+
+    @DeleteMapping("/api/enfants/{enfantId}")
+    @ResponseBody
+    public ResponseEntity<Void> supprimerEnfant(@PathVariable Integer enfantId) {
+        parentService.supprimerEnfant(enfantId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/api/activites")
+    @ResponseBody
+    public ResponseEntity<List<ActiviteParent>> getActivites() {
+        return ResponseEntity.ok(activiteService.getAllActivitesActives());
+    }
+
+    @GetMapping("/api/activites/{activiteId}/sessions")
+    @ResponseBody
+    public ResponseEntity<List<SessionParent>> getSessions(@PathVariable Integer activiteId) {
+        return ResponseEntity.ok(activiteService.getSessionsFuturesByActivite(activiteId));
+    }
+
+    @GetMapping("/api/{parentId}/inscriptions")
+    @ResponseBody
+    public ResponseEntity<List<InscriptionEnfant>> getInscriptions(@PathVariable Integer parentId) {
+        return ResponseEntity.ok(inscriptionService.getInscriptionsFuturesParent(parentId));
+    }
+
+    @PostMapping("/api/inscriptions")
+    @ResponseBody
+    public ResponseEntity<InscriptionEnfant> inscrireEnfant(@RequestBody Map<String, Integer> payload) {
+        Integer enfantId = payload.get("enfantId");
+        Integer sessionId = payload.get("sessionId");
+        return ResponseEntity.ok(inscriptionService.inscrireEnfant(enfantId, sessionId, null));
+    }
+
+    @DeleteMapping("/api/inscriptions/{inscriptionId}")
+    @ResponseBody
+    public ResponseEntity<Void> annulerInscription(@PathVariable Long inscriptionId) {
+        inscriptionService.annulerInscription(inscriptionId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/api/{parentId}/planning")
+    @ResponseBody
+    public ResponseEntity<List<InscriptionEnfant>> getPlanning(@PathVariable Integer parentId) {
+        return ResponseEntity.ok(inscriptionService.getInscriptionsFuturesParent(parentId));
+    }
+
+    @GetMapping("/api/{parentId}/notifications")
+    @ResponseBody
+    public ResponseEntity<List<Communication>> getNotifications(@PathVariable Integer parentId) {
+        return ResponseEntity.ok(communicationService.getCommunicationsParent(parentId));
+    }
+
+    @GetMapping("/api/profil/{email}")
+    @ResponseBody
+    public ResponseEntity<Parent> getProfil(@PathVariable String email) {
+        return ResponseEntity.ok(parentService.getParentParEmail(email));
+    }
+
+    @PutMapping("/api/profil/{parentId}")
+    @ResponseBody
+    public ResponseEntity<Parent> updateProfil(@PathVariable Integer parentId,
+                                               @RequestBody ParentDTO parentDTO) {
+        return ResponseEntity.ok(parentService.mettreAJourParent(parentId, parentDTO));
     }
 }

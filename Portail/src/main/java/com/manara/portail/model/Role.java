@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "role")
-public class  Role {
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,14 +14,13 @@ public class  Role {
     String nom;
     String description;
 
-
     // DEFAULT
     public Role() {
 
     }
 
     // SPECIFIC
-    public Role( String nom, String description) {
+    public Role(String nom, String description) {
         this.nom = nom;
         this.description = description;
     }

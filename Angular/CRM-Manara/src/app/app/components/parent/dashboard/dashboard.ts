@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { ParentService, Enfant, Inscription } from '../../../services/parent-service';
 
@@ -44,7 +44,7 @@ export class DashboardComponent implements OnInit {
   communications: Communication[] = [];
   messagesNonLus: number = 0;
 
-  constructor(private parentService: ParentService) {}
+  constructor(private parentService: ParentService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.chargerDashboard();
@@ -57,26 +57,29 @@ export class DashboardComponent implements OnInit {
   if (email) {
   this.parentService.getDashboard(email).subscribe({
     next: (data: any) => {
+       // LOG de tests
+      console.log('DASHBOARD - Enfants reçus:', data.enfants);
       this.parent = data.parent || data;
       this.enfants = data.enfants || [];
       this.inscriptions = data.inscriptions || [];
       this.messagesNonLus = data.messagesNonLus || 0;
       this.communications = data.communications || [];
       this.prochainesActivites = data.prochainesActivites || [];
+      this.cdr.detectChanges();
     },
     error: (err) => console.error('Erreur chargement dashboard:', err)
   });
 }
 
-    if (parentId) {
-      this.parentService.getEnfants(parentId).subscribe({
-        next: (data) => this.enfants = data,
-        error: (err) => console.error('Erreur chargement enfants:', err)
-      });
+  if (parentId) {
+    this.parentService.getEnfants(parentId).subscribe({
+      next: (data) => this.enfants = data,
+      error: (err) => console.error('Erreur chargement enfants:', err)
+    });
 
-      this.parentService.getInscriptionsParent(parentId).subscribe({
-        next: (data) => this.inscriptions = data,
-        error: (err) => console.error('Erreur chargement inscriptions:', err)
+    this.parentService.getInscriptionsParent(parentId).subscribe({
+      next: (data) => this.inscriptions = data,
+      error: (err) => console.error('Erreur chargement inscriptions:', err)
       });
     }
   }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';  // ← Ajouter cet import
+import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../services/auth-service';
 
 interface UtilisateurForm {
@@ -19,7 +19,7 @@ interface UtilisateurForm {
   styleUrls: ['./register.css']
 })
 export class Register {
-  
+
   utilisateur: UtilisateurForm = {
     prenom: '',
     nom: '',
@@ -36,26 +36,43 @@ export class Register {
 
   constructor(
     private authService: AuthService,
-    private http: HttpClient,  //
+    private http: HttpClient,
     private router: Router
   ) {}
 
   onSubmit(): void {
+    // Vérification côté frontend
     if (this.utilisateur.motdepasse !== this.utilisateur.confirmMotdepasse) {
       this.passwordMismatch = true;
       return;
     }
     this.passwordMismatch = false;
 
-    // Appel DIRECT vers l'API (sans passer par AuthService)
-    this.http.post('http://localhost:8080/register/save', this.utilisateur).subscribe({
+    // Données envoyées SANS confirmMotdepasse
+    const data = {
+      prenom: this.utilisateur.prenom,
+      nom: this.utilisateur.nom,
+      telephone: this.utilisateur.telephone,
+      email: this.utilisateur.email,
+      motdepasse: this.utilisateur.motdepasse,
+      confirmMotdepasse: this.utilisateur.confirmMotdepasse
+    };
+
+    this.http.post('http://localhost:8080/api/register', data).subscribe({
       next: () => {
         this.successMessage = 'Inscription réussie ! Vous pouvez maintenant vous connecter.';
+        this.errorMessage = '';
+
         setTimeout(() => this.router.navigate(['/login']), 2000);
       },
       error: (err: any) => {
+        this.successMessage = '';
         this.errorMessage = 'Erreur lors de l\'inscription';
-        console.error('Erreur:', err);
+
+        // 🔍 Logs détaillés pour debug
+        console.error("Status:", err.status);
+        console.error("Error body:", err.error);
+        console.error("Full error:", err);
       }
     });
   }

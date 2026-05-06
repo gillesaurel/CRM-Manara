@@ -84,4 +84,12 @@ export class Header implements OnInit {
 
   }
 
+  isAnimateur(): boolean {
+    const user = localStorage.getItem('user');
+    if (user) {
+      return JSON.parse(user).role?.nom === 'ANIMATEUR';
+    }
+    return false;
+}
+
 }
