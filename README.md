@@ -2,7 +2,7 @@
 
 ## À propos de ce projet...
 
-Ce projet a été fait par Manu Charland-Rivard, Gilles Aurel Nguemkam et Julien Jean Jose
+Ce projet a été fait par Manu Charland-Rivard, Gilles Aurel Nguemkam, Julien Jean Jose et Marc-André Legault
 
 Version #3
 
